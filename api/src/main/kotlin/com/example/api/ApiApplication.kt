@@ -1,11 +1,11 @@
-package com.example.health
+package com.example.api
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class HealthApplication
+class ApiApplication
 
 fun main(args: Array<String>) {
-    runApplication<HealthApplication>(*args)
+    runApplication<ApiApplication>(*args)
 }
