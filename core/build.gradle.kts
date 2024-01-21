@@ -10,8 +10,13 @@ allOpen {
 dependencies {
     implementation(project(":common"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // mongoDB
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
+    // redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.redisson:redisson:3.25.2")
 }
 
 tasks.withType<KotlinCompile> {
