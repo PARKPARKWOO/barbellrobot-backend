@@ -8,5 +8,5 @@ class MemberInfo(
     var weight: Double,
     var skeletalMuscleMass: Double, // 골격근량
     var age: Int,
-    var gender: String,
+    var exerciseMonths: Int,
 )
