@@ -6,7 +6,7 @@ import jakarta.persistence.Embeddable
 class MemberInfo(
     var tall: Double,
     var weight: Double,
-    var skeletalMuscleMass: Double, // 골격근량
+    var skeletalMuscleMass: Double?, // 골격근량
     var age: Int,
     var exerciseMonths: Int,
 )

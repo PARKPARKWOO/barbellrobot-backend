@@ -1,8 +1,8 @@
 package com.example.core.member.adapter.out.persistence.entity
 
 import com.example.core.common.persistence.BaseEntity
-import com.example.core.member.domain.Member
-import com.example.core.member.domain.Role
+import com.example.domain.member.Member
+import com.example.domain.member.Role
 import jakarta.persistence.AttributeOverride
 import jakarta.persistence.AttributeOverrides
 import jakarta.persistence.Column
@@ -23,10 +23,12 @@ const val MEMBER_TABLE_NAME = "member"
 class MemberEntity(
     @Column(name = "email")
     var email: String,
+    @Column(name = "nickname")
+    var nickname: String,
     @Column(name = "password")
     var password: String,
     @Column(name = "provider") // 소셜로그인 시
-    var provider: String,
+    var provider: String?,
     @Embedded
     @AttributeOverrides(
         AttributeOverride(name = "tall", column = Column(name = "tall")),
@@ -56,6 +58,7 @@ class MemberEntity(
             createdAt = this.createdAt,
             deletedAt = this.deletedAt,
             role = this.role,
+            nickname = this.nickname,
         )
     }
 }

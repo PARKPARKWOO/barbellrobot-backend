@@ -10,8 +10,3 @@ data class SignUpRequest(
     @NotNull
     val password: String,
 )
-
-data class AuthenticateEmailRequest(
-    @NotNull
-    val email: String,
-)

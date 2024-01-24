@@ -1,6 +1,6 @@
 package com.example.api.response
 
 data class ApiResponse<T>(
-    val code: String,
+    val code: Boolean,
     val data: T,
 )

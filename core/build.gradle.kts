@@ -9,6 +9,7 @@ allOpen {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":domain"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // mongoDB
@@ -17,6 +18,11 @@ dependencies {
     // redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.redisson:redisson:3.25.2")
+
+    // test
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.8.0")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.8.0")
+    testImplementation("io.mockk:mockk:1.13.8")
 }
 
 tasks.withType<KotlinCompile> {
@@ -28,4 +34,9 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.bootJar {
+    enabled = false
+    mainClass = "com.example.api.ApiApplication"
 }

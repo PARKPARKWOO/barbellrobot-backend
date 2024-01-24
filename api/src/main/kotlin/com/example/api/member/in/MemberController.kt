@@ -1,24 +1,35 @@
 package com.example.api.member.`in`
 
-import com.example.api.member.`in`.request.AuthenticateEmailRequest
+import com.example.api.member.`in`.request.SendAuthenticationNumberRequest
+import com.example.api.member.`in`.request.VerifyAuthenticationNumberRequest
+import com.example.api.member.`in`.request.toCommand
+import com.example.core.member.application.`in`.EmailVerifyUseCase
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/api/v1/member")
 class MemberController(
-
+    private val emailVerifyUseCase: EmailVerifyUseCase,
 ) {
-    @PostMapping("/v1/email-verify")
+    @PostMapping("/email-verify")
     fun authenticateEmail(
-        @RequestBody request: AuthenticateEmailRequest,
+        @RequestBody request: VerifyAuthenticationNumberRequest,
     ) {
-
+        emailVerifyUseCase.verifyEmail(request.toCommand())
     }
 
-    @PostMapping("/v1/sign-up")
-    fun signUp() {
+    @PostMapping("/send/email-verify")
+    fun sendAuthenticationNumberEmail(
+        @RequestBody
+        request: SendAuthenticationNumberRequest,
+    ) {
+        emailVerifyUseCase.sendVerifyEmail(request.toCommand())
+    }
+
+    @PostMapping("/sign-up/free")
+    fun signUpFreeUser() {
     }
 }
