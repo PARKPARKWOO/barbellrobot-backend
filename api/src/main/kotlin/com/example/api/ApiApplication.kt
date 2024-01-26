@@ -3,7 +3,12 @@ package com.example.api
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication
+@SpringBootApplication(
+    scanBasePackages = [
+        "com.example.core.*",
+        "com.example.common.*",
+    ],
+)
 class ApiApplication
 
 fun main(args: Array<String>) {

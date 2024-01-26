@@ -12,6 +12,12 @@ allprojects {
     repositories {
         mavenCentral()
     }
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += "-Xjsr305=strict"
+            jvmTarget = "17"
+        }
+    }
 }
 
 subprojects {
@@ -24,7 +30,7 @@ subprojects {
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-
+    apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
     java {
         sourceCompatibility = JavaVersion.VERSION_17
     }
@@ -46,13 +52,6 @@ dependencyManagement {
 //    }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
-    }
-}
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }
@@ -61,5 +60,5 @@ tasks.bootJar {
     enabled = false
     mainClass = "com.example.api.ApiApplication"
 }
-tasks.jar { enabled = false }
 
+tasks.jar { enabled = false }

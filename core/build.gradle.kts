@@ -1,13 +1,28 @@
+import org.jetbrains.kotlin.gradle.idea.proto.com.google.protobuf.GeneratedCodeInfoKt.annotation
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-dependencies {
-    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.Embeddable")
+    annotation("jakarta.persistence.MappedSuperclass")
+}
 
+dependencies {
+    implementation(project(":common"))
+    implementation(project(":domain"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // mongoDB
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
+    // redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.redisson:redisson:3.25.2")
+
+    // test
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.8.0")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.8.0")
+    testImplementation("io.mockk:mockk:1.13.8")
 }
 
 tasks.withType<KotlinCompile> {
@@ -19,4 +34,9 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.bootJar {
+    enabled = false
+    mainClass = "com.example.api.ApiApplication"
 }
