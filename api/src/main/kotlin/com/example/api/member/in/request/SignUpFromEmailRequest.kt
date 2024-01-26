@@ -1,13 +1,14 @@
 package com.example.api.member.`in`.request
 
-import com.example.core.member.application.`in`.command.SignUpMemberFromEmailCommand
+import com.example.core.user.application.`in`.command.SignUpMemberFromEmailCommand
+import com.example.domain.user.Gender
 import java.util.UUID
 
 data class SignUpFromEmailRequest(
     val email: String,
     val nickname: String,
     val password: String,
-    val gender: String,
+    val gender: Gender,
     val age: Int,
     val exerciseMonths: Int,
     val tall: Double,
