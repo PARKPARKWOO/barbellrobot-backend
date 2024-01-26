@@ -1,4 +1,4 @@
-package com.example.api.member.`in`
+package com.example.api.trainer
 
 import com.example.api.member.`in`.reponse.SuccessAuthenticationResponse
 import com.example.api.member.`in`.request.SendAuthenticationNumberRequest
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/member")
-class MemberController(
+@RequestMapping("/api/v1/trainer")
+class TrainerController(
     private val emailVerifyUseCase: EmailVerifyUseCase,
     private val signUpMemberUseCase: SignUpMemberUseCase,
 ) {
@@ -37,8 +37,8 @@ class MemberController(
         return ApiResponse(data = Unit)
     }
 
-    @PostMapping("/sign-up/free")
-    fun signUpFreeUser(
+    @PostMapping("/sign-up/trainer")
+    fun signUpTrainer(
         @RequestBody
         request: SignUpFromEmailRequest,
     ): ApiResponse<Unit> {

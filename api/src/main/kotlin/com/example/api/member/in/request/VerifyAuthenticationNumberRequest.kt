@@ -1,6 +1,6 @@
 package com.example.api.member.`in`.request
 
-import com.example.core.member.application.`in`.command.VerifyEmailCommand
+import com.example.core.user.application.`in`.command.VerifyEmailCommand
 
 data class VerifyAuthenticationNumberRequest(
     val email: String,
