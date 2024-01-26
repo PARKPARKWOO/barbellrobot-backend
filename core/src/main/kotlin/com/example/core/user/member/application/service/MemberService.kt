@@ -4,7 +4,6 @@ import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.user.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.core.user.application.out.EmailVerifyPort
-import com.example.core.user.application.out.SendEmailPort
 import com.example.core.user.application.out.SignUpPort
 import com.example.core.user.member.application.`in`.SignUpMemberUseCase
 import com.example.core.user.member.application.out.MemberPort
