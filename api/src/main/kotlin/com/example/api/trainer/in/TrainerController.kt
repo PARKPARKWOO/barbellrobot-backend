@@ -2,13 +2,11 @@ package com.example.api.trainer.`in`
 
 import com.example.api.member.`in`.reponse.SuccessAuthenticationResponse
 import com.example.api.member.`in`.request.SendAuthenticationNumberRequest
-import com.example.api.member.`in`.request.SignUpFromEmailRequest
 import com.example.api.member.`in`.request.VerifyAuthenticationNumberRequest
 import com.example.api.member.`in`.request.toCommand
 import com.example.api.response.ApiResponse
 import com.example.api.trainer.`in`.request.SignUpTrainerFromEmailRequest
 import com.example.core.user.application.`in`.EmailVerifyUseCase
-import com.example.core.user.member.application.`in`.SignUpMemberUseCase
 import com.example.core.user.trainer.application.`in`.SignUpTrainerUseCase
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

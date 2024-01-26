@@ -2,6 +2,8 @@ package com.example.core.user.trainer.adapter.out.persistence.entity
 
 import com.example.core.common.persistence.BaseEntity
 import com.example.domain.user.Gender
+import com.example.domain.user.Role
+import com.example.domain.user.Trainer
 import jakarta.persistence.AttributeOverride
 import jakarta.persistence.AttributeOverrides
 import jakarta.persistence.Column
@@ -43,6 +45,8 @@ class TrainerEntity(
     var gender: Gender,
     @Column(name = "introduce")
     var introduce: String,
+    @Column(name = "role")
+    var role: Role,
 ) : BaseEntity() {
     fun changeGym(gymName: String, gymAddress: GymAddress) {
         this.gymName = gymName
@@ -51,6 +55,22 @@ class TrainerEntity(
 
     fun changeIntroduce(introduce: String) {
         this.introduce = introduce
+    }
+
+    fun toDomain(): Trainer {
+        return Trainer(
+            nickname = nickname,
+            password = password,
+            email = email,
+            gender = gender,
+            gymName = gymName,
+            street = gymAddress.street,
+            country = gymAddress.country,
+            city = gymAddress.city,
+            exerciseYears = exerciseYears,
+            introduce = introduce,
+            role = role,
+        )
     }
 }
 

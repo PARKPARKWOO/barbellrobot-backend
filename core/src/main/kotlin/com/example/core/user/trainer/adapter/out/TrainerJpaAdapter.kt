@@ -5,6 +5,7 @@ import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerEntit
 import com.example.core.user.trainer.adapter.out.persistence.repository.TrainerRepository
 import com.example.core.user.trainer.application.out.TrainerJpaPort
 import com.example.core.user.trainer.application.out.command.SignUpTrainerCommand
+import com.example.domain.user.Role
 import org.springframework.stereotype.Component
 
 @Component
@@ -25,6 +26,7 @@ class TrainerJpaAdapter(
             exerciseYears = command.exerciseYears,
             gender = command.gender,
             introduce = command.introduce,
+            role = Role.ROLE_TRAINER,
         )
         trainerRepository.save(trainerEntity)
     }
