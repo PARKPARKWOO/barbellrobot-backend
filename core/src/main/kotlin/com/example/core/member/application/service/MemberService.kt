@@ -5,10 +5,11 @@ import com.example.core.common.error.ServiceException
 import com.example.core.member.application.`in`.EmailVerifyUseCase
 import com.example.core.member.application.`in`.SignUpUseCase
 import com.example.core.member.application.`in`.command.SendVerifyEmailCommand
-import com.example.core.member.application.`in`.command.SignMemberFromEmailCommand
+import com.example.core.member.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.core.member.application.`in`.command.VerifyEmailCommand
 import com.example.core.member.application.out.EmailVerifyPort
 import com.example.core.member.application.out.MemberPort
+import com.example.core.member.application.out.SendEmailPort
 import com.example.core.member.application.out.SignUpPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,24 +20,27 @@ class MemberService(
     private val signUpPort: SignUpPort,
     private val memberPort: MemberPort,
     private val emailVerifyPort: EmailVerifyPort,
+    private val sendEmailPort: SendEmailPort,
 ) : SignUpUseCase, EmailVerifyUseCase {
     @Transactional(readOnly = true)
-    override fun verifyEmail(command: VerifyEmailCommand) {
-        emailVerifyPort.verifyEmail(command)
+    override fun verifyEmail(command: VerifyEmailCommand): UUID {
+        return emailVerifyPort.verifyEmail(command)
     }
 
     @Transactional
     override fun sendVerifyEmail(command: SendVerifyEmailCommand) {
-        emailVerifyPort.sendVerifyEmail(command)
+        emailVerifyPort.saveAuthenticationNumber(command)
+        sendEmailPort.sendAuthenticationNumber(command)
     }
 
     @Transactional
-    override fun signMemberFromEmail(command: SignMemberFromEmailCommand): UUID {
+    override fun signUpMemberFromEmail(command: SignUpMemberFromEmailCommand) {
         createMemberVerify(command)
-        return signUpPort.signMemberFromEmail(command)
+        emailVerifyPort.verifyAuthenticationSuccess(command)
+        signUpPort.signUpMemberFromEmail(command)
     }
 
-    private fun createMemberVerify(command: SignMemberFromEmailCommand) {
+    private fun createMemberVerify(command: SignUpMemberFromEmailCommand) {
         verifyNickname(command.nickname)
     }
 

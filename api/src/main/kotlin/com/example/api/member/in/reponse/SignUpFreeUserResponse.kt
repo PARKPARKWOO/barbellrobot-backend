@@ -9,5 +9,6 @@ data class SignUpResponse(
 )
 
 data class AuthenticateEmailResponse(
+    @JsonProperty("code")
     val code: Int,
 )

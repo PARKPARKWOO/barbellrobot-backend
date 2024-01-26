@@ -1,6 +1,8 @@
 package com.example.core.member.application.`in`.command
 
-data class SignMemberFromEmailCommand(
+import java.util.UUID
+
+data class SignUpMemberFromEmailCommand(
     val email: String,
     val nickname: String,
     val password: String,
@@ -10,4 +12,5 @@ data class SignMemberFromEmailCommand(
     val tall: Double,
     val weight: Double,
     val skeletalMuscleMass: Double?,
+    val authenticationString: UUID,
 )

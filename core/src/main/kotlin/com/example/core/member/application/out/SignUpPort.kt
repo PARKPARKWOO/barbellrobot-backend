@@ -1,8 +1,7 @@
 package com.example.core.member.application.out
 
-import com.example.core.member.application.`in`.command.SignMemberFromEmailCommand
-import java.util.UUID
+import com.example.core.member.application.`in`.command.SignUpMemberFromEmailCommand
 
 interface SignUpPort {
-    fun signMemberFromEmail(command: SignMemberFromEmailCommand): UUID
+    fun signUpMemberFromEmail(command: SignUpMemberFromEmailCommand)
 }

@@ -18,7 +18,7 @@ const val MEMBER_TABLE_NAME = "member"
 
 @Entity
 @Table(name = MEMBER_TABLE_NAME)
-@SQLDelete(sql = "UPDATE $MEMBER_TABLE_NAME TABLE_NAME set deleted_at = now() WHERE id = ?")
+@SQLDelete(sql = "UPDATE $MEMBER_TABLE_NAME set deleted_at = now() WHERE id = ?")
 @DynamicUpdate
 class MemberEntity(
     @Column(name = "email")
