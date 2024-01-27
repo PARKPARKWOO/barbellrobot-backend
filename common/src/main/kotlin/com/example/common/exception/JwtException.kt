@@ -11,3 +11,7 @@ data class ParseJwtFailedException(
 data class ExpiredJwtException(
     override val message: String,
 ) : JwtException(message)
+
+data class NoBearerTokenException(
+    override val message: String,
+): JwtException(message)

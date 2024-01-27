@@ -22,7 +22,6 @@ class JwtTokenService(
         return Jwts.builder()
             .setHeader(Jwts.header().setType(Header.JWT_TYPE))
             .setClaims(claims)
-            // .setIssuer("klleon")
             .setExpiration(Date((now + expireMillis)))
             .setIssuedAt(Date(now))
             .signWith(
