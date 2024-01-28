@@ -3,9 +3,16 @@ spring:
     redis:
       port: ${REDIS_PORT:6379}
       host: ${REDIS_HOST:localhost}
-      password: ${REDIS_PASSWORD:password}
+      password: ${REDIS_PASSWORD}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${RDBMS_URI:localhost}:3306/health?useUnicode=yes&characterEncoding=UTF-8&connectTimeout=2000&autoReconnect=true&serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
     username: ${RDBMS_USERNAME:root}
     password: ${RDBMS_PASSWORD:1234}
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  access-token:
+    expire-millis: ${ACCESS_EXPIRE_MILLIS}
+  refresh-token:
+    expire-millis: ${REFRESH_EXPIRE_MILLIS}

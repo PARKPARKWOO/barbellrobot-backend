@@ -1,15 +1,25 @@
 package com.example.domain.user
 
+import java.util.UUID
+
 data class Trainer(
-    var nickname: String,
-    var email: String,
-    var password: String,
-    var gymName: String,
-    var street: String,
-    var city: String,
-    var country: String,
-    var exerciseYears: Int,
-    var gender: Gender,
-    var introduce: String,
-    var role: Role,
-)
+    val id: UUID,
+    val nickname: String,
+    val email: String,
+    val password: String,
+    val gymName: String,
+    val street: String,
+    val city: String,
+    val country: String,
+    val exerciseYears: Int,
+    val gender: Gender,
+    val introduce: String,
+    val role: Role,
+) {
+    fun getClaims(): Map<String, Any> {
+        val claims = mutableMapOf<String, Any>()
+        claims["id"] = id
+        claims["role"] = role
+        return claims
+    }
+}

@@ -6,4 +6,6 @@ import java.util.UUID
 
 interface MemberRepository : JpaRepository<MemberEntity, UUID> {
     fun findByNickname(nickname: String): MemberEntity?
+
+    fun findByEmailAndPassword(email: String, password: String): MemberEntity?
 }

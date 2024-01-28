@@ -4,4 +4,6 @@ import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerEntit
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
-interface TrainerRepository : JpaRepository<TrainerEntity, UUID>
+interface TrainerRepository : JpaRepository<TrainerEntity, UUID> {
+    fun findByEmailAndPassword(email: String, password: String): TrainerEntity?
+}

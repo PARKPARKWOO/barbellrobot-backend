@@ -1,5 +1,6 @@
 package com.example.core.user.trainer.application.`in`
 
+import com.example.core.user.application.`in`.command.SignInWithEmailCommand
 import com.example.core.user.application.`in`.command.SignUpTrainerFromEmailCommand
 
 interface SignUpTrainerUseCase {

@@ -42,6 +42,8 @@ subprojects {
 //        implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
         runtimeOnly("com.mysql:mysql-connector-j")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     }
     tasks.register("prepareKotlinBuildScriptModel") {}
 }

@@ -1,8 +1,10 @@
 package com.example.domain.user
 
 import java.time.LocalDateTime
+import java.util.UUID
 
 data class Member(
+    val id: UUID,
     val email: String,
     val nickname: String,
     val password: String,
@@ -16,4 +18,11 @@ data class Member(
     val createdAt: LocalDateTime,
     val deletedAt: LocalDateTime?,
     val role: Role,
-)
+) {
+    fun getClaims(): Map<String, Any> {
+        val claims = mutableMapOf<String, Any>()
+        claims["id"] = id
+        claims["role"] = role
+        return claims
+    }
+}
