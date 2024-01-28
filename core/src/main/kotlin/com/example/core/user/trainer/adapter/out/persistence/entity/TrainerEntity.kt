@@ -59,6 +59,7 @@ class TrainerEntity(
 
     fun toDomain(): Trainer {
         return Trainer(
+            id = id,
             nickname = nickname,
             password = password,
             email = email,
@@ -71,6 +72,13 @@ class TrainerEntity(
             introduce = introduce,
             role = role,
         )
+    }
+
+    fun getClaims(): Map<String, Any> {
+        val claims = mutableMapOf<String, Any>()
+        claims["id"] = id
+        claims["role"] = role
+        return claims
     }
 }
 

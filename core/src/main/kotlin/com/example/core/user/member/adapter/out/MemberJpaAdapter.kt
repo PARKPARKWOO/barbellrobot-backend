@@ -2,10 +2,12 @@ package com.example.core.user.member.adapter.out
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
+import com.example.core.user.application.`in`.command.SignInWithEmailCommand
 import com.example.core.user.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
+import com.example.core.user.member.application.out.MemberJpaPort
 import com.example.core.user.member.application.out.MemberPort
 import com.example.domain.user.Member
 import com.example.domain.user.Role
@@ -15,7 +17,7 @@ import java.util.UUID
 @Component
 class MemberJpaAdapter(
     private val memberRepository: MemberRepository,
-) : MemberPort {
+) : MemberJpaPort {
     override fun signUpMember(command: SignUpMemberFromEmailCommand) {
         val memberInfo = MemberInfo(
             tall = command.tall,
@@ -38,6 +40,13 @@ class MemberJpaAdapter(
 
     override fun getMember(id: UUID): Member {
         return getEntity(id).toDomain()
+    }
+
+    override fun signInWithEmail(command: SignInWithEmailCommand): Member? {
+        return memberRepository.findByEmailAndPassword(
+            email = command.email,
+            password = command.password,
+        )?.toDomain()
     }
 
     private fun getEntity(id: UUID): MemberEntity {

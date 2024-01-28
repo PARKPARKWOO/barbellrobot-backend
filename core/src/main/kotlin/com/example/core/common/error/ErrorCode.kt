@@ -8,4 +8,7 @@ enum class ErrorCode(
     AUTHENTICATION_NUMBER_UN_RESOLVE("인증을 다시해주세요"),
     MEMBER_NOT_FOUND("회원을 찾을 수 없습니다."),
     DUPLICATE_NICKNAME("nickname 이 중복됩니다."),
+
+    // trainer
+    TRAINER_NOT_FOUND("trainer 를 찾을 수 없습니다."),
 }

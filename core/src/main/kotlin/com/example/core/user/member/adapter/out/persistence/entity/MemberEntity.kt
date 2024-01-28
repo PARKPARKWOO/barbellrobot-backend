@@ -48,6 +48,7 @@ class MemberEntity(
 ) : BaseEntity() {
     fun toDomain(): Member {
         return Member(
+            id = this.id,
             email = this.email,
             password = this.password,
             provider = this.provider,
@@ -62,5 +63,12 @@ class MemberEntity(
             role = this.role,
             nickname = this.nickname,
         )
+    }
+
+    fun getClaims(): Map<String, Any> {
+        val claims = mutableMapOf<String, Any>()
+        claims["id"] = id
+        claims["role"] = role
+        return claims
     }
 }

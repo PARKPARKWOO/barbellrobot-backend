@@ -1,10 +1,11 @@
 package com.example.api.email.`in`
 
+import com.example.api.email.`in`.request.SendAuthenticationNumberRequest
+import com.example.api.email.`in`.request.VerifyAuthenticationNumberRequest
+import com.example.api.email.`in`.request.toCommand
 import com.example.api.member.`in`.reponse.SuccessAuthenticationResponse
-import com.example.api.member.`in`.request.SendAuthenticationNumberRequest
-import com.example.api.member.`in`.request.VerifyAuthenticationNumberRequest
-import com.example.api.member.`in`.request.toCommand
 import com.example.api.response.ApiResponse
+import com.example.common.annotation.PublicEndPoint
 import com.example.core.user.application.`in`.EmailVerifyUseCase
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.PostMapping
@@ -22,6 +23,7 @@ class EmailController(
         summary = "email 인증번호를 검증합니다.",
         description = "email 인증번호를 검증하고 회원가입시 사용할 UUID 를 반환합니다.",
     )
+    @PublicEndPoint
     fun authenticateEmail(
         @RequestBody
         request: VerifyAuthenticationNumberRequest,
@@ -36,6 +38,7 @@ class EmailController(
         summary = "email 인증번호를 요청합니다.",
         description = "email 인증을 위한 email 에 인증번호를 전송합니다.",
     )
+    @PublicEndPoint
     fun sendAuthenticationNumberEmail(
         @RequestBody
         request: SendAuthenticationNumberRequest,

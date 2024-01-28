@@ -1,8 +1,11 @@
 package com.example.api.member.`in`
 
-import com.example.api.member.`in`.request.SignUpFromEmailRequest
-import com.example.api.member.`in`.request.toCommand
+import com.example.api.email.`in`.request.SignInWithEmailRequest
+import com.example.api.email.`in`.request.SignUpFromEmailRequest
 import com.example.api.response.ApiResponse
+import com.example.api.response.JwtResponse
+import com.example.common.annotation.PublicEndPoint
+import com.example.core.user.member.application.`in`.SignInMemberUseCase
 import com.example.core.user.member.application.`in`.SignUpMemberUseCase
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.PostMapping
@@ -14,16 +17,35 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/member")
 class MemberController(
     private val signUpMemberUseCase: SignUpMemberUseCase,
+    private val signInMemberUseCase: SignInMemberUseCase,
 ) {
     @PostMapping("/sign-up/email")
     @Operation(
         summary = "email 을 통한 회원가입을 합니다.",
     )
+    @PublicEndPoint
     fun signUpMemberWithEmail(
         @RequestBody
         request: SignUpFromEmailRequest,
     ): ApiResponse<Unit> {
         signUpMemberUseCase.signUpMemberFromEmail(request.toCommand())
         return ApiResponse(data = Unit)
+    }
+
+    @PostMapping("/sign-in")
+    @Operation(
+        summary = "email 과 password 로 로그인",
+    )
+    @PublicEndPoint
+    fun signInWithEmail(
+        @RequestBody
+        request: SignInWithEmailRequest,
+    ): ApiResponse<JwtResponse> {
+        val result = signInMemberUseCase.signInWithEmail(request.toCommand())
+        val response = JwtResponse(
+            accessToken = result.accessToken,
+            refreshToken = result.refreshToken,
+        )
+        return ApiResponse(data = response)
     }
 }
