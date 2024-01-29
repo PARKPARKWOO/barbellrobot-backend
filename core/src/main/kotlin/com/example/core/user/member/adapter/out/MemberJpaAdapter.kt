@@ -8,7 +8,6 @@ import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
 import com.example.core.user.member.application.out.MemberJpaPort
-import com.example.core.user.member.application.out.MemberPort
 import com.example.domain.user.Member
 import com.example.domain.user.Role
 import org.springframework.stereotype.Component
