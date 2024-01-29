@@ -10,14 +10,17 @@ import java.util.*
 
 @Service
 class JwtTokenService(
-    @Value("\${jwt.secret-key}")
-    private val secretKeyString: String,
+    @Value("\${jwt.access-token.secret-key}")
+    private val accessTokenSecretKeyString: String,
+    @Value("\${jwt.refresh-token.secret-key}")
+    private val refreshTokenSecretKeyString: String,
     @Value("\${jwt.access-token.expire-millis}")
     private val accessTokenExpireTime: Long,
     @Value("\${jwt.refresh-token.expire-millis}")
     private val refreshTokenExpireTime: Long,
 ) {
-    private val secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKeyString))
+    private val accessTokenSecretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(accessTokenSecretKeyString))
+    private val refreshTokenSecretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(refreshTokenSecretKeyString))
 
     fun build(claims: Map<String, Any>): JwtResponseDto {
         val accessToken = buildAccessToken(claims)
@@ -36,7 +39,7 @@ class JwtTokenService(
             .setExpiration(Date((now + accessTokenExpireTime)))
             .setIssuedAt(Date(now))
             .signWith(
-                secretKey,
+                accessTokenSecretKey,
                 SignatureAlgorithm.ES512,
             )
             .compact()
@@ -50,7 +53,7 @@ class JwtTokenService(
             .setExpiration(Date((now + refreshTokenExpireTime)))
             .setIssuedAt(Date(now))
             .signWith(
-                secretKey,
+                refreshTokenSecretKey,
                 SignatureAlgorithm.ES512,
             )
             .compact()
@@ -59,7 +62,7 @@ class JwtTokenService(
     fun parse(token: String): Map<String, Any> {
         return try {
             Jwts.parserBuilder()
-                .setSigningKey(secretKey)
+                .setSigningKey(accessTokenSecretKey)
                 .build()
                 .parseClaimsJws(token)
                 .body

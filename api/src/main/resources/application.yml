@@ -3,7 +3,7 @@ spring:
     redis:
       port: ${REDIS_PORT:6379}
       host: ${REDIS_HOST:localhost}
-      password: ${REDIS_PASSWORD}
+      password: ${REDIS_PASSWORD:healthgood1!}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${RDBMS_URI:localhost}:3306/health?useUnicode=yes&characterEncoding=UTF-8&connectTimeout=2000&autoReconnect=true&serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
@@ -11,8 +11,9 @@ spring:
     password: ${RDBMS_PASSWORD:1234}
 
 jwt:
-  secret-key: ${JWT_SECRET_KEY}
   access-token:
-    expire-millis: ${ACCESS_EXPIRE_MILLIS}
+    secret-key: ${ACCESS_SECRET_KEY:qwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq}
+    expire-millis: ${ACCESS_EXPIRE_MILLIS:10000}
   refresh-token:
-    expire-millis: ${REFRESH_EXPIRE_MILLIS}
+    secret-key: ${REFRESH_SECRET_KEY:asasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasa}
+    expire-millis: ${REFRESH_EXPIRE_MILLIS:10000000}
