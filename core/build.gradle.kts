@@ -26,6 +26,13 @@ dependencies {
     // query dsl
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+
+    // oauth
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
+    // feign
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+    implementation("io.github.openfeign:feign-httpclient:13.2")
 }
 
 tasks.withType<KotlinCompile> {

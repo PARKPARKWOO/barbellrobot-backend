@@ -48,4 +48,16 @@ class MemberController(
         )
         return ApiResponse(data = response)
     }
+
+    @PostMapping("/sign-up/kakao")
+    @Operation(
+        summary = "member Kakao 회원가입",
+    )
+    @PublicEndPoint
+    fun signUpWithKakao(
+        @RequestBody
+        request: SignUpMemberWithKakaoRequest,
+    ) {
+        
+    }
 }

@@ -23,7 +23,7 @@ allprojects {
 subprojects {
     group = "com.example"
     version = "0.0.1-SNAPSHOT"
-//    extra["springCloudVersion"] = "2023.0.0"
+    extra["springCloudVersion"] = "2023.0.0"
     apply(plugin = "java")
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.kotlin.kapt")
@@ -46,12 +46,11 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     }
     tasks.register("prepareKotlinBuildScriptModel") {}
-}
-
-dependencyManagement {
-//    imports {
-//        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-//    }
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        }
+    }
 }
 
 tasks.withType<Test> {
