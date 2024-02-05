@@ -1,4 +1,4 @@
-package com.example.core.user.application.`in`.command
+package com.example.core.user.trainer.application.`in`.command
 
 import com.example.core.user.application.out.command.VerifyAuthenticationSuccessCommand
 import com.example.core.user.trainer.application.out.command.SignUpTrainerCommand

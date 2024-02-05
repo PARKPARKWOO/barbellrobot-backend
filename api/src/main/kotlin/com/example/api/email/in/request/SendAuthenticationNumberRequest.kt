@@ -4,7 +4,7 @@ import com.example.core.user.application.`in`.command.SendVerifyEmailCommand
 import org.jetbrains.annotations.NotNull
 
 data class SendAuthenticationNumberRequest(
-    @NotNull
+    @field:NotNull
     val email: String,
 )
 

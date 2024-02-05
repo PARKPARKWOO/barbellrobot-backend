@@ -8,6 +8,7 @@ import com.example.api.response.ApiResponse
 import com.example.common.annotation.PublicEndPoint
 import com.example.core.user.application.`in`.EmailVerifyUseCase
 import io.swagger.v3.oas.annotations.Operation
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,7 +26,7 @@ class EmailController(
     )
     @PublicEndPoint
     fun authenticateEmail(
-        @RequestBody
+        @RequestBody @Valid
         request: VerifyAuthenticationNumberRequest,
     ): ApiResponse<SuccessAuthenticationResponse> {
         val success = emailVerifyUseCase.verifyEmail(request.toCommand())
@@ -40,7 +41,7 @@ class EmailController(
     )
     @PublicEndPoint
     fun sendAuthenticationNumberEmail(
-        @RequestBody
+        @RequestBody @Valid
         request: SendAuthenticationNumberRequest,
     ): ApiResponse<Unit> {
         emailVerifyUseCase.sendVerifyEmail(request.toCommand())

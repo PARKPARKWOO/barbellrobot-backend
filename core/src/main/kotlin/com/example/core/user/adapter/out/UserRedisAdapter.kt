@@ -5,7 +5,6 @@ import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.common.redis.RedisDriver
 import com.example.core.user.application.`in`.command.SendVerifyEmailCommand
-import com.example.core.user.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.core.user.application.`in`.command.VerifyEmailCommand
 import com.example.core.user.application.out.EmailVerifyPort
 import com.example.core.user.application.out.command.VerifyAuthenticationSuccessCommand
