@@ -25,7 +25,7 @@ class MemberController(
     )
     @PublicEndPoint
     fun signUpMemberWithEmail(
-        @RequestBody
+        @RequestBody @Valid
         request: SignUpFromEmailRequest,
     ): ApiResponse<Unit> {
         signUpMemberUseCase.signUpMemberFromEmail(request.toCommand())
@@ -38,7 +38,7 @@ class MemberController(
     )
     @PublicEndPoint
     fun signInWithEmail(
-        @RequestBody
+        @RequestBody @Valid
         request: SignInWithEmailRequest,
     ): ApiResponse<JwtResponse> {
         val result = signInMemberUseCase.signInWithEmail(request.toCommand())
@@ -47,5 +47,17 @@ class MemberController(
             refreshToken = result.refreshToken,
         )
         return ApiResponse(data = response)
+    }
+
+    @PostMapping("/sign-up/kakao")
+    @Operation(
+        summary = "member Kakao 회원가입",
+    )
+    @PublicEndPoint
+    fun signUpWithKakao(
+        @RequestBody
+        request: SignUpMemberWithKakaoRequest,
+    ) {
+
     }
 }

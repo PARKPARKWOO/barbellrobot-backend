@@ -1,11 +1,14 @@
 package com.example.api.email.`in`.request
 
-import com.example.core.user.application.`in`.command.SignUpMemberFromEmailCommand
+import com.example.core.user.member.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.domain.user.Gender
+import org.jetbrains.annotations.NotNull
 import java.util.UUID
 
 data class SignUpFromEmailRequest(
+    @field:NotNull
     val email: String,
+    @field:NotNull
     val nickname: String,
     val password: String,
     val gender: Gender,

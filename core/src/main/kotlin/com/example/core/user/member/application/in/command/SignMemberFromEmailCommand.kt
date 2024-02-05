@@ -1,4 +1,4 @@
-package com.example.core.user.application.`in`.command
+package com.example.core.user.member.application.`in`.command
 
 import com.example.core.user.application.out.command.VerifyAuthenticationSuccessCommand
 import com.example.domain.user.Gender

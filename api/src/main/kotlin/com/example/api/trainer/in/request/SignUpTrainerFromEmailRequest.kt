@@ -1,6 +1,6 @@
 package com.example.api.trainer.`in`.request
 
-import com.example.core.user.application.`in`.command.SignUpTrainerFromEmailCommand
+import com.example.core.user.trainer.application.`in`.command.SignUpTrainerFromEmailCommand
 import com.example.domain.user.Gender
 import java.util.*
 

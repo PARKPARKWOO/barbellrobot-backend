@@ -1,7 +1,7 @@
 package com.example.core.user.member.application.out
 
 import com.example.core.user.application.`in`.command.SignInWithEmailCommand
-import com.example.core.user.application.`in`.command.SignUpMemberFromEmailCommand
+import com.example.core.user.member.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.domain.user.Member
 import java.util.UUID
 

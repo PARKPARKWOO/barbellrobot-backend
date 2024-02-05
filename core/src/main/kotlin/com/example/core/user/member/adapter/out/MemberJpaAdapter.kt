@@ -3,7 +3,7 @@ package com.example.core.user.member.adapter.out
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.user.application.`in`.command.SignInWithEmailCommand
-import com.example.core.user.application.`in`.command.SignUpMemberFromEmailCommand
+import com.example.core.user.member.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
