@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 @Component
 class TrainerJpaAdapter(
     private val trainerRepository: TrainerRepository,
-): TrainerJpaPort {
+) : TrainerJpaPort {
     override fun signUpTrainer(command: SignUpTrainerCommand) {
         val trainerEntity = TrainerEntity(
             nickname = command.nickname,

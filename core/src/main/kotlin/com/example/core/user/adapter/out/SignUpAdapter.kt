@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component
 @Component
 class SignUpAdapter(
     private val userQueryRepository: UserQueryRepository,
-): SignUpPort {
+) : SignUpPort {
     override fun findNicknameUser(nickName: String): Boolean {
         return userQueryRepository.findNickname(nickName)
     }
-
 }

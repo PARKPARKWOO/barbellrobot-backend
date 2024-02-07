@@ -19,7 +19,7 @@ class JwtTokenInterceptor(
             return true
         }
         val token = request.getBearerTokenFromHeader()
-        val claims = jwtTokenService.parse(token)
+        jwtTokenService.parse(token)
         // TODO: ROLE 추가
         return true
     }

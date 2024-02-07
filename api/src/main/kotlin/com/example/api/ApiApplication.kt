@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 )
 class ApiApplication
 
+@Suppress("SpreadOperator")
 fun main(args: Array<String>) {
     runApplication<ApiApplication>(*args)
 }
