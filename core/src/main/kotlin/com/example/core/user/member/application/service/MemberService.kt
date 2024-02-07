@@ -5,11 +5,12 @@ import com.example.common.jwt.JwtTokenService
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.user.application.`in`.command.SignInWithEmailCommand
-import com.example.core.user.member.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.core.user.application.out.EmailVerifyPort
 import com.example.core.user.application.out.SignUpPort
 import com.example.core.user.member.application.`in`.SignInMemberUseCase
 import com.example.core.user.member.application.`in`.SignUpMemberUseCase
+import com.example.core.user.member.application.`in`.command.SignUpMemberFromEmailCommand
+import com.example.core.user.member.application.`in`.command.SignUpMemberFromKakaoCommand
 import com.example.core.user.member.application.out.MemberJpaPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -26,6 +27,10 @@ class MemberService(
         createVerify(command)
         emailVerifyPort.verifyAuthenticationSuccess(command.toAuthenticationCommand())
         memberJpaPort.signUpMember(command)
+    }
+
+    override fun signUpMemberFromKakao(command: SignUpMemberFromKakaoCommand) {
+        TODO("Not yet implemented")
     }
 
     private fun createVerify(command: SignUpMemberFromEmailCommand) {

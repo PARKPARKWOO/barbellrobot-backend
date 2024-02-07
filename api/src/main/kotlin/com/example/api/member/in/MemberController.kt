@@ -8,6 +8,7 @@ import com.example.common.annotation.PublicEndPoint
 import com.example.core.user.member.application.`in`.SignInMemberUseCase
 import com.example.core.user.member.application.`in`.SignUpMemberUseCase
 import io.swagger.v3.oas.annotations.Operation
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -55,9 +56,9 @@ class MemberController(
     )
     @PublicEndPoint
     fun signUpWithKakao(
-        @RequestBody
-        request: SignUpMemberWithKakaoRequest,
+//        @RequestBody
+//        request: SignUpMemberWithKakaoRequest,
     ) {
-
+        //
     }
 }
