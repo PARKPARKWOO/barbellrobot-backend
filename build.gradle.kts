@@ -45,22 +45,10 @@ subprojects {
         sourceCompatibility = JavaVersion.VERSION_17
     }
     dependencies {
-        implementation("org.springframework.boot:spring-boot-starter-web")
-        implementation("org.springframework.boot:spring-boot-starter-websocket")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-        implementation("org.jetbrains.kotlin:kotlin-reflect")
-//        implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
-        runtimeOnly("com.mysql:mysql-connector-j")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+//        implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
     }
     tasks.register("prepareKotlinBuildScriptModel") {}
-    dependencyManagement {
-        imports {
-            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-        }
-    }
 }
 val ktlint: Configuration by configurations.creating
 
