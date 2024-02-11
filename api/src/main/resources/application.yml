@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   data:
     redis:
       port: ${REDIS_PORT:6379}

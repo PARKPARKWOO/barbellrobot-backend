@@ -7,10 +7,10 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 
-const val EXERCISE_CATEGORY_TABLE_NAME = "exercise_area"
+const val EXERCISE_AREA_TABLE_NAME = "exercise_area"
 
 @Entity
-@Table(name = EXERCISE_CATEGORY_TABLE_NAME)
+@Table(name = EXERCISE_AREA_TABLE_NAME)
 class ExerciseAreaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
