@@ -19,7 +19,7 @@ const val EXERCISE_ITEM_TABLE_NAME = "exercise_item"
 class ExerciseItemEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+    var id: Long = 0L,
     @Column(name = "exercise_name")
     var exerciseName: String,
     @Column(name = "video_uri")
@@ -31,7 +31,7 @@ class ExerciseItemEntity(
     var exerciseAreas: MutableList<Long> = mutableListOf(),
     @ElementCollection(fetch = LAZY)
     @CollectionTable(name = "exercise_goal_ids", joinColumns = [JoinColumn(name = "exercise_item_id")])
-    var exerciseGoals: MutableList<Long> = mutableListOf()
+    var exerciseGoals: MutableList<Long> = mutableListOf(),
 ) {
     fun addExerciseArea(exerciseAreaId: Long) {
         this.exerciseAreas.add(exerciseAreaId)

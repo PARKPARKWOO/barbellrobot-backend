@@ -14,7 +14,7 @@ const val EXERCISE_AREA_TABLE_NAME = "exercise_area"
 class ExerciseAreaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long?,
+    var id: Long = 0L,
     @Column(name = "area")
     var area: String,
 )

@@ -14,7 +14,7 @@ const val EXERCISE_GOAL_TABLE_NAME = "exercise_goal"
 class ExerciseGoalEntity(
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    var id: Long,
+    var id: Long = 0L,
     @Column(name = "goal")
     var goal: String,
 )
