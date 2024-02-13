@@ -20,4 +20,22 @@ class ExerciseItemJpaAdapter(
         )
         exerciseItemRepository.save(entity)
     }
+
+    override fun findByExerciseAreaId(exerciseAreaId: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun findByExerciseGoalId(exerciseGoalId: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeExerciseArea(exerciseAreaId: Long) {
+        exerciseItemRepository.findByExerciseAreasContains(exerciseAreaId)?.map { entities ->
+            entities.removeExerciseArea(exerciseAreaId)
+        }
+    }
+
+    override fun removeExerciseGoals(exerciseGoalId: Long) {
+        TODO("Not yet implemented")
+    }
 }

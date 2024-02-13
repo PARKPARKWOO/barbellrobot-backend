@@ -1,4 +1,4 @@
-package com.example.api.email.`in`.request
+package com.example.api.email.adapter.`in`.request
 
 import com.example.core.user.member.application.`in`.command.SignUpMemberFromEmailCommand
 import com.example.domain.user.Gender

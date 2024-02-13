@@ -9,9 +9,15 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ExerciseAreaService(
     private val exerciseAreaJpaPort: ExerciseAreaJpaPort,
-): ExerciseAreaUseCase {
+//    private val exerciseItemJpaPort: ExerciseItemJpaPort,
+) : ExerciseAreaUseCase {
     @Transactional
     override fun saveExerciseArea(command: SaveExerciseAreaCommand) {
         exerciseAreaJpaPort.saveExerciseArea(command)
+    }
+
+    @Transactional
+    override fun deleteExerciseArea(id: Long) {
+        TODO()
     }
 }

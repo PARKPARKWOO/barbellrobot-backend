@@ -4,4 +4,12 @@ import com.example.core.exercise.application.`in`.command.SaveExerciseItemComman
 
 interface ExerciseItemJpaPort {
     fun saveExerciseItem(command: SaveExerciseItemCommand)
+
+    fun findByExerciseAreaId(exerciseAreaId: Long)
+
+    fun findByExerciseGoalId(exerciseGoalId: Long)
+
+    fun removeExerciseArea(exerciseAreaId: Long)
+
+    fun removeExerciseGoals(exerciseGoalId: Long)
 }

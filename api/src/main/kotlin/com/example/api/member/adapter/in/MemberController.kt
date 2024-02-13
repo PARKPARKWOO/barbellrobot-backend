@@ -1,7 +1,7 @@
-package com.example.api.member.`in`
+package com.example.api.member.adapter.`in`
 
-import com.example.api.email.`in`.request.SignInWithEmailRequest
-import com.example.api.email.`in`.request.SignUpFromEmailRequest
+import com.example.api.email.adapter.`in`.request.SignInWithEmailRequest
+import com.example.api.email.adapter.`in`.request.SignUpFromEmailRequest
 import com.example.api.response.ApiResponse
 import com.example.api.response.JwtResponse
 import com.example.common.annotation.PublicEndPoint

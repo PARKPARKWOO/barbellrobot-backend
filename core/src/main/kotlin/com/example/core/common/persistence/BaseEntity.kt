@@ -18,10 +18,9 @@ import java.util.*
 @EntityListeners(AuditingEntityListener::class)
 class BaseEntity {
     @Id
-    @UuidGenerator
-    @Column(columnDefinition = "VARCHAR(36)")
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    val id: UUID = UUID(0, 0)
+    var id: UUID = UUID.randomUUID()
 
     @Column(name = "created_at")
     @CreatedDate

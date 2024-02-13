@@ -1,4 +1,4 @@
-package com.example.api.email.`in`.request
+package com.example.api.email.adapter.`in`.request
 
 import com.example.core.user.application.`in`.command.VerifyEmailCommand
 import org.jetbrains.annotations.NotNull

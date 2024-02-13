@@ -1,4 +1,4 @@
-package com.example.api.member.`in`.reqeust
+package com.example.api.member.adapter.`in`.reqeust
 
 data class SignUpMemberWithKakaoRequest(
     val authorizationCode: String,

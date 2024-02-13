@@ -4,4 +4,6 @@ import com.example.core.exercise.application.`in`.command.SaveExerciseGoalComman
 
 interface ExerciseGoalUseCase {
     fun saveExerciseGoal(command: SaveExerciseGoalCommand)
+
+    fun deleteExerciseGoal(id: Long)
 }

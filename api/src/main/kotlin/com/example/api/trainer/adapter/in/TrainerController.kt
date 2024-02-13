@@ -1,9 +1,9 @@
-package com.example.api.trainer.`in`
+package com.example.api.trainer.adapter.`in`
 
-import com.example.api.email.`in`.request.SignInWithEmailRequest
+import com.example.api.email.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.response.ApiResponse
 import com.example.api.response.JwtResponse
-import com.example.api.trainer.`in`.request.SignUpTrainerFromEmailRequest
+import com.example.api.trainer.adapter.`in`.request.SignUpTrainerFromEmailRequest
 import com.example.common.annotation.PublicEndPoint
 import com.example.core.user.trainer.application.`in`.SignInTrainerUseCase
 import com.example.core.user.trainer.application.`in`.SignUpTrainerUseCase

@@ -1,9 +1,10 @@
 package com.example.domain.exercise
 
 data class ExerciseItem(
-    var id: Long,
-    var exerciseName: String,
-    var videoUri: String?,
-    var imageUri: String?,
-    var exerciseAreas: List<Long>
+    val id: Long,
+    val exerciseName: String,
+    val videoUri: String?,
+    val imageUri: String?,
+    val exerciseAreas: List<Long>,
+    val exerciseGoals: List<Long>,
 )

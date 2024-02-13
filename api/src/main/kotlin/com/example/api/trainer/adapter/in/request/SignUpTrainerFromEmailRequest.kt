@@ -1,4 +1,4 @@
-package com.example.api.trainer.`in`.request
+package com.example.api.trainer.adapter.`in`.request
 
 import com.example.core.user.trainer.application.`in`.command.SignUpTrainerFromEmailCommand
 import com.example.domain.user.Gender
