@@ -1,9 +1,9 @@
-package com.example.api.email.`in`
+package com.example.api.email.adapter.`in`
 
-import com.example.api.email.`in`.request.SendAuthenticationNumberRequest
-import com.example.api.email.`in`.request.VerifyAuthenticationNumberRequest
-import com.example.api.email.`in`.request.toCommand
-import com.example.api.member.`in`.reponse.SuccessAuthenticationResponse
+import com.example.api.email.adapter.`in`.request.SendAuthenticationNumberRequest
+import com.example.api.email.adapter.`in`.request.VerifyAuthenticationNumberRequest
+import com.example.api.email.adapter.`in`.request.toCommand
+import com.example.api.member.adapter.`in`.reponse.SuccessAuthenticationResponse
 import com.example.api.response.ApiResponse
 import com.example.common.annotation.PublicEndPoint
 import com.example.core.user.application.`in`.EmailVerifyUseCase

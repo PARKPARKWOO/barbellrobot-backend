@@ -4,4 +4,6 @@ import com.example.core.exercise.application.`in`.command.SaveExerciseAreaComman
 
 interface ExerciseAreaUseCase {
     fun saveExerciseArea(command: SaveExerciseAreaCommand)
+
+    fun deleteExerciseArea(id: Long)
 }

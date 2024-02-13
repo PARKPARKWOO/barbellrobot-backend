@@ -1,4 +1,4 @@
-package com.example.api.member.`in`.reponse
+package com.example.api.member.adapter.`in`.reponse
 
 import java.util.UUID
 

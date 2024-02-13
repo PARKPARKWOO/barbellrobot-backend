@@ -12,6 +12,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
+import jakarta.persistence.Version
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.SQLDelete
 
@@ -44,6 +45,7 @@ class MemberEntity(
     var role: Role,
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
+    @Version
     var gender: Gender,
 ) : BaseEntity() {
     fun toDomain(): Member {

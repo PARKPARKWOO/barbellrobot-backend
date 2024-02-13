@@ -1,5 +1,6 @@
 package com.example.core.exercise.adapter.out.persistence.entity
 
+import com.example.domain.exercise.ExerciseGoal
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -17,4 +18,11 @@ class ExerciseGoalEntity(
     var id: Long = 0L,
     @Column(name = "goal")
     var goal: String,
-)
+) {
+    fun toDomain(): ExerciseGoal {
+        return ExerciseGoal(
+            id = this.id,
+            goal = this.goal,
+        )
+    }
+}

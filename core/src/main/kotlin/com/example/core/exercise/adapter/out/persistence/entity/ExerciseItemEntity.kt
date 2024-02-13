@@ -41,6 +41,14 @@ class ExerciseItemEntity(
         this.exerciseGoals.add(exerciseGoalId)
     }
 
+    fun removeExerciseGoal(exerciseGoalId: Long) {
+        this.exerciseGoals.remove(exerciseGoalId)
+    }
+
+    fun removeExerciseArea(exerciseAreaId: Long) {
+        this.exerciseAreas.remove(exerciseAreaId)
+    }
+
     fun changeVideoUri(uri: String) {
         this.videoUri = uri
     }
@@ -56,6 +64,7 @@ class ExerciseItemEntity(
             videoUri = videoUri,
             imageUri = imageUri,
             exerciseAreas = exerciseAreas,
+            exerciseGoals = exerciseGoals,
         )
     }
 }
