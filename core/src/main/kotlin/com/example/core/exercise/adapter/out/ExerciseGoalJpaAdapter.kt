@@ -25,7 +25,7 @@ class ExerciseGoalJpaAdapter(
     }
 
     override fun getExerciseGoals(ids: List<Long>): List<ExerciseGoal>? {
-        return exerciseGoalRepository.findByIds(ids)?.map { entity ->
+        return exerciseGoalRepository.queryIdsIn(ids)?.map { entity ->
             entity.toDomain()
         }
     }

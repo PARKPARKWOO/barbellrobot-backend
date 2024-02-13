@@ -6,17 +6,18 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
-interface ExerciseAreaRepository : JpaRepository<ExerciseAreaEntity, Long>, ExerciseAreaQueryRepository
+interface ExerciseAreaRepository : JpaRepository<ExerciseAreaEntity, Long>, ExerciseAreaQueryRepository {
+}
 
 interface ExerciseAreaQueryRepository {
-    fun findByIds(ids: List<Long>): List<ExerciseAreaEntity>?
+    fun queryIdsIn(ids: List<Long>): List<ExerciseAreaEntity>?
 }
 
 @Repository
-class ExerciseAreaQueryRepositoryImp(
+class ExerciseAreaQueryRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : ExerciseAreaQueryRepository {
-    override fun findByIds(ids: List<Long>): List<ExerciseAreaEntity>? {
+    override fun queryIdsIn(ids: List<Long>): List<ExerciseAreaEntity>? {
         return jpaQueryFactory.selectFrom(exerciseAreaEntity)
             .where(exerciseAreaEntity.id.`in`(ids))
             .fetch()

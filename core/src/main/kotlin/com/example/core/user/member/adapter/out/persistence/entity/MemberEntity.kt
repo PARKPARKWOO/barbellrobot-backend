@@ -45,7 +45,6 @@ class MemberEntity(
     var role: Role,
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
-    @Version
     var gender: Gender,
 ) : BaseEntity() {
     fun toDomain(): Member {
