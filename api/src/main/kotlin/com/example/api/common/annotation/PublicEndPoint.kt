@@ -1,4 +1,4 @@
-package com.example.common.annotation
+package com.example.api.common.annotation
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

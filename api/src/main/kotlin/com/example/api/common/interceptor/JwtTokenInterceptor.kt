@@ -1,5 +1,6 @@
-package com.example.common.interceptor
+package com.example.api.common.interceptor
 
+import com.example.api.common.annotation.PublicEndPoint
 import com.example.common.constants.Constants.AUTHORIZATION_HEADER
 import com.example.common.constants.Constants.BEARER_PREFIX
 import com.example.common.exception.NoBearerTokenException
@@ -8,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
+import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
 
 @Component
@@ -16,6 +18,11 @@ class JwtTokenInterceptor(
 ) : HandlerInterceptor {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         if (request.method.equals(HttpMethod.OPTIONS.name())) {
+            return true
+        }
+        val handlerMethod = handler as? HandlerMethod
+        val publicAnnotation = handlerMethod?.getMethodAnnotation(PublicEndPoint::class.java)
+        if (publicAnnotation != null) {
             return true
         }
         val token = request.getBearerTokenFromHeader()

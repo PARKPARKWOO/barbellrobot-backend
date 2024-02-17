@@ -24,10 +24,8 @@ class ExerciseAreaJpaAdapter(
         return getEntity(id).toDomain()
     }
 
-    override fun getExerciseAreas(ids: List<Long>): List<ExerciseArea>? {
-        return exerciseAreaRepository.queryIdsIn(ids)?.map { entity ->
-            entity.toDomain()
-        }
+    override fun getExerciseAreas(ids: List<Long>): List<ExerciseAreaEntity>? {
+        return exerciseAreaRepository.queryIdsIn(ids)
     }
 
     override fun delete(id: Long) {

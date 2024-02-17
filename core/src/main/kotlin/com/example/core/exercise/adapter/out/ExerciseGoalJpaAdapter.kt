@@ -6,7 +6,6 @@ import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEnti
 import com.example.core.exercise.adapter.out.persistence.repository.ExerciseGoalRepository
 import com.example.core.exercise.application.`in`.command.SaveExerciseGoalCommand
 import com.example.core.exercise.application.out.ExerciseGoalJpaPort
-import com.example.domain.exercise.ExerciseGoal
 import org.springframework.stereotype.Component
 
 @Component
@@ -20,18 +19,15 @@ class ExerciseGoalJpaAdapter(
         exerciseGoalRepository.save(entity)
     }
 
-    override fun getExerciseGoal(id: Long): ExerciseGoal {
-        return getEntity(id).toDomain()
+    override fun getExerciseGoal(id: Long): ExerciseGoalEntity {
+        return getEntity(id)
     }
 
-    override fun getExerciseGoals(ids: List<Long>): List<ExerciseGoal>? {
-        return exerciseGoalRepository.queryIdsIn(ids)?.map { entity ->
-            entity.toDomain()
-        }
+    override fun getExerciseGoals(ids: List<Long>): List<ExerciseGoalEntity>? {
+        return exerciseGoalRepository.queryIdsIn(ids)
     }
 
-    override fun delete(id: Long) {
-        val entity = getEntity(id)
+    override fun delete(entity: ExerciseGoalEntity) {
         exerciseGoalRepository.delete(entity)
     }
 

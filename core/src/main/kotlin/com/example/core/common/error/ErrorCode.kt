@@ -15,4 +15,5 @@ enum class ErrorCode(
     // exercise
     NOT_FOUND_EXERCISE_GOAL("goal을 다시 확인해주세요"),
     NOT_FOUND_EXERCISE_AREA("area를 다시 확인해주세요"),
+    NOT_FOUND_EXERCISE_ITEM("item 을 찾을 수 없습니다"),
 }

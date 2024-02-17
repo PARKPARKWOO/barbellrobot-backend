@@ -1,6 +1,6 @@
-package com.example.common.config
+package com.example.api.common.config
 
-import com.example.common.config.SwaggerConfig.Companion.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME
+import com.example.api.common.config.SwaggerConfig.Companion.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
@@ -20,8 +20,13 @@ class SwaggerConfig {
         )
         .info(info())
 
-    private fun info() = Info().title("crechat-api")
-        .description("crechat API 명세")
+    private fun info() = Info().title("health-api")
+        .description(
+            """
+            Service 명 입력
+            을 위한 API 명세서 입니다.
+            """.trimIndent(),
+        )
         .version("1")
 
     companion object {

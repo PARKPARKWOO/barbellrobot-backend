@@ -9,6 +9,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 
 const val EXERCISE_GOAL_TABLE_NAME = "exercise_goal"
+const val EXERCISE_GOAL_ID = EXERCISE_GOAL_TABLE_NAME + "_id"
 
 @Entity
 @Table(name = EXERCISE_GOAL_TABLE_NAME)

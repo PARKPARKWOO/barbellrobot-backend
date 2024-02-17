@@ -5,7 +5,7 @@ import com.example.api.email.adapter.`in`.request.VerifyAuthenticationNumberRequ
 import com.example.api.email.adapter.`in`.request.toCommand
 import com.example.api.member.adapter.`in`.reponse.SuccessAuthenticationResponse
 import com.example.api.response.ApiResponse
-import com.example.common.annotation.PublicEndPoint
+import com.example.api.common.annotation.PublicEndPoint
 import com.example.core.user.application.`in`.EmailVerifyUseCase
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.Valid

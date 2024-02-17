@@ -8,11 +8,12 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.every
 import io.mockk.mockk
 
+@Suppress("UnusedPrivateProperty")
 class ExerciseGoalDescribe : DescribeSpec(
     {
         val exerciseGoalJpaPort: ExerciseGoalJpaPort = mockk()
         val exerciseItemJpaPort: ExerciseItemJpaPort = mockk()
-        val exerciseGoalService = ExerciseGoalService(exerciseGoalJpaPort, exerciseItemJpaPort)
+        val exerciseGoalService = ExerciseGoalService(exerciseGoalJpaPort)
         describe("ExerciseGoal 을 생성할때") {
             context("정상적인 요청이라면") {
                 it("Success") {

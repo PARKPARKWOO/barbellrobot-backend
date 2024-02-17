@@ -36,7 +36,7 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 
     // oauth
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+//    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
     // feign
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")

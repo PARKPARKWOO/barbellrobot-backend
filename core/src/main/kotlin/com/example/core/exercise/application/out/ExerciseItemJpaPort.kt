@@ -1,15 +1,13 @@
 package com.example.core.exercise.application.out
 
-import com.example.core.exercise.application.`in`.command.SaveExerciseItemCommand
+import com.example.core.exercise.application.dto.QueryItemDto
+import com.example.core.exercise.application.out.command.SaveExerciseItemOutCommand
+import com.example.domain.exercise.ExerciseItem
 
 interface ExerciseItemJpaPort {
-    fun saveExerciseItem(command: SaveExerciseItemCommand)
+    fun saveExerciseItem(command: SaveExerciseItemOutCommand): Long
 
-    fun findByExerciseAreaId(exerciseAreaId: Long)
+    fun queryItem(id: Long): QueryItemDto?
 
-    fun findByExerciseGoalId(exerciseGoalId: Long)
-
-    fun removeExerciseArea(exerciseAreaId: Long)
-
-    fun removeExerciseGoals(exerciseGoalId: Long)
+    fun findById(id: Long): ExerciseItem
 }

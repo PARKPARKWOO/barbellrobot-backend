@@ -6,8 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
-interface ExerciseAreaRepository : JpaRepository<ExerciseAreaEntity, Long>, ExerciseAreaQueryRepository {
-}
+interface ExerciseAreaRepository : JpaRepository<ExerciseAreaEntity, Long>, ExerciseAreaQueryRepository
 
 interface ExerciseAreaQueryRepository {
     fun queryIdsIn(ids: List<Long>): List<ExerciseAreaEntity>?
