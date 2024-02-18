@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.idea.proto.com.google.protobuf.GeneratedCodeInfoKt.annotation
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 allOpen {
@@ -11,6 +10,16 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
 
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // jpa
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // mysql
+    runtimeOnly("com.mysql:mysql-connector-j")
     // mongoDB
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
@@ -27,11 +36,17 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 
     // oauth
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+//    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
     // feign
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("io.github.openfeign:feign-httpclient:13.2")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 tasks.withType<KotlinCompile> {

@@ -11,4 +11,9 @@ enum class ErrorCode(
 
     // trainer
     TRAINER_NOT_FOUND("trainer 를 찾을 수 없습니다."),
+
+    // exercise
+    NOT_FOUND_EXERCISE_GOAL("goal을 다시 확인해주세요"),
+    NOT_FOUND_EXERCISE_AREA("area를 다시 확인해주세요"),
+    NOT_FOUND_EXERCISE_ITEM("item 을 찾을 수 없습니다"),
 }

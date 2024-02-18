@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   data:
     redis:
       port: ${REDIS_PORT:6379}
@@ -11,6 +13,9 @@ spring:
     password: ${RDBMS_PASSWORD:1234}
   jpa:
     open-in-view: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
 
 jwt:
   access-token:
