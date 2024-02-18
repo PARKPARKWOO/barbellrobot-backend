@@ -6,7 +6,7 @@ import com.example.core.exercise.application.`in`.command.SaveExerciseGoalComman
 object ExerciseGoalTestUtil {
     const val id = 1L
 
-    const val GOAL = "goal1"
+    const val GOAL = "goal"
 
     val saveExerciseGoalCommand = SaveExerciseGoalCommand(
         goal = "다이어트",
