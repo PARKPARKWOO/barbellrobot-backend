@@ -1,10 +1,10 @@
 package com.example.api.member.adapter.`in`
 
+import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.email.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.email.adapter.`in`.request.SignUpFromEmailRequest
 import com.example.api.response.ApiResponse
 import com.example.api.response.JwtResponse
-import com.example.api.common.annotation.PublicEndPoint
 import com.example.core.user.member.application.`in`.SignInMemberUseCase
 import com.example.core.user.member.application.`in`.SignUpMemberUseCase
 import io.swagger.v3.oas.annotations.Operation

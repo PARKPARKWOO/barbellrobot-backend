@@ -1,10 +1,13 @@
 package com.example.api.exercise.adapter.`in`
 
-import com.example.api.exercise.adapter.`in`.request.CreateExerciseAreaRequest
-import com.example.api.response.ApiResponse
 import com.example.api.common.annotation.PublicEndPoint
+import com.example.api.exercise.adapter.`in`.request.CreateExerciseAreaRequest
+import com.example.api.exercise.adapter.`in`.response.ExerciseAreaResponse
+import com.example.api.response.ApiResponse
 import com.example.core.exercise.application.`in`.ExerciseAreaUseCase
+import com.example.domain.exercise.ExerciseArea
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,6 +27,24 @@ class ExerciseAreaController(
     ): ApiResponse<Unit> {
         exerciseAreaUseCase.saveExerciseArea(request.toCommand())
         return ApiResponse(data = Unit)
+    }
+
+    @GetMapping("/all")
+    @PublicEndPoint
+    fun getAllArea(): ApiResponse<List<ExerciseAreaResponse>> {
+        val response = exerciseAreaUseCase.getAllExerciseArea().map { area ->
+            ExerciseAreaResponse.from(area)
+        }
+        return ApiResponse(data = response)
+    }
+
+    @GetMapping("/{id}")
+    @PublicEndPoint
+    fun getArea(
+        @PathVariable("id") id: Long,
+    ): ApiResponse<ExerciseAreaResponse> {
+        val response = ExerciseAreaResponse.from(exerciseAreaUseCase.getExerciseArea(id))
+        return ApiResponse(data = response)
     }
 
     @DeleteMapping("/{id}")

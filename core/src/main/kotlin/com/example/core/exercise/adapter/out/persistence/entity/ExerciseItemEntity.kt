@@ -1,15 +1,11 @@
 package com.example.core.exercise.adapter.out.persistence.entity
 
 import com.example.domain.exercise.ExerciseItem
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.FetchType.LAZY
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 const val EXERCISE_ITEM_TABLE_NAME = "exercise_item"

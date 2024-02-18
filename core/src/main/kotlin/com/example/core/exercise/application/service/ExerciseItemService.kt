@@ -64,4 +64,11 @@ class ExerciseItemService(
     override fun queryItem(id: Long): QueryItemDto {
         return exerciseItemJpaPort.queryItem(id) ?: throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_ITEM)
     }
+
+    @Transactional
+    override fun deleteItem(id: Long) {
+        exerciseItemJpaPort.delete(id)
+        itemAreaRelationshipJpaPort.deleteItemId(id)
+        itemGoalRelationshipJpaPort.deleteByItemId(id)
+    }
 }

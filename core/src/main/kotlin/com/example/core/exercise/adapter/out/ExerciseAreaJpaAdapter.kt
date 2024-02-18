@@ -33,6 +33,12 @@ class ExerciseAreaJpaAdapter(
         exerciseAreaRepository.delete(entity)
     }
 
+    override fun getAll(): List<ExerciseArea>? {
+        return exerciseAreaRepository.findAll().map { area ->
+            area.toDomain()
+        }
+    }
+
     private fun getEntity(id: Long): ExerciseAreaEntity {
         return exerciseAreaRepository.findById(id).orElseThrow {
             throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_AREA)

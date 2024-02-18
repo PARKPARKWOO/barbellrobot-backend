@@ -1,10 +1,10 @@
 package com.example.api.trainer.adapter.`in`
 
+import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.email.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.response.ApiResponse
 import com.example.api.response.JwtResponse
 import com.example.api.trainer.adapter.`in`.request.SignUpTrainerFromEmailRequest
-import com.example.api.common.annotation.PublicEndPoint
 import com.example.core.user.trainer.application.`in`.SignInTrainerUseCase
 import com.example.core.user.trainer.application.`in`.SignUpTrainerUseCase
 import io.swagger.v3.oas.annotations.Operation

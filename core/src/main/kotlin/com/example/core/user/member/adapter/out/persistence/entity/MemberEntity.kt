@@ -12,7 +12,6 @@ import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
-import jakarta.persistence.Version
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.SQLDelete
 

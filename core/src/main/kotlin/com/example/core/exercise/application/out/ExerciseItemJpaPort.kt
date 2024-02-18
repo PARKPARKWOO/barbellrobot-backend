@@ -10,4 +10,6 @@ interface ExerciseItemJpaPort {
     fun queryItem(id: Long): QueryItemDto?
 
     fun findById(id: Long): ExerciseItem
+
+    fun delete(id: Long)
 }

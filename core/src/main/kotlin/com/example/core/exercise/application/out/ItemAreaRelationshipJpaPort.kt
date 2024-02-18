@@ -8,5 +8,7 @@ interface ItemAreaRelationshipJpaPort {
 
     fun findByItemId(itemId: Long): List<ItemAreaRelationshipEntity>?
 
-    fun removeRelationship()
+    fun deleteItemId(itemId: Long)
+
+    fun deleteAreaId(areaId: Long)
 }

@@ -8,5 +8,7 @@ interface ItemGoalRelationshipJpaPort {
 
     fun findByItemId(itemId: Long): List<ItemGoalRelationshipEntity>?
 
-    fun removeRelationship(goalId: Long)
+    fun deleteByGoalId(goalId: Long)
+
+    fun deleteByItemId(itemId: Long)
 }

@@ -6,6 +6,7 @@ import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEnti
 import com.example.core.exercise.adapter.out.persistence.repository.ExerciseGoalRepository
 import com.example.core.exercise.application.`in`.command.SaveExerciseGoalCommand
 import com.example.core.exercise.application.out.ExerciseGoalJpaPort
+import com.example.domain.exercise.ExerciseGoal
 import org.springframework.stereotype.Component
 
 @Component
@@ -29,6 +30,12 @@ class ExerciseGoalJpaAdapter(
 
     override fun delete(entity: ExerciseGoalEntity) {
         exerciseGoalRepository.delete(entity)
+    }
+
+    override fun getAll(): List<ExerciseGoal>? {
+        return exerciseGoalRepository.findAll().map { goal ->
+            goal.toDomain()
+        }
     }
 
     private fun getEntity(id: Long): ExerciseGoalEntity {

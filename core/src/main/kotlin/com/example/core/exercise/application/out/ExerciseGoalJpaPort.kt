@@ -2,6 +2,7 @@ package com.example.core.exercise.application.out
 
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
 import com.example.core.exercise.application.`in`.command.SaveExerciseGoalCommand
+import com.example.domain.exercise.ExerciseGoal
 
 interface ExerciseGoalJpaPort {
     fun saveExerciseGoal(command: SaveExerciseGoalCommand)
@@ -11,4 +12,6 @@ interface ExerciseGoalJpaPort {
     fun getExerciseGoals(ids: List<Long>): List<ExerciseGoalEntity>?
 
     fun delete(entity: ExerciseGoalEntity)
+
+    fun getAll(): List<ExerciseGoal>?
 }

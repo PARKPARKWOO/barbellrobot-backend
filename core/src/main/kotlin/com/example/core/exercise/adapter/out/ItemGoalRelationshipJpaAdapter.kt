@@ -26,8 +26,11 @@ class ItemGoalRelationshipJpaAdapter(
         return itemGoalRelationshipRepository.findByExerciseItemId(itemId)
     }
 
-    override fun removeRelationship(goalId: Long) {
-        // bulk delete
-        TODO("Not yet implemented")
+    override fun deleteByGoalId(goalId: Long) {
+        itemGoalRelationshipRepository.deleteGoalId(goalId)
+    }
+
+    override fun deleteByItemId(itemId: Long) {
+        itemGoalRelationshipRepository.deleteItemId(itemId)
     }
 }

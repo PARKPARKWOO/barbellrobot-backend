@@ -12,4 +12,6 @@ interface ExerciseAreaJpaPort {
     fun getExerciseAreas(ids: List<Long>): List<ExerciseAreaEntity>?
 
     fun delete(id: Long)
+
+    fun getAll(): List<ExerciseArea>?
 }

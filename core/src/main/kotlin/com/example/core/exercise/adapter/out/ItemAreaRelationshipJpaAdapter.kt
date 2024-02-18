@@ -26,7 +26,11 @@ class ItemAreaRelationshipJpaAdapter(
         return itemAreaRelationshipRepository.findByExerciseItemId(itemId)
     }
 
-    override fun removeRelationship() {
-        TODO("Not yet implemented")
+    override fun deleteItemId(itemId: Long) {
+        itemAreaRelationshipRepository.deleteItemId(itemId)
+    }
+
+    override fun deleteAreaId(areaId: Long) {
+        itemAreaRelationshipRepository.deleteAreaId(areaId)
     }
 }
