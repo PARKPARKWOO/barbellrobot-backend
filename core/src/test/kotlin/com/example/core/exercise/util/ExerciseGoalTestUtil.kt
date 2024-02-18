@@ -4,7 +4,7 @@ import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEnti
 import com.example.core.exercise.application.`in`.command.SaveExerciseGoalCommand
 
 object ExerciseGoalTestUtil {
-    const val id = 1L
+    const val ID = 1L
 
     const val GOAL = "goal"
 
@@ -13,7 +13,7 @@ object ExerciseGoalTestUtil {
     )
 
     val entity = ExerciseGoalEntity(
-        id = id,
+        id = ID,
         goal = GOAL,
     )
 
