@@ -62,7 +62,7 @@ class ExerciseItemDescribe : DescribeSpec(
                     every { exerciseGoalJpaPort.getExerciseGoals(any()) } returns ExerciseGoalTestUtil.entityList
                     every { itemAreaRelationshipJpaPort.addRelationship(any()) } returns Unit
                     every { itemGoalRelationshipJpaPort.addRelationship(any()) } returns Unit
-                    every { exerciseItemJpaPort.saveExerciseItem(any()) } returns ExerciseItemTestUtil.id
+                    every { exerciseItemJpaPort.saveExerciseItem(any()) } returns ExerciseItemTestUtil.ID
 
                     exerciseItemService.saveExerciseItem(saveCommand)
                 }

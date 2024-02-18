@@ -5,13 +5,16 @@ import com.example.core.exercise.application.`in`.command.SaveExerciseGoalComman
 
 object ExerciseGoalTestUtil {
     const val id = 1L
+
+    const val GOAL = "goal1"
+
     val saveExerciseGoalCommand = SaveExerciseGoalCommand(
         goal = "다이어트",
     )
 
     val entity = ExerciseGoalEntity(
         id = id,
-        goal = "goal1",
+        goal = GOAL,
     )
 
     val entityList = listOf<ExerciseGoalEntity>(entity)

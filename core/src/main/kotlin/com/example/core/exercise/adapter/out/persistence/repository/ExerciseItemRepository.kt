@@ -9,11 +9,9 @@ import com.example.core.exercise.adapter.out.persistence.entity.QExerciseItemEnt
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemAreaRelationshipEntity.itemAreaRelationshipEntity
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemGoalRelationshipEntity.itemGoalRelationshipEntity
 import com.example.core.exercise.application.dto.QueryItemDto
-import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
-
 
 interface ExerciseItemRepository : JpaRepository<ExerciseItemEntity, Long>, ExerciseItemQueryRepository
 
@@ -43,7 +41,7 @@ class ExerciseItemQueryRepositoryImpl(
             .where(itemGoalRelationshipEntity.exerciseItemId.eq(id))
             .fetch()
 
-        return exerciseItem?.let {item ->
+        return exerciseItem?.let { item ->
             QueryItemDto(
                 item = item.toDomain(),
                 goals = exerciseGoals.map { goal ->
@@ -54,29 +52,5 @@ class ExerciseItemQueryRepositoryImpl(
                 },
             )
         }
-//        val relationDtoList = jpaQueryFactory.select(
-//            QQueryItemRelationDto(
-//                itemGoalRelationshipEntity.exerciseGoalId,
-//                itemAreaRelationshipEntity.exerciseAreaId,
-//            )
-//        ).from(itemGoalRelationshipEntity)
-//            .join(itemAreaRelationshipEntity)
-//            .fetchJoin()
-//            .where(eqAreaId(id), eqGoalId(id))
-//            .fetch()
-//
-//        jpaQueryFactory.select(
-//            QQueryItemDto(
-//                exerciseItemEntity.id,
-//                exerciseItemEntity.exerciseName,
-//                exerciseItemEntity.videoUri,
-//                exerciseItemEntity.imageUri,
-//                QQueryArea(
-//                    exerciseAreaEntity.id,
-//                    exerciseAreaEntity.area,
-//                ),
-//                exerciseItemEntity,
-//            )
-//        )
     }
 }

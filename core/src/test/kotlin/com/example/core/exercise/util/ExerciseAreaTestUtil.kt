@@ -4,15 +4,17 @@ import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEnti
 import com.example.core.exercise.application.`in`.command.SaveExerciseAreaCommand
 
 object ExerciseAreaTestUtil {
-    const val id = 1L
+    const val ID = 1L
+
+    const val AREA = "area"
 
     val saveExerciseAreaCommand = SaveExerciseAreaCommand(
         area = "가슴",
     )
 
     val entity = ExerciseAreaEntity(
-        id = id,
-        area = "area1",
+        id = ID,
+        area = AREA,
     )
 
     val entityList = listOf(entity)

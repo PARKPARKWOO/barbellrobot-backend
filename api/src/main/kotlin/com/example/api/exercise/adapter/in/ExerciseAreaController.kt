@@ -5,7 +5,6 @@ import com.example.api.exercise.adapter.`in`.request.CreateExerciseAreaRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseAreaResponse
 import com.example.api.response.ApiResponse
 import com.example.core.exercise.application.`in`.ExerciseAreaUseCase
-import com.example.domain.exercise.ExerciseArea
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
