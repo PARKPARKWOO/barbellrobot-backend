@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 @Aspect
+@Suppress("RethrowCaughtException")
 class DistributedLockAop(
     private val redissonClient: RedissonClient,
     private val aopForTransaction: AopForTransaction,
