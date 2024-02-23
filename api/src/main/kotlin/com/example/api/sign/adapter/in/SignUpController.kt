@@ -1,7 +1,7 @@
 package com.example.api.sign.adapter.`in`
 
 import com.example.api.common.annotation.PublicEndPoint
-import com.example.api.response.ApiResponse
+import com.example.api.common.response.ApiResponse
 import com.example.api.sign.adapter.`in`.request.SendAuthenticationNumberRequest
 import com.example.api.sign.adapter.`in`.request.SignUpMemberWithEmailRequest
 import com.example.api.sign.adapter.`in`.request.SignUpTrainerWithEmailRequest

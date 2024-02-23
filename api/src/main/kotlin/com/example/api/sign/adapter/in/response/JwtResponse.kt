@@ -1,4 +1,4 @@
-package com.example.api.response
+package com.example.api.sign.adapter.`in`.response
 
 data class JwtResponse(
     val accessToken: String,
