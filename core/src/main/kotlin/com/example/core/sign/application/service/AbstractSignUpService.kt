@@ -14,6 +14,7 @@ abstract class AbstractSignUpService(
     private val emailVerifyPort: EmailVerifyPort,
 ) : SignUpUserUseCase {
     abstract override fun saveUser(command: SignUpUserWithEmailCommand)
+
     abstract override fun signUpWithKakao()
 
     @Transactional

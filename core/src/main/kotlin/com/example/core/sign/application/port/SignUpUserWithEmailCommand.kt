@@ -8,5 +8,6 @@ interface SignUpUserWithEmailCommand {
     val email: String
     val password: String
     val gender: Gender
+
     fun toAuthenticationCommand(): VerifyAuthenticationSuccessCommand
 }

@@ -14,7 +14,6 @@ class SignUpMemberService(
     private val emailVerifyPort: EmailVerifyPort,
     private val memberJpaPort: MemberJpaPort,
 ) : SignUpMemberUseCase, AbstractSignUpService(userQueryPort, emailVerifyPort) {
-
     override fun saveUser(command: SignUpUserWithEmailCommand) {
         val memberCommand = command as? SignUpMemberWithEmailCommand
             ?: TODO("error 재정의")
