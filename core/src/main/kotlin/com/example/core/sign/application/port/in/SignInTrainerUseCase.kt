@@ -1,8 +1,3 @@
 package com.example.core.sign.application.port.`in`
 
-import com.example.common.jwt.JwtResponseDto
-import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
-
-interface SignInTrainerUseCase {
-    fun signInWithEmail(command: SignInWithEmailCommand): JwtResponseDto
-}
+interface SignInTrainerUseCase : SignInUserUseCase

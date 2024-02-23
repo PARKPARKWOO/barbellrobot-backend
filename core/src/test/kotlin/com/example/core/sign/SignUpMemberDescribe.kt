@@ -1,10 +1,11 @@
-package com.example.core.member
+package com.example.core.sign
 
-import com.example.common.jwt.JwtTokenService
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.member.util.MemberServiceTestUtil
 import com.example.core.sign.application.port.out.EmailVerifyPort
+import com.example.core.sign.application.service.SignUpMemberService
+import com.example.core.sign.util.MemberServiceTestUtil
+import com.example.core.user.application.out.UserQueryPort
 import com.example.core.user.member.application.out.MemberJpaPort
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
@@ -12,17 +13,15 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 
-class MemberServiceDescribe : DescribeSpec(
+class SignUpMemberDescribe : DescribeSpec(
     {
         val memberJpaPort: MemberJpaPort = mockk()
         val emailVerifyPort: EmailVerifyPort = mockk()
-        val signUpPort: SignUpPort = mockk()
-        val jwtTokenService: JwtTokenService = mockk()
-        val memberService = MemberService(
+        val userQueryPort: UserQueryPort = mockk()
+        val memberService = SignUpMemberService(
             memberJpaPort = memberJpaPort,
             emailVerifyPort = emailVerifyPort,
-            signUpPort = signUpPort,
-            jwtTokenService = jwtTokenService,
+            userQueryPort = userQueryPort,
         )
 
         describe("signUp member with email") {
@@ -31,16 +30,16 @@ class MemberServiceDescribe : DescribeSpec(
                 it("SignUp Success") {
                     every { emailVerifyPort.verifyAuthenticationSuccess(any()) } returns Unit
                     every { memberJpaPort.signUpMember(any()) } returns Unit
-                    every { signUpPort.findNicknameUser(any()) } returns false
-                    memberService.signUpMemberFromEmail(signUpWithEmailCommand)
+                    every { userQueryPort.findByNickname(any()) } returns null
+                    memberService.signUpWithEmail(signUpWithEmailCommand)
                 }
             }
             context("Duplicate Nickname") {
                 it("ServiceException ErrorCode DUPLICATE_NICKNAME") {
-                    every { signUpPort.findNicknameUser(any()) } returns true
+                    every { userQueryPort.findByNickname(any()) } returns MemberServiceTestUtil.memberEntity
                     every { emailVerifyPort.verifyAuthenticationSuccess(any()) } returns Unit
                     val exception = shouldThrow<ServiceException> {
-                        memberService.signUpMemberFromEmail(signUpWithEmailCommand)
+                        memberService.signUpWithEmail(signUpWithEmailCommand)
                     }
                     exception.errorCode.name shouldBe ErrorCode.DUPLICATE_NICKNAME.name
                 }
@@ -49,9 +48,9 @@ class MemberServiceDescribe : DescribeSpec(
             context("Authentication value is null") {
                 it("ServiceException ErrorCode AUTHENTICATION_NUMBER_UN_RESOLVE") {
                     every { emailVerifyPort.verifyAuthenticationSuccess(any()) } throws ServiceException(ErrorCode.AUTHENTICATION_NUMBER_UN_RESOLVE)
-                    every { signUpPort.findNicknameUser(any()) } returns false
+                    every { userQueryPort.findByNickname(any()) } returns null
                     val exception = shouldThrow<ServiceException> {
-                        memberService.signUpMemberFromEmail(signUpWithEmailCommand)
+                        memberService.signUpWithEmail(signUpWithEmailCommand)
                     }
                     exception.errorCode.name shouldBe ErrorCode.AUTHENTICATION_NUMBER_UN_RESOLVE.name
                 }

@@ -1,5 +1,7 @@
 package com.example.core.sign.application.service
 
+import com.example.core.common.error.ErrorCode
+import com.example.core.common.error.ServiceException
 import com.example.core.sign.application.port.SignUpUserWithEmailCommand
 import com.example.core.sign.application.port.`in`.SignUpUserUseCase
 import com.example.core.sign.application.port.out.EmailVerifyPort
@@ -30,6 +32,8 @@ abstract class AbstractSignUpService(
     }
 
     private fun verifyNickname(nickname: String) {
-        userQueryPort.findByNickname(nickname)
+        userQueryPort.findByNickname(nickname)?.let {
+            throw ServiceException(ErrorCode.DUPLICATE_NICKNAME)
+        }
     }
 }
