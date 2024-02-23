@@ -1,6 +1,7 @@
 package com.example.core.user.trainer.adapter.out.persistence.entity
 
 import com.example.core.common.persistence.BaseEntity
+import com.example.core.user.UserEntity
 import com.example.domain.user.Gender
 import com.example.domain.user.Role
 import com.example.domain.user.Trainer
@@ -47,7 +48,7 @@ class TrainerEntity(
     var introduce: String,
     @Column(name = "role")
     var role: Role,
-) : BaseEntity() {
+) : BaseEntity(), UserEntity {
     fun changeGym(gymName: String, gymAddress: GymAddress) {
         this.gymName = gymName
         this.gymAddress = gymAddress
@@ -74,11 +75,8 @@ class TrainerEntity(
         )
     }
 
-    fun getClaims(): Map<String, Any> {
-        val claims = mutableMapOf<String, Any>()
-        claims["id"] = id
-        claims["role"] = role
-        return claims
+    override fun toUserEntity(): UserEntity {
+        return this
     }
 }
 

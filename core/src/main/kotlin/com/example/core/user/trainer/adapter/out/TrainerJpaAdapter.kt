@@ -1,11 +1,11 @@
 package com.example.core.user.trainer.adapter.out
 
-import com.example.core.user.application.`in`.command.SignInWithEmailCommand
+import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
 import com.example.core.user.trainer.adapter.out.persistence.entity.GymAddress
 import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerEntity
 import com.example.core.user.trainer.adapter.out.persistence.repository.TrainerRepository
-import com.example.core.user.trainer.application.out.TrainerJpaPort
-import com.example.core.user.trainer.application.out.command.SignUpTrainerCommand
+import com.example.core.user.trainer.application.port.out.TrainerJpaPort
+import com.example.core.user.trainer.application.port.out.command.SignUpTrainerCommand
 import com.example.domain.user.Role
 import com.example.domain.user.Trainer
 import org.springframework.stereotype.Component

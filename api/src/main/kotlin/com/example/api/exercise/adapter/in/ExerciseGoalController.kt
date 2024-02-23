@@ -3,7 +3,7 @@ package com.example.api.exercise.adapter.`in`
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.exercise.adapter.`in`.request.CreateExerciseGoalRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseGoalResponse
-import com.example.api.response.ApiResponse
+import com.example.api.common.response.ApiResponse
 import com.example.core.exercise.application.`in`.ExerciseGoalUseCase
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
