@@ -2,8 +2,8 @@ package com.example.api.sign.adapter.`in`
 
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
-import com.example.api.sign.adapter.`in`.response.JwtResponse
 import com.example.api.sign.adapter.`in`.request.SignInWithEmailRequest
+import com.example.api.sign.adapter.`in`.response.JwtResponse
 import com.example.core.sign.application.port.`in`.SignInMemberUseCase
 import com.example.core.sign.application.port.`in`.SignInTrainerUseCase
 import io.swagger.v3.oas.annotations.Operation
