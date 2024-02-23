@@ -4,9 +4,9 @@ import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.email.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.response.ApiResponse
 import com.example.api.response.JwtResponse
-import com.example.api.trainer.adapter.`in`.request.SignUpTrainerFromEmailRequest
-import com.example.core.user.trainer.application.`in`.SignInTrainerUseCase
-import com.example.core.user.trainer.application.`in`.SignUpTrainerUseCase
+import com.example.api.sign.adapter.`in`.request.SignUpTrainerWithEmailRequest
+import com.example.core.sign.application.port.`in`.SignInTrainerUseCase
+import com.example.core.sign.application.port.`in`.SignUpTrainerUseCase
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -26,7 +26,7 @@ class TrainerController(
     @PublicEndPoint
     fun signUpTrainerWithEmail(
         @RequestBody
-        request: SignUpTrainerFromEmailRequest,
+        request: SignUpTrainerWithEmailRequest,
     ): ApiResponse<Unit> {
         trainerUseCase.signUpTrainerFromEmail(request.toCommand())
         return ApiResponse(data = Unit)

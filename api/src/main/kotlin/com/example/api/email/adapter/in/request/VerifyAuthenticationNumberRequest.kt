@@ -1,6 +1,6 @@
 package com.example.api.email.adapter.`in`.request
 
-import com.example.core.user.application.`in`.command.VerifyEmailCommand
+import com.example.core.sign.application.port.`in`.command.VerifyEmailCommand
 import org.jetbrains.annotations.NotNull
 
 data class VerifyAuthenticationNumberRequest(

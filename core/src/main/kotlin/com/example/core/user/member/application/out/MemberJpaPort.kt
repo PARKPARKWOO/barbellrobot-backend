@@ -1,12 +1,12 @@
 package com.example.core.user.member.application.out
 
-import com.example.core.user.application.`in`.command.SignInWithEmailCommand
-import com.example.core.user.member.application.`in`.command.SignUpMemberFromEmailCommand
+import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
+import com.example.core.sign.application.port.`in`.command.SignUpMemberWithEmailCommand
 import com.example.domain.user.Member
 import java.util.UUID
 
 interface MemberJpaPort {
-    fun signUpMember(command: SignUpMemberFromEmailCommand)
+    fun signUpMember(command: SignUpMemberWithEmailCommand)
 
     fun getMember(id: UUID): Member
 

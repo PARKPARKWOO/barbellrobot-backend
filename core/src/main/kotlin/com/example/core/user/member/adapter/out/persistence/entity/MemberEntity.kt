@@ -1,6 +1,7 @@
 package com.example.core.user.member.adapter.out.persistence.entity
 
 import com.example.core.common.persistence.BaseEntity
+import com.example.core.user.UserEntity
 import com.example.domain.user.Gender
 import com.example.domain.user.Member
 import com.example.domain.user.Role
@@ -45,7 +46,7 @@ class MemberEntity(
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     var gender: Gender,
-) : BaseEntity() {
+) : BaseEntity(), UserEntity {
     fun toDomain(): Member {
         return Member(
             id = this.id,
@@ -65,10 +66,7 @@ class MemberEntity(
         )
     }
 
-    fun getClaims(): Map<String, Any> {
-        val claims = mutableMapOf<String, Any>()
-        claims["id"] = id
-        claims["role"] = role
-        return claims
+    override fun toUserEntity(): UserEntity {
+        return this
     }
 }

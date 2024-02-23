@@ -4,10 +4,8 @@ import com.example.common.jwt.JwtTokenService
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.member.util.MemberServiceTestUtil
-import com.example.core.user.application.out.EmailVerifyPort
-import com.example.core.user.application.out.SignUpPort
+import com.example.core.sign.application.port.out.EmailVerifyPort
 import com.example.core.user.member.application.out.MemberJpaPort
-import com.example.core.user.member.application.service.MemberService
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

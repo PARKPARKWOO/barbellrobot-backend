@@ -1,6 +1,6 @@
 package com.example.api.email.adapter.`in`.request
 
-import com.example.core.user.application.`in`.command.SignInWithEmailCommand
+import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
 import org.jetbrains.annotations.NotNull
 
 data class SignInWithEmailRequest(
