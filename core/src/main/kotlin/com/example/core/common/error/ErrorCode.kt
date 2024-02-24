@@ -16,6 +16,10 @@ enum class ErrorCode(
     EXPIRED_JWT(""),
     PARSE_JWT_FAILED(""),
 
+    // resolver error
+    AUTHENTICATION_RESOLVER_ERROR("authentication resolver error 에서 발생 하였습니다."),
+    NOT_FOUND_REQUEST("HttpServlet 이 null 입니다."),
+
     // user
     MEMBER_NOT_FOUND("회원을 찾을 수 없습니다."),
     DUPLICATE_NICKNAME("nickname 이 중복됩니다."),

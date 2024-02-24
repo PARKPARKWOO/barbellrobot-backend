@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 class SignInMemberService(
     private val memberJpaPort: MemberJpaPort,
     private val jwtTokenService: JwtTokenService,
-) : SignInMemberUseCase {
+) : SignInMemberUseCase, AbstractSignInService() {
     @Transactional(readOnly = true)
     override fun signInWithEmail(command: SignInWithEmailCommand): JwtResponseDto {
         return memberJpaPort.signInWithEmail(command)?.let { member ->

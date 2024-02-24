@@ -1,5 +1,6 @@
 package com.example.domain.user
 
+import com.example.domain.constants.DomainConstants
 import java.util.UUID
 
 data class Trainer(
@@ -18,8 +19,8 @@ data class Trainer(
 ) : User {
     override fun getClaims(): Map<String, Any> {
         val claims = mutableMapOf<String, Any>()
-        claims["id"] = id
-        claims["role"] = role
+        claims[DomainConstants.USER_ID] = id
+        claims[DomainConstants.USER_ROLE] = role
         return claims
     }
 }
