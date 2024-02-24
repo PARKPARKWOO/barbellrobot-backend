@@ -12,6 +12,9 @@ dependencies {
     // swagger-ui
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
+    // log
+    implementation("net.logstash.logback:logstash-logback-encoder:6.6")
+
     runtimeOnly("com.mysql:mysql-connector-j")
 }
 
