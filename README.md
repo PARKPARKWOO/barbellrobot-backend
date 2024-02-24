@@ -6,6 +6,9 @@ MySQL 실행 후 database 를 추가한다.
 ```
 create database health
 ```
+USERNAME = root /
+PASSWORD = 1234
+로 세팅한다.
 #### Redis
 docker-compose.yml
 ```
@@ -35,6 +38,7 @@ Status Code 200 으로 통일
     {
       "success": true,
       "data": T?,
+      "errorCode": null
     }
   ```
 - pagination
@@ -44,7 +48,7 @@ Status Code 200 으로 통일
   ```json
     {
       "success": false,
-      "code": String,
+      "code": String
       "message": String
     }
     ```
