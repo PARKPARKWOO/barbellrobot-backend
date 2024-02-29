@@ -16,6 +16,8 @@ dependencies {
     implementation("net.logstash.logback:logstash-logback-encoder:6.6")
 
     runtimeOnly("com.mysql:mysql-connector-j")
+
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.666")
 }
 
 dependencyManagement {
