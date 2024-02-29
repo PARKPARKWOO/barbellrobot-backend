@@ -41,6 +41,9 @@ dependencies {
     // feign
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("io.github.openfeign:feign-httpclient:13.2")
+
+    // s3
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.666")
 }
 
 dependencyManagement {
