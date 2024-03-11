@@ -1,8 +1,6 @@
 package com.example.api.common.resolver
 
 import com.example.api.common.annotation.AuthenticationUser
-import com.example.common.constants.Constants
-import com.example.common.jwt.JwtTokenService
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.domain.constants.DomainConstants
@@ -17,9 +15,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 import java.util.UUID
 
 @Component
-class AuthenticationResolver(
-    private val jwtTokenService: JwtTokenService,
-) : HandlerMethodArgumentResolver {
+class AuthenticationResolver : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.hasParameterAnnotation(AuthenticationUser::class.java)
     }
@@ -30,13 +26,10 @@ class AuthenticationResolver(
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?,
     ): Any? {
-        val request = webRequest.getNativeRequest(HttpServletRequest::class.java)
-        request?.let {
-            val token = it.getHeader(Constants.AUTHORIZATION_HEADER)
-            val claims = jwtTokenService.parse(token)
-            val userId = claims[DomainConstants.USER_ID] as? UUID
+        webRequest.getNativeRequest(HttpServletRequest::class.java)?.let {
+            val userId = UUID.fromString(it.getAttribute(DomainConstants.USER_ID).toString())
                 ?: throw ServiceException(ErrorCode.AUTHENTICATION_RESOLVER_ERROR)
-            val role = claims[DomainConstants.USER_ROLE] as? Role
+            val role: Role = Role.valueOf(it.getAttribute(DomainConstants.USER_ROLE).toString()) as? Role
                 ?: throw ServiceException(ErrorCode.AUTHENTICATION_RESOLVER_ERROR)
             return UserInfo(
                 userId = userId,

@@ -37,29 +37,30 @@ class UserHistoryEntity(
     @NotNull
     var today: LocalDate,
     @Column(name = "user_id")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     var userId: UUID,
     @Column(name = "attendance")
     var attendance: Boolean = true,
     @Column(name = "breakfast_images_uri")
     @ElementCollection
-    @CollectionTable(name = "user_history_breakfast_images", joinColumns = [JoinColumn(name = "user_history_id")])
-    var breakfastImagesUri: MutableList<String> = mutableListOf(),
+    @CollectionTable(name = "user_history_breakfast_image_id", joinColumns = [JoinColumn(name = "user_history_id")])
+    var breakfastImageIds: MutableList<Long> = mutableListOf(),
     @Column(name = "breakfast_foods")
     @ElementCollection
     @CollectionTable(name = "user_history_breakfast_foods", joinColumns = [JoinColumn(name = "user_history_id")])
     var breakfastFoods: MutableList<String> = mutableListOf(),
     @Column(name = "lunch_images_uri")
     @ElementCollection
-    @CollectionTable(name = "user_history_lunch_images", joinColumns = [JoinColumn(name = "user_history_id")])
-    var lunchImagesUri: MutableList<String> = mutableListOf(),
+    @CollectionTable(name = "user_history_lunch_image_id", joinColumns = [JoinColumn(name = "user_history_id")])
+    var lunchImageIds: MutableList<Long> = mutableListOf(),
     @Column(name = "lunch_foods")
     @ElementCollection
     @CollectionTable(name = "user_history_lunch_foods", joinColumns = [JoinColumn(name = "user_history_id")])
     var lunchFoods: MutableList<String> = mutableListOf(),
     @Column(name = "breakfast_images_uri")
     @ElementCollection
-    @CollectionTable(name = "user_history_dinner_images", joinColumns = [JoinColumn(name = "user_history_id")])
-    var dinnerImagesUri: MutableList<String> = mutableListOf(),
+    @CollectionTable(name = "user_history_dinner_image_id", joinColumns = [JoinColumn(name = "user_history_id")])
+    var dinnerImageIds: MutableList<Long> = mutableListOf(),
     @Column(name = "dinner_foods")
     @ElementCollection
     @CollectionTable(name = "user_history_dinner_foods", joinColumns = [JoinColumn(name = "user_history_id")])
@@ -67,11 +68,11 @@ class UserHistoryEntity(
     @Column(name = "today_images")
     @ElementCollection
     @CollectionTable(name = "user_history_today_images", joinColumns = [JoinColumn(name = "user_history_id")])
-    var todayImages: MutableList<String> = mutableListOf(),
+    var todayImageIds: MutableList<Long> = mutableListOf(),
     @Column(name = "today_video")
     @ElementCollection
     @CollectionTable(name = "user_history_today_video", joinColumns = [JoinColumn(name = "user_history_id")])
-    var todayVideo: MutableList<String> = mutableListOf(),
+    var todayVideo: MutableList<Long> = mutableListOf(),
 ) {
     @Column(name = "updated_at")
     @LastModifiedDate
@@ -83,52 +84,52 @@ class UserHistoryEntity(
             userId = userId,
             breakfast = Breakfast(
                 foods = breakfastFoods,
-                images = breakfastImagesUri,
+                imageIds = breakfastImageIds,
             ),
             lunch = Lunch(
                 foods = lunchFoods,
-                images = lunchImagesUri,
+                imageIds = lunchImageIds,
             ),
             dinner = Dinner(
                 foods = dinnerFoods,
-                images = dinnerImagesUri,
+                imageIds = dinnerImageIds,
             ),
             createdAt = today,
-            todayImages = todayImages,
             todayVideo = todayVideo,
             updatedAt = updatedAt,
+            todayImageIds = todayImageIds,
         )
     }
 
-    fun addBreakfastFoods(vararg foods: String) {
+    fun addBreakfastFoods(foods: List<String>) {
         this.breakfastFoods.addAll(foods)
     }
 
-    fun addBreakfastImages(vararg images: String) {
-        this.breakfastImagesUri.addAll(images)
+    fun addBreakfastImages(images: List<Long>) {
+        this.breakfastImageIds.addAll(images)
     }
 
-    fun addLunchFoods(vararg foods: String) {
+    fun addLunchFoods(foods: List<String>) {
         this.lunchFoods.addAll(foods)
     }
 
-    fun addLunchImages(vararg images: String) {
-        this.lunchImagesUri.addAll(images)
+    fun addLunchImages(images: List<Long>) {
+        this.lunchImageIds.addAll(images)
     }
 
-    fun addDinnerFoods(vararg foods: String) {
+    fun addDinnerFoods(foods: List<String>) {
         this.dinnerFoods.addAll(foods)
     }
 
-    fun addDinnerImages(vararg images: String) {
-        this.dinnerImagesUri.addAll(images)
+    fun addDinnerImages(images: List<Long>) {
+        this.dinnerImageIds.addAll(images)
     }
 
-    fun addTodayImages(vararg images: String) {
-        this.todayImages.addAll(images)
+    fun addTodayImages(images: List<Long>) {
+        this.todayImageIds.addAll(images)
     }
 
-    fun addTodayVideo(vararg video: String) {
+    fun addTodayVideo(video: List<Long>) {
         this.todayVideo.addAll(video)
     }
 }

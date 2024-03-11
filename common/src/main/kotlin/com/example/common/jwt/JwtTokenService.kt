@@ -44,7 +44,8 @@ class JwtTokenService(
             .setIssuedAt(Date(now))
             .signWith(
                 accessTokenSecretKey,
-                SignatureAlgorithm.ES512,
+//                SignatureAlgorithm.ES512,
+                SignatureAlgorithm.HS512,
             )
             .compact()
     }
@@ -58,7 +59,8 @@ class JwtTokenService(
             .setIssuedAt(Date(now))
             .signWith(
                 refreshTokenSecretKey,
-                SignatureAlgorithm.ES512,
+//                SignatureAlgorithm.ES512,
+                SignatureAlgorithm.HS512,
             )
             .compact()
     }

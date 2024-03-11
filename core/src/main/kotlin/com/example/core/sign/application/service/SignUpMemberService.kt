@@ -1,5 +1,7 @@
 package com.example.core.sign.application.service
 
+import com.example.core.common.error.ErrorCode
+import com.example.core.common.error.ServiceException
 import com.example.core.sign.application.port.SignUpUserWithEmailCommand
 import com.example.core.sign.application.port.`in`.SignUpMemberUseCase
 import com.example.core.sign.application.port.`in`.command.SignUpMemberWithEmailCommand
@@ -16,7 +18,7 @@ class SignUpMemberService(
 ) : SignUpMemberUseCase, AbstractSignUpService(userQueryPort, emailVerifyPort) {
     override fun saveUser(command: SignUpUserWithEmailCommand) {
         val memberCommand = command as? SignUpMemberWithEmailCommand
-            ?: TODO("error 재정의")
+            ?: throw ServiceException(ErrorCode.SIGN_UP_COMMAND_TYPE_CASTING_ERROR)
         memberJpaPort.signUpMember(memberCommand)
     }
 

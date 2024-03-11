@@ -74,6 +74,7 @@ class ExceptionController : Log {
 
     @ExceptionHandler(Exception::class)
     fun unKnownException(
+        e: Exception,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
         log.error(
@@ -81,6 +82,7 @@ class ExceptionController : Log {
             errorCode = ${ErrorCode.UN_KNOWN_EXCEPTION}
             message = ${ErrorCode.UN_KNOWN_EXCEPTION.message}
             requestPath = ${request.requestURI}
+            stackTrace = ${e.printStackTrace()}
             """.trimIndent(),
         )
         val response = ErrorResponse(

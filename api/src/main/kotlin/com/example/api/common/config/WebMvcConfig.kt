@@ -1,7 +1,9 @@
 package com.example.api.common.config
 
 import com.example.api.common.interceptor.JwtTokenInterceptor
+import com.example.api.common.resolver.AuthenticationResolver
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @EnableWebMvc
 class WebMvcConfig(
     private val jwtTokenInterceptor: JwtTokenInterceptor,
+    private val authenticationResolver: AuthenticationResolver,
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
@@ -26,5 +29,9 @@ class WebMvcConfig(
             )
             .allowedHeaders("*")
             .allowedMethods("*")
+    }
+
+    override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
+        resolvers.add(authenticationResolver)
     }
 }

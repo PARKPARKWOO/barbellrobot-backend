@@ -42,7 +42,7 @@ class MemberEntity(
     var memberInfo: MemberInfo,
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    var role: Role,
+    override var role: Role,
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     var gender: Gender,

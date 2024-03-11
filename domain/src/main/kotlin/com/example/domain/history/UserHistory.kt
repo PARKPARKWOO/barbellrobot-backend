@@ -12,22 +12,22 @@ data class UserHistory(
     val dinner: Dinner,
     val attendance: Boolean = true,
     val createdAt: LocalDate,
-    val todayImages: List<String>,
-    val todayVideo: List<String>,
+    val todayImageIds: List<Long>,
+    val todayVideo: List<Long>,
     val updatedAt: LocalDateTime,
 )
 
 data class Breakfast(
     val foods: List<String>,
-    val images: List<String>,
+    val imageIds: List<Long>,
 )
 
 data class Lunch(
     val foods: List<String>,
-    val images: List<String>,
+    val imageIds: List<Long>,
 )
 
 data class Dinner(
     val foods: List<String>,
-    val images: List<String>,
+    val imageIds: List<Long>,
 )

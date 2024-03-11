@@ -47,7 +47,7 @@ class TrainerEntity(
     @Column(name = "introduce")
     var introduce: String,
     @Column(name = "role")
-    var role: Role,
+    override var role: Role,
 ) : BaseEntity(), UserEntity {
     fun changeGym(gymName: String, gymAddress: GymAddress) {
         this.gymName = gymName
