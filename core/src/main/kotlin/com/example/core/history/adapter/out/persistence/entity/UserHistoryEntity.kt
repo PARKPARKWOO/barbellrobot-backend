@@ -51,6 +51,7 @@ class UserHistoryEntity(
     @LastModifiedDate
     @NotNull
     lateinit var updatedAt: LocalDateTime
+
     fun toDomain(): UserHistory {
         return UserHistory(
             id = id,
