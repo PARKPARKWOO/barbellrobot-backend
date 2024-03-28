@@ -36,7 +36,7 @@ class SignInController(
         return ApiResponse(data = response)
     }
 
-    @PostMapping("/sign-in")
+    @PostMapping("/email/member")
     @Operation(
         summary = "email 과 password 로 로그인",
     )

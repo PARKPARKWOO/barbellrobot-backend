@@ -16,9 +16,14 @@ enum class ErrorCode(
     EXPIRED_JWT(""),
     PARSE_JWT_FAILED(""),
 
+    // resolver error
+    AUTHENTICATION_RESOLVER_ERROR("authentication resolver error 에서 발생 하였습니다."),
+    NOT_FOUND_REQUEST("HttpServlet 이 null 입니다."),
+
     // user
     MEMBER_NOT_FOUND("회원을 찾을 수 없습니다."),
     DUPLICATE_NICKNAME("nickname 이 중복됩니다."),
+    SIGN_UP_COMMAND_TYPE_CASTING_ERROR("회원가입시 command 형변환 실패 하였습니다"),
 
     // trainer
     TRAINER_NOT_FOUND("trainer 를 찾을 수 없습니다."),
@@ -27,6 +32,9 @@ enum class ErrorCode(
     NOT_FOUND_EXERCISE_GOAL("goal을 다시 확인해주세요"),
     NOT_FOUND_EXERCISE_AREA("area를 다시 확인해주세요"),
     NOT_FOUND_EXERCISE_ITEM("item 을 찾을 수 없습니다"),
+
+    // history
+    NOT_FOUND_USER_HISTORY("오늘 history를 찾을 수 없습니다"),
 
     // unknown
     UN_KNOWN_EXCEPTION("알수 없는 에러가 발생 하였습니다."),

@@ -12,20 +12,13 @@ class UserQueryAdapter(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : UserQueryPort {
     override fun findByNickname(nickname: String): UserEntity? {
-        val member = jpaQueryFactory.select(QMemberEntity.memberEntity)
+        return jpaQueryFactory.select(QMemberEntity.memberEntity)
             .from(QMemberEntity.memberEntity)
             .where(QMemberEntity.memberEntity.nickname.eq(nickname))
-            .fetchOne()
-        val trainer = jpaQueryFactory.select(QTrainerEntity.trainerEntity)
-            .from(QTrainerEntity.trainerEntity)
-            .where(QTrainerEntity.trainerEntity.nickname.eq(nickname))
-            .fetchOne()
-        val user =
-            member?.let {
-                member.toUserEntity()
-            } ?: trainer?.let {
-                trainer.toUserEntity()
-            }
-        return user
+            .fetchOne()?.toUserEntity()
+            ?: jpaQueryFactory.select(QTrainerEntity.trainerEntity)
+                .from(QTrainerEntity.trainerEntity)
+                .where(QTrainerEntity.trainerEntity.nickname.eq(nickname))
+                .fetchOne()?.toUserEntity()
     }
 }

@@ -1,9 +1,9 @@
 package com.example.api.exercise.adapter.`in`
 
 import com.example.api.common.annotation.PublicEndPoint
+import com.example.api.common.response.ApiResponse
 import com.example.api.exercise.adapter.`in`.request.CreateExerciseAreaRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseAreaResponse
-import com.example.api.common.response.ApiResponse
 import com.example.core.exercise.application.`in`.ExerciseAreaUseCase
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -26,6 +26,12 @@ class ExerciseAreaController(
     ): ApiResponse<Unit> {
         exerciseAreaUseCase.saveExerciseArea(request.toCommand())
         return ApiResponse(data = Unit)
+    }
+
+    @PublicEndPoint
+    @GetMapping("/test")
+    fun test() {
+        println(Thread.currentThread().id)
     }
 
     @GetMapping("/all")
