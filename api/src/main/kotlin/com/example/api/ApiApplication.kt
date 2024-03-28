@@ -1,7 +1,6 @@
 package com.example.api
 
 import jakarta.annotation.PostConstruct
-import org.joda.time.LocalDate
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.runApplication
@@ -27,6 +26,7 @@ class ApiApplication {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"))
     }
 }
+
 @Suppress("SpreadOperator")
 fun main(args: Array<String>) {
     runApplication<ApiApplication>(*args)

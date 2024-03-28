@@ -1,8 +1,6 @@
 package com.example.core.history.adapter.out.persistence.repository
 
-import com.example.core.history.adapter.out.persistence.entity.QDietFoodEntity
 import com.example.core.history.adapter.out.persistence.entity.QDietFoodEntity.dietFoodEntity
-import com.example.core.history.adapter.out.persistence.entity.QDietImageEntity
 import com.example.core.history.adapter.out.persistence.entity.QDietImageEntity.dietImageEntity
 import com.example.core.history.adapter.out.persistence.entity.QExerciseHistoryEntity.exerciseHistoryEntity
 import com.example.core.history.adapter.out.persistence.entity.QUserHistoryEntity.userHistoryEntity
@@ -12,9 +10,7 @@ import com.example.core.history.dto.QDietFoodQueryDto
 import com.example.core.history.dto.QDietImageQueryDto
 import com.example.core.history.dto.QExerciseHistoryResponseDto
 import com.example.core.history.dto.QUserHistoryQueryDto
-import com.example.core.history.dto.QUserHistoryResponseDto
 import com.example.core.history.dto.UserHistoryResponseDto
-import com.example.core.multimedia.adapter.out.persistence.entity.QMultimediaEntity
 import com.example.core.multimedia.adapter.out.persistence.entity.QMultimediaEntity.multimediaEntity
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
@@ -59,7 +55,7 @@ class UserHistoryQueryRepositoryImpl(
                 userHistoryEntity.attendance,
                 userHistoryEntity.todayImageIds,
                 userHistoryEntity.todayVideo,
-            )
+            ),
         ).from(userHistoryEntity)
             .where(betweenDate(startDate, endDate).and(userHistoryEntity.userId.eq(userId)))
             .fetch()
@@ -69,7 +65,7 @@ class UserHistoryQueryRepositoryImpl(
                 userHistoryEntity.id,
                 dietFoodEntity.food,
                 dietFoodEntity.type,
-            )
+            ),
         ).from(dietFoodEntity)
             .leftJoin(userHistoryEntity).on(userHistoryEntity.id.eq(dietFoodEntity.historyId))
             .where(userHistoryEntity.userId.eq(userId))
@@ -81,13 +77,12 @@ class UserHistoryQueryRepositoryImpl(
                 userHistoryEntity.id,
                 multimediaEntity.uri,
                 dietImageEntity.type,
-            )
+            ),
         ).from(dietImageEntity)
             .leftJoin(multimediaEntity).on(dietImageEntity.multimediaId.eq(multimediaEntity.id))
             .leftJoin(userHistoryEntity).on(userHistoryEntity.id.eq(dietImageEntity.historyId))
             .where(userHistoryEntity.userId.eq(userId))
             .fetch()
-
 
         // userExerciseHistory Query
         val exerciseHistoryDto = jpaQueryFactory.select(

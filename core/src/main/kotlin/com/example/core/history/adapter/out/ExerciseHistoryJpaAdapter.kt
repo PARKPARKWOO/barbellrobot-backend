@@ -35,5 +35,4 @@ class ExerciseHistoryJpaAdapter(
         val entities = command.map(transform)
         exerciseHistoryRepository.saveAll(entities)
     }
-
 }

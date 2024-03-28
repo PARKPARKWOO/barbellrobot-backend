@@ -33,6 +33,7 @@ class JwtTokenInterceptor(
         return true
     }
 }
+
 fun HttpServletRequest.getBearerTokenFromHeader(): String {
     this.getHeader(AUTHORIZATION_HEADER)?.let { token ->
         when {

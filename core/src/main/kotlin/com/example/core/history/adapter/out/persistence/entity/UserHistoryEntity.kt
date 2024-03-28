@@ -61,12 +61,4 @@ class UserHistoryEntity(
             todayImageIds = todayImageIds,
         )
     }
-
-    fun addTodayImages(images: List<Long>) {
-        this.todayImageIds.addAll(images)
-    }
-
-    fun addTodayVideo(video: List<Long>) {
-        this.todayVideo.addAll(video)
-    }
 }

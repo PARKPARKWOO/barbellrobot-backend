@@ -1,7 +1,5 @@
 package com.example.core.history.adapter.out
 
-import com.example.core.common.error.ErrorCode
-import com.example.core.common.error.ServiceException
 import com.example.core.history.adapter.out.persistence.entity.DietFoodEntity
 import com.example.core.history.adapter.out.persistence.entity.DietImageEntity
 import com.example.core.history.adapter.out.persistence.entity.UserHistoryEntity
