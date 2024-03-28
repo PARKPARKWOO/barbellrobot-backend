@@ -4,9 +4,9 @@ import com.example.core.history.application.port.`in`.GenerateHistoryUseCase
 import com.example.core.history.application.port.`in`.HistoryQueryUseCase
 import com.example.core.history.application.port.`in`.command.AddDietJpaCommand
 import com.example.core.history.application.port.`in`.command.ExerciseTodayCommand
-import com.example.core.history.application.port.out.AttendanceTodayCommand
 import com.example.core.history.application.port.out.ExerciseHistoryJpaPort
 import com.example.core.history.application.port.out.UserHistoryJpaPort
+import com.example.core.history.application.port.out.command.AttendanceTodayCommand
 import com.example.core.history.application.port.out.command.SaveExerciseHistoryCommand
 import com.example.core.history.application.port.out.query.FindUserHistoryQuery
 import com.example.core.history.dto.HistoryResponseDto
@@ -91,5 +91,16 @@ class HistoryService(
             endDate = getEndOfMonth(today),
         )
         return userHistoryJpaPort.queryUserHistory(query)
+    }
+
+    @Transactional(readOnly = true)
+    override fun getHistoryFromToday(userId: UUID): HistoryResponseDto? {
+        val today = LocalDate.now()
+        val query = FindUserHistoryQuery(
+            userId = userId,
+            startDate = today,
+            endDate = today,
+        )
+        return userHistoryJpaPort.queryUserHistory(query)?.get(0)
     }
 }

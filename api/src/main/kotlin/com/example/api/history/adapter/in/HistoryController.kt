@@ -118,4 +118,24 @@ class HistoryController(
         }
         return ApiResponse(data = response)
     }
+
+    @GetMapping("/today")
+    @Operation(
+        summary = "오늘 운동 기록",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun getHistoryFromToday(
+        @Parameter(hidden = true) @AuthenticationUser
+        userInfo: UserInfo,
+    ): ApiResponse<HistoryResponse> {
+        val response = historyQueryUseCase.getHistoryFromToday(userInfo.userId)?.let {
+            HistoryResponse(
+                userHistoryResponse = UserHistoryResponse.from(it.userHistoryResponseDto),
+                exerciseHistoryResponse = it.exerciseHistoryResponseDto?.map { exerciseHistoryResponseDto ->
+                    ExerciseHistoryResponse.from(exerciseHistoryResponseDto)
+                },
+            )
+        }
+        return ApiResponse(data = response)
+    }
 }

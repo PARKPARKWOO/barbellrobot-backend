@@ -7,4 +7,6 @@ interface HistoryQueryUseCase {
     fun getHistoryFromWeek(userId: UUID): List<HistoryResponseDto>?
 
     fun getHistoryFromMonth(userId: UUID): List<HistoryResponseDto>?
+
+    fun getHistoryFromToday(userId: UUID): HistoryResponseDto?
 }

@@ -1,5 +1,6 @@
 package com.example.core.history.dto
 
+import com.example.domain.history.Diet
 import com.querydsl.core.annotations.QueryProjection
 import java.time.LocalDate
 import java.util.UUID
@@ -15,16 +16,36 @@ data class UserHistoryResponseDto
         val id: UUID,
         val today: LocalDate,
         val attendance: Boolean,
-        val breakfastImageIds: List<Long>?,
-        val breakfastFoods: List<String>?,
-        val lunchImageIds: List<Long>?,
-        val lunchFoods: List<String>?,
-        val dinnerImageIds: List<Long>?,
-        val dinnerFoods: List<String>?,
-        val todayImageIds: List<Long>?,
-        val todayVideo: List<Long>?,
+        val dietFoodDtos: List<DietFoodQueryDto>,
+        val dietImageDtos: List<DietImageQueryDto>,
+        val todayImageIds: List<String>?,
+        val todayVideo: List<String>?,
     )
 
+data class UserHistoryQueryDto
+    @QueryProjection
+    constructor(
+        val id: UUID,
+        val today: LocalDate,
+        val attendance: Boolean,
+        var todayImageIds: List<Long>?,
+        var todayVideoIds: List<Long>?,
+    )
+data class DietFoodQueryDto
+    @QueryProjection
+    constructor(
+        val historyId: UUID,
+        val food: String,
+        val type: Diet,
+    )
+
+data class DietImageQueryDto
+    @QueryProjection
+    constructor(
+        val historyId: UUID,
+        val imageUrl: String,
+        val type: Diet,
+    )
 data class ExerciseHistoryResponseDto
     @QueryProjection
     constructor(
