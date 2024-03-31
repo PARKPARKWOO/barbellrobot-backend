@@ -55,6 +55,10 @@ class MemberJpaAdapter(
         getEntity(command.userId).uploadProfile(command.uri)
     }
 
+    override fun update(member: Member) {
+        getEntity(member.id).update(member)
+    }
+
     private fun getEntity(id: UUID): MemberEntity {
         return memberRepository.findById(id).orElseThrow {
             throw ServiceException(ErrorCode.MEMBER_NOT_FOUND)

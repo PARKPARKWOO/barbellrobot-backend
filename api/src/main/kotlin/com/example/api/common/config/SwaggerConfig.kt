@@ -23,7 +23,7 @@ class SwaggerConfig {
     private fun info() = Info().title("health-api")
         .description(
             """
-            Service 명 입력
+            Service(MVP 개발 이후) 명 입력
             을 위한 API 명세서 입니다.
             """.trimIndent(),
         )

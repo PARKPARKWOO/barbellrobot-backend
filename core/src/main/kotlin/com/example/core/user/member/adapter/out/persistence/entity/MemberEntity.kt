@@ -75,6 +75,16 @@ class MemberEntity(
         )
     }
 
+    fun update(member: Member) {
+        this.gender = member.gender
+        this.memberInfo.age = member.age
+        this.memberInfo.tall = member.tall
+        this.memberInfo.weight = member.weight
+        this.memberInfo.skeletalMuscleMass = member.skeletalMuscleMass
+        this.memberInfo.exerciseMonths = member.exerciseMonths
+        this.nickname = nickname
+    }
+
     override fun toUserEntity(): UserEntity {
         return this
     }

@@ -14,4 +14,6 @@ interface MemberJpaPort {
     fun signInWithEmail(command: SignInWithEmailCommand): Member?
 
     fun updateProfile(command: UpdateProfileCommand)
+
+    fun update(member: Member)
 }

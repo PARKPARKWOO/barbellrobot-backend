@@ -25,4 +25,8 @@ class MemberGoalEntity(
     fun addGoal(goals: List<Long>) {
         exerciseGoalIds.addAll(goals)
     }
+
+    fun deleteGoal(goal: Long) {
+        this.exerciseGoalIds.remove(goal)
+    }
 }
