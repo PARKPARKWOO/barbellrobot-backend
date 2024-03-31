@@ -16,15 +16,11 @@ import java.util.UUID
 @Component
 class ManagementJpaAdapter(
     private val managementRepository: ManagementRepository,
-    private val trainerRepository: TrainerRepository,
     private val memberRepository: MemberRepository,
 ) : ManagementJpaPort {
     override fun create(trainer: Trainer) {
-        val trainerEntity = trainerRepository.findById(trainer.id).orElseThrow {
-            throw ServiceException(ErrorCode.TRAINER_NOT_FOUND)
-        }
         val managementEntity = ManagementEntity(
-            trainer = trainerEntity,
+            trainerId = trainer.id,
         )
         managementRepository.save(managementEntity)
     }

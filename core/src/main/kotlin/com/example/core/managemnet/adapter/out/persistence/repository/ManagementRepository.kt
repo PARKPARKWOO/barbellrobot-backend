@@ -19,7 +19,7 @@ class ManagementQueryRepositoryImpl(
 ) : ManagementQueryRepository {
     override fun findFromTrainerId(trainerId: UUID): ManagementEntity? {
         return jpaQueryFactory.selectFrom(managementEntity)
-            .where(managementEntity.trainer.id.eq(trainerId))
+            .where(managementEntity.trainerId.eq(trainerId))
             .fetchOne()
     }
 }
