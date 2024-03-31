@@ -6,7 +6,7 @@ import com.example.core.user.member.adapter.out.persistence.entity.QMemberEntity
 import com.example.core.user.trainer.adapter.out.persistence.entity.QTrainerEntity
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class UserQueryAdapter(

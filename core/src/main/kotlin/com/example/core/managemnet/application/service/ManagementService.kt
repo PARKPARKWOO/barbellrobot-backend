@@ -7,7 +7,7 @@ import com.example.domain.user.MemberSummary
 import com.example.domain.user.Trainer
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.util.UUID
 
 @Service
 class ManagementService(
