@@ -7,7 +7,7 @@ import com.example.core.sign.application.port.out.EmailVerifyPort
 import com.example.core.sign.application.service.SignUpTrainerService
 import com.example.core.sign.util.MemberServiceTestUtil
 import com.example.core.sign.util.TrainerServiceTestUtil
-import com.example.core.user.application.out.UserQueryPort
+import com.example.core.user.application.port.out.UserQueryPort
 import com.example.core.user.trainer.application.port.out.TrainerJpaPort
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec

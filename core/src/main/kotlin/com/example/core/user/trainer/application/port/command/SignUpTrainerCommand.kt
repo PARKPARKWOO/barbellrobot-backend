@@ -1,4 +1,4 @@
-package com.example.core.user.trainer.application.port.out.command
+package com.example.core.user.trainer.application.port.command
 
 import com.example.domain.user.Gender
 

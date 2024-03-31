@@ -6,7 +6,7 @@ import com.example.core.sign.application.port.SignUpUserWithEmailCommand
 import com.example.core.sign.application.port.`in`.SignUpUserUseCase
 import com.example.core.sign.application.port.out.EmailVerifyPort
 import com.example.core.sign.application.port.out.command.VerifyAuthenticationSuccessCommand
-import com.example.core.user.application.out.UserQueryPort
+import com.example.core.user.application.port.out.UserQueryPort
 import org.springframework.transaction.annotation.Transactional
 
 abstract class AbstractSignUpService(

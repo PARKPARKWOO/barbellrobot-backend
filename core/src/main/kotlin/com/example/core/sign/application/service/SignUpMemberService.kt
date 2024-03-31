@@ -6,7 +6,7 @@ import com.example.core.sign.application.port.SignUpUserWithEmailCommand
 import com.example.core.sign.application.port.`in`.SignUpMemberUseCase
 import com.example.core.sign.application.port.`in`.command.SignUpMemberWithEmailCommand
 import com.example.core.sign.application.port.out.EmailVerifyPort
-import com.example.core.user.application.out.UserQueryPort
+import com.example.core.user.application.port.out.UserQueryPort
 import com.example.core.user.member.application.out.MemberJpaPort
 import org.springframework.stereotype.Service
 

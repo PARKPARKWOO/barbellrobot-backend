@@ -1,7 +1,7 @@
 package com.example.core.user.adapter.out
 
 import com.example.core.user.UserEntity
-import com.example.core.user.application.out.UserQueryPort
+import com.example.core.user.application.port.out.UserQueryPort
 import com.example.core.user.member.adapter.out.persistence.entity.QMemberEntity
 import com.example.core.user.trainer.adapter.out.persistence.entity.QTrainerEntity
 import com.querydsl.jpa.impl.JPAQueryFactory

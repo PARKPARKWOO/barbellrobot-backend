@@ -6,26 +6,44 @@ import java.util.UUID
 
 data class Member(
     val id: UUID,
-    val nickname: String,
+    var nickname: String,
     val email: String,
-    val password: String,
+    var password: String,
     val role: Role,
-    val gender: Gender,
+    var gender: Gender,
     val provider: String?,
-    val exerciseMonths: Int,
-    val tall: Double,
-    val weight: Double,
-    val skeletalMuscleMass: Double?, // 골격근량
-    val age: Int,
+    var exerciseMonths: Int,
+    var tall: Double,
+    var weight: Double,
+    var skeletalMuscleMass: Double?, // 골격근량
+    var age: Int,
     val createdAt: LocalDateTime,
     val deletedAt: LocalDateTime?,
-    val profile: String?,
+    var profile: String?,
 ) : User {
     override fun getClaims(): Map<String, Any> {
         val claims = mutableMapOf<String, Any>()
         claims[DomainConstants.USER_ID] = id
         claims[DomainConstants.USER_ROLE] = role
         return claims
+    }
+
+    fun updateNickname(nickname: String) {
+        this.nickname = nickname
+    }
+
+    fun updateInfo(
+        exerciseMonths: Int,
+        tall: Double,
+        weight: Double,
+        skeletalMuscleMass: Double?,
+        gender: Gender,
+    ) {
+        this.exerciseMonths = exerciseMonths
+        this.tall = tall
+        this.weight = weight
+        this.skeletalMuscleMass = skeletalMuscleMass
+        this.gender = gender
     }
 
     fun summary() = MemberSummary(

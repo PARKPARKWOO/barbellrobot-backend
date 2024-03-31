@@ -5,4 +5,6 @@ import com.example.domain.user.Role
 interface UserEntity {
     val role: Role
     fun toUserEntity(): UserEntity
+
+    fun uploadProfile(uri: String)
 }
