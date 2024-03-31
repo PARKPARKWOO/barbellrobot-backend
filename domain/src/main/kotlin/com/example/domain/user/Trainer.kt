@@ -15,7 +15,7 @@ data class Trainer(
     val city: String,
     val country: String,
     val exerciseYears: Int,
-    val introduce: String,
+    val introduce: String?,
 ) : User {
     override fun getClaims(): Map<String, Any> {
         val claims = mutableMapOf<String, Any>()

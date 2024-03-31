@@ -33,6 +33,14 @@ class ExerciseItemController(
     }
 
     @GetMapping("/{id}")
+    @Operation(
+        summary = "운동 아이템 조회",
+        description = """
+            벤치 프레스, 풀업 등
+            운동아이템을 어느 부위 운동인지,
+            어떤 목적인지(다이어트 등) 묶어 조회
+        """,
+    )
     @PublicEndPoint
     fun findItem(
         @PathVariable("id")

@@ -5,6 +5,8 @@ data class ApiResponse<T>(
     val data: T?,
 )
 
+// pagenation 추가
+
 data class ErrorResponse(
     val success: Boolean = false,
     val code: String,

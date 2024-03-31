@@ -28,12 +28,6 @@ class ExerciseAreaController(
         return ApiResponse(data = Unit)
     }
 
-    @PublicEndPoint
-    @GetMapping("/test")
-    fun test() {
-        println(Thread.currentThread().id)
-    }
-
     @GetMapping("/all")
     @PublicEndPoint
     fun getAllArea(): ApiResponse<List<ExerciseAreaResponse>> {

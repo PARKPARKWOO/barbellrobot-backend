@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 class TrainerJpaAdapter(
     private val trainerRepository: TrainerRepository,
 ) : TrainerJpaPort {
-    override fun signUpTrainer(command: SignUpTrainerCommand) {
+    override fun signUpTrainer(command: SignUpTrainerCommand): Trainer {
         val trainerEntity = TrainerEntity(
             nickname = command.nickname,
             email = command.email,
@@ -30,7 +30,7 @@ class TrainerJpaAdapter(
             introduce = command.introduce,
             role = Role.ROLE_TRAINER,
         )
-        trainerRepository.save(trainerEntity)
+        return trainerRepository.save(trainerEntity).toDomain()
     }
 
     override fun signInWithEmail(command: SignInWithEmailCommand): Trainer? {

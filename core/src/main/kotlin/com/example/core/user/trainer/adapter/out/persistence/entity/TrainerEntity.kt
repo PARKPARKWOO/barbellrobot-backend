@@ -45,7 +45,7 @@ class TrainerEntity(
     @Enumerated(EnumType.STRING)
     var gender: Gender,
     @Column(name = "introduce")
-    var introduce: String,
+    var introduce: String?,
     @Column(name = "role")
     override var role: Role,
 ) : BaseEntity(), UserEntity {

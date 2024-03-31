@@ -47,6 +47,9 @@ dependencies {
 
     // coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+    // uuid generator
+    implementation("com.fasterxml.uuid:java-uuid-generator:5.0.0")
 }
 
 dependencyManagement {

@@ -11,7 +11,6 @@ import com.example.core.history.dto.QDietImageQueryDto
 import com.example.core.history.dto.QExerciseHistoryResponseDto
 import com.example.core.history.dto.QUserHistoryQueryDto
 import com.example.core.history.dto.UserHistoryResponseDto
-import com.example.core.multimedia.adapter.out.persistence.entity.QMultimediaEntity.multimediaEntity
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
@@ -75,11 +74,10 @@ class UserHistoryQueryRepositoryImpl(
         val dietImageResult = jpaQueryFactory.select(
             QDietImageQueryDto(
                 userHistoryEntity.id,
-                multimediaEntity.uri,
+                dietImageEntity.image,
                 dietImageEntity.type,
             ),
         ).from(dietImageEntity)
-            .leftJoin(multimediaEntity).on(dietImageEntity.multimediaId.eq(multimediaEntity.id))
             .leftJoin(userHistoryEntity).on(userHistoryEntity.id.eq(dietImageEntity.historyId))
             .where(userHistoryEntity.userId.eq(userId))
             .fetch()
@@ -102,15 +100,6 @@ class UserHistoryQueryRepositoryImpl(
             // 해당 UserHistory에 대응하는 DietFood와 DietImage 찾기
             val correspondingDietFoods = dietFoodResult.filter { it.historyId == userHistory.id }
             val correspondingDietImages = dietImageResult.filter { it.historyId == userHistory.id }
-            val imageUris = jpaQueryFactory.select(multimediaEntity.uri)
-                .from(multimediaEntity)
-                .where(multimediaEntity.id.`in`(userHistory.todayImageIds))
-                .fetch()
-
-            val videoUris = jpaQueryFactory.select(multimediaEntity.uri)
-                .from(multimediaEntity)
-                .where(multimediaEntity.id.`in`(userHistory.todayVideoIds))
-                .fetch()
 
             // UserHistoryResponseDto 생성
             UserHistoryResponseDto(
@@ -119,8 +108,8 @@ class UserHistoryQueryRepositoryImpl(
                 attendance = userHistory.attendance,
                 dietFoodDtos = correspondingDietFoods,
                 dietImageDtos = correspondingDietImages,
-                todayImageIds = imageUris,
-                todayVideo = videoUris,
+                todayImages = userHistory.todayImages,
+                todayVideo = userHistory.todayVideo,
             )
         }
         return userHistoryResponseDtos.map { dto ->

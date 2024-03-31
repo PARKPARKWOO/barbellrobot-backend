@@ -46,6 +46,8 @@ class MemberEntity(
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     var gender: Gender,
+    @Column(name = "profile", nullable = true)
+    var profile: String?,
 ) : BaseEntity(), UserEntity {
     fun toDomain(): Member {
         return Member(
@@ -63,6 +65,7 @@ class MemberEntity(
             deletedAt = this.deletedAt,
             role = this.role,
             nickname = this.nickname,
+            profile = this.profile,
         )
     }
 

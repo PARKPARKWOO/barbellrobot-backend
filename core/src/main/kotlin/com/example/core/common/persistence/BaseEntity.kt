@@ -1,5 +1,6 @@
 package com.example.core.common.persistence
 
+import com.fasterxml.uuid.Generators
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.Id
@@ -20,7 +21,7 @@ class BaseEntity {
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    var id: UUID = UUID.randomUUID()
+    var id: UUID = Generators.timeBasedEpochGenerator().generate()
 
     @Column(name = "created_at")
     @CreatedDate

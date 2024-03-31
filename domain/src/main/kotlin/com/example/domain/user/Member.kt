@@ -19,6 +19,7 @@ data class Member(
     val age: Int,
     val createdAt: LocalDateTime,
     val deletedAt: LocalDateTime?,
+    val profile: String?,
 ) : User {
     override fun getClaims(): Map<String, Any> {
         val claims = mutableMapOf<String, Any>()
@@ -26,4 +27,10 @@ data class Member(
         claims[DomainConstants.USER_ROLE] = role
         return claims
     }
+
+    fun summary() = MemberSummary(
+        id = id,
+        nickname = nickname,
+        profile = profile,
+    )
 }

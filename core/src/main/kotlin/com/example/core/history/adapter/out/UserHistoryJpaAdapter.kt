@@ -34,7 +34,7 @@ class UserHistoryJpaAdapter(
             DietImageEntity(
                 type = command.type,
                 historyId = command.todayHistoryId,
-                multimediaId = it,
+                image = it,
             )
         }
         dietImageRepository.saveAll(imageEntity)

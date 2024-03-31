@@ -9,7 +9,7 @@ data class UserHistory(
     val userId: UUID,
     val attendance: Boolean = true,
     val createdAt: LocalDate,
-    val todayImageIds: List<Long>,
-    val todayVideo: List<Long>,
+    val todayImages: List<String>,
+    val todayVideo: List<String>,
     val updatedAt: LocalDateTime,
 )

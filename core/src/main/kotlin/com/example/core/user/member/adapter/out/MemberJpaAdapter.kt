@@ -33,6 +33,7 @@ class MemberJpaAdapter(
             role = Role.ROLE_FREE,
             gender = command.gender,
             provider = null,
+            profile = null,
         )
         memberRepository.save(entity)
     }

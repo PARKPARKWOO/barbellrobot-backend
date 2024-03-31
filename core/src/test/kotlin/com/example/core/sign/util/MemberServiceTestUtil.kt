@@ -35,5 +35,6 @@ object MemberServiceTestUtil {
         ),
         role = Role.ROLE_FREE,
         gender = signUpWithEmailCommand.gender,
+        profile = null,
     )
 }

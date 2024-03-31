@@ -18,7 +18,7 @@ class S3Adapter(
     @Value("\${cloud-front.domain}")
     private val cloudFrontDomain: String,
 ) : S3Port {
-    override suspend fun uploadS3(files: List<MultipartFile>): List<String>? {
+    override suspend fun uploadFiles(files: List<MultipartFile>): List<String>? {
         return coroutineScope {
             files.map { file ->
                 val metadata = ObjectMetadata().apply {
