@@ -48,6 +48,8 @@ class TrainerEntity(
     var introduce: String?,
     @Column(name = "role")
     override var role: Role,
+    @Column(name = "profile")
+    var profile: String?,
 ) : BaseEntity(), UserEntity {
     fun changeGym(gymName: String, gymAddress: GymAddress) {
         this.gymName = gymName
@@ -77,6 +79,10 @@ class TrainerEntity(
 
     override fun toUserEntity(): UserEntity {
         return this
+    }
+
+    override fun uploadProfile(uri: String) {
+        this.profile = uri
     }
 }
 

@@ -4,6 +4,7 @@ import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
 import com.example.core.sign.application.port.`in`.command.SignUpMemberWithEmailCommand
+import com.example.core.user.application.port.command.UpdateProfileCommand
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
@@ -47,6 +48,10 @@ class MemberJpaAdapter(
             email = command.email,
             password = command.password,
         )?.toDomain()
+    }
+
+    override fun updateProfile(command: UpdateProfileCommand) {
+        getEntity(command.userId).uploadProfile(command.uri)
     }
 
     private fun getEntity(id: UUID): MemberEntity {

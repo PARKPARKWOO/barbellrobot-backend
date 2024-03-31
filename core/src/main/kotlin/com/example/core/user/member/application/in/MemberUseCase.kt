@@ -1,3 +1,5 @@
 package com.example.core.user.member.application.`in`
 
-interface MemberUseCase
+import com.example.core.user.application.port.`in`.UserUseCase
+
+interface MemberUseCase : UserUseCase

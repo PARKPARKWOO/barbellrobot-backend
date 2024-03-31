@@ -72,4 +72,8 @@ class MemberEntity(
     override fun toUserEntity(): UserEntity {
         return this
     }
+
+    override fun uploadProfile(uri: String) {
+        this.profile = uri
+    }
 }

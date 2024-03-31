@@ -1,4 +1,4 @@
-package com.example.core.user.application.out
+package com.example.core.user.application.port.out
 
 import com.example.core.user.UserEntity
 import java.util.UUID
