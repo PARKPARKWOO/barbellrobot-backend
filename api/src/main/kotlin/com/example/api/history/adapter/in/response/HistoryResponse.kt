@@ -41,7 +41,7 @@ data class UserHistoryResponse(
                     lunchImageUri = imagesByType[Diet.LUNCH]?.map { it.imageUrl } ?: emptyList(),
                     dinnerFoods = foodsByType[Diet.DINNER]?.map { it.food } ?: emptyList(),
                     dinnerImageUri = imagesByType[Diet.DINNER]?.map { it.imageUrl } ?: emptyList(),
-                    todayImageUri = dto.todayImageIds,
+                    todayImageUri = dto.todayImages,
                     todayVideoUri = dto.todayVideo,
                 )
             }

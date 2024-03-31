@@ -27,5 +27,5 @@ class DietImageEntity(
     @JdbcTypeCode(SqlTypes.VARCHAR)
     var historyId: UUID,
     @Column(name = "food")
-    var multimediaId: Long,
+    var image: String,
 )

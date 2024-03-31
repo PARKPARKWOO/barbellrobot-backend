@@ -8,7 +8,7 @@ import java.util.UUID
 data class AddDietJpaCommand(
     val type: Diet,
     val todayHistoryId: UUID,
-    val images: List<Long>?,
+    val images: List<String>?,
     val foods: List<String>?,
 ) {
     fun toFoodCommand() = AddDietFoodCommand(

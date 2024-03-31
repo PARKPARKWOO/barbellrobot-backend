@@ -31,13 +31,15 @@ class ExerciseItemQueryRepositoryImpl(
 
         val exerciseAreas: List<ExerciseAreaEntity> = jpaQueryFactory
             .selectFrom(exerciseAreaEntity)
-            .join(itemAreaRelationshipEntity).on(itemAreaRelationshipEntity.exerciseAreaId.eq(exerciseAreaEntity.id))
+            .join(itemAreaRelationshipEntity)
+            .on(itemAreaRelationshipEntity.exerciseAreaId.eq(exerciseAreaEntity.id))
             .where(itemAreaRelationshipEntity.exerciseItemId.eq(id))
             .fetch()
 
         val exerciseGoals: List<ExerciseGoalEntity> = jpaQueryFactory
             .selectFrom(exerciseGoalEntity)
-            .join(itemGoalRelationshipEntity).on(itemGoalRelationshipEntity.exerciseGoalId.eq(exerciseGoalEntity.id))
+            .join(itemGoalRelationshipEntity)
+            .on(itemGoalRelationshipEntity.exerciseGoalId.eq(exerciseGoalEntity.id))
             .where(itemGoalRelationshipEntity.exerciseItemId.eq(id))
             .fetch()
 

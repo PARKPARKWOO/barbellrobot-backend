@@ -18,7 +18,7 @@ data class UserHistoryResponseDto
         val attendance: Boolean,
         val dietFoodDtos: List<DietFoodQueryDto>,
         val dietImageDtos: List<DietImageQueryDto>,
-        val todayImageIds: List<String>?,
+        val todayImages: List<String>?,
         val todayVideo: List<String>?,
     )
 
@@ -28,8 +28,8 @@ data class UserHistoryQueryDto
         val id: UUID,
         val today: LocalDate,
         val attendance: Boolean,
-        var todayImageIds: List<Long>?,
-        var todayVideoIds: List<Long>?,
+        var todayImages: List<String>?,
+        var todayVideo: List<String>?,
     )
 
 data class DietFoodQueryDto

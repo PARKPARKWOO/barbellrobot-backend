@@ -5,6 +5,6 @@ import java.util.UUID
 
 data class AddDietImageCommand(
     val todayHistoryId: UUID,
-    val imageIds: List<Long>,
+    val imageIds: List<String>,
     val type: Diet,
 )

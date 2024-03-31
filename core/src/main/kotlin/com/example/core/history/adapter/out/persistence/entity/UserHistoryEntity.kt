@@ -41,11 +41,11 @@ class UserHistoryEntity(
     @Column(name = "today_images")
     @ElementCollection
     @CollectionTable(name = "user_history_today_images", joinColumns = [JoinColumn(name = "user_history_id")])
-    var todayImageIds: MutableList<Long> = mutableListOf(),
+    var todayImageIds: MutableList<String> = mutableListOf(),
     @Column(name = "today_video")
     @ElementCollection
     @CollectionTable(name = "user_history_today_video", joinColumns = [JoinColumn(name = "user_history_id")])
-    var todayVideo: MutableList<Long> = mutableListOf(),
+    var todayVideo: MutableList<String> = mutableListOf(),
 ) {
     @Column(name = "updated_at")
     @LastModifiedDate
@@ -59,7 +59,7 @@ class UserHistoryEntity(
             createdAt = today,
             todayVideo = todayVideo,
             updatedAt = updatedAt,
-            todayImageIds = todayImageIds,
+            todayImages = todayImageIds,
         )
     }
 }

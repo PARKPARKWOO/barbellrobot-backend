@@ -6,6 +6,7 @@ import com.example.core.user.member.adapter.out.persistence.entity.QMemberEntity
 import com.example.core.user.trainer.adapter.out.persistence.entity.QTrainerEntity
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class UserQueryAdapter(
@@ -19,6 +20,17 @@ class UserQueryAdapter(
             ?: jpaQueryFactory.select(QTrainerEntity.trainerEntity)
                 .from(QTrainerEntity.trainerEntity)
                 .where(QTrainerEntity.trainerEntity.nickname.eq(nickname))
+                .fetchOne()?.toUserEntity()
+    }
+
+    override fun findById(userId: UUID): UserEntity? {
+        return jpaQueryFactory.select(QMemberEntity.memberEntity)
+            .from(QMemberEntity.memberEntity)
+            .where(QMemberEntity.memberEntity.id.eq(userId))
+            .fetchOne()?.toUserEntity()
+            ?: jpaQueryFactory.select(QTrainerEntity.trainerEntity)
+                .from(QTrainerEntity.trainerEntity)
+                .where(QTrainerEntity.trainerEntity.id.eq(userId))
                 .fetchOne()?.toUserEntity()
     }
 }

@@ -5,7 +5,7 @@ import com.example.core.user.trainer.application.port.out.command.SignUpTrainerC
 import com.example.domain.user.Trainer
 
 interface TrainerJpaPort {
-    fun signUpTrainer(command: SignUpTrainerCommand)
+    fun signUpTrainer(command: SignUpTrainerCommand): Trainer
 
     fun signInWithEmail(command: SignInWithEmailCommand): Trainer?
 }
