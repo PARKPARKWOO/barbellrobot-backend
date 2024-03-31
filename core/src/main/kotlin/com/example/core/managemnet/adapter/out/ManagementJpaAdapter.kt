@@ -7,12 +7,11 @@ import com.example.core.managemnet.adapter.out.persistence.repository.Management
 import com.example.core.managemnet.application.port.command.AddManagementMemberCommand
 import com.example.core.managemnet.application.port.out.ManagementJpaPort
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
-import com.example.core.user.member.application.out.MemberJpaPort
 import com.example.core.user.trainer.adapter.out.persistence.repository.TrainerRepository
 import com.example.domain.user.MemberSummary
 import com.example.domain.user.Trainer
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class ManagementJpaAdapter(
