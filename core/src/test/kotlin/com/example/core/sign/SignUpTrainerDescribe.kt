@@ -2,7 +2,6 @@ package com.example.core.sign
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.managemnet.application.port.`in`.ManagementUseCase
 import com.example.core.sign.application.port.out.EmailVerifyPort
 import com.example.core.sign.application.service.SignUpTrainerService
 import com.example.core.sign.util.MemberServiceTestUtil
@@ -20,12 +19,10 @@ class SignUpTrainerDescribe : DescribeSpec(
         val userQueryPort: UserQueryPort = mockk()
         val trainerJpaPort: TrainerJpaPort = mockk()
         val emailVerifyPort: EmailVerifyPort = mockk()
-        val managementUseCase: ManagementUseCase = mockk()
         val signUpTrainerService = SignUpTrainerService(
             trainerJpaPort = trainerJpaPort,
             userQueryPort = userQueryPort,
             emailVerifyPort = emailVerifyPort,
-            managementUseCase = managementUseCase,
         )
         describe("signUp trainer with email") {
             val signUpWithEmailCommand = TrainerServiceTestUtil.signUpWithEmailCommand
@@ -34,7 +31,6 @@ class SignUpTrainerDescribe : DescribeSpec(
                     every { emailVerifyPort.verifyAuthenticationSuccess(any()) } returns Unit
                     every { trainerJpaPort.signUpTrainer(any()) } returns TrainerServiceTestUtil.trainer
                     every { userQueryPort.findByNickname(any()) } returns null
-                    every { managementUseCase.create(any()) } returns Unit
                     signUpTrainerService.signUpWithEmail(signUpWithEmailCommand)
                 }
             }

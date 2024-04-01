@@ -4,10 +4,10 @@ import com.example.api.common.annotation.AuthenticationUser
 import com.example.api.common.config.SwaggerConfig
 import com.example.api.common.resolver.UserInfo
 import com.example.api.common.response.ApiResponse
-import com.example.api.trainer.request.AddManagementMemberRequest
+import com.example.api.trainer.request.ApprovalRequest
+import com.example.api.trainer.request.RejectRequest
 import com.example.api.trainer.response.ManagementMemberResponse
 import com.example.api.trainer.response.MemberSummaryResponse
-import com.example.core.managemnet.application.port.command.AddManagementMemberCommand
 import com.example.core.managemnet.application.port.`in`.ManagementUseCase
 import com.example.core.user.application.port.command.UploadProfileCommand
 import com.example.core.user.trainer.application.port.`in`.TrainerUseCase
@@ -46,22 +46,33 @@ class TrainerController(
         return ApiResponse(data = response)
     }
 
-    @PostMapping("/management")
+    @PostMapping("/management/reject")
     @Operation(
-        summary = "관리 목록에 member 추가",
+        summary = "pt 제안 거절",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
-    fun addManagementMember(
+    fun reject(
         @Parameter(hidden = true) @AuthenticationUser
         userInfo: UserInfo,
         @RequestBody
-        request: AddManagementMemberRequest,
+        request: RejectRequest,
     ): ApiResponse<Unit> {
-        val command = AddManagementMemberCommand(
-            trainerId = userInfo.userId,
-            memberId = request.memberId,
-        )
-        managementUseCase.addManagementMember(command)
+        managementUseCase.reject(request.toCommand(userInfo.userId))
+        return ApiResponse(data = Unit)
+    }
+
+    @PostMapping("/management/approval")
+    @Operation(
+        summary = "pt 제안 승인",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun approval(
+        @Parameter(hidden = true) @AuthenticationUser
+        userInfo: UserInfo,
+        @RequestBody
+        request: ApprovalRequest,
+    ): ApiResponse<Unit> {
+        managementUseCase.approval(request.toCommand(userInfo.userId))
         return ApiResponse(data = Unit)
     }
 

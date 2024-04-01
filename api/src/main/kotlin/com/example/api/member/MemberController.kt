@@ -5,8 +5,12 @@ import com.example.api.common.config.SwaggerConfig
 import com.example.api.common.resolver.UserInfo
 import com.example.api.common.response.ApiResponse
 import com.example.api.member.request.AddGoalRequest
+import com.example.api.member.request.CancelManagementRequest
 import com.example.api.member.request.DeleteMemberGoalRequest
+import com.example.api.member.request.OfferManagementRequest
 import com.example.api.member.request.UpdateMemberInfoRequest
+import com.example.api.member.response.ManagementFromMemberResponse
+import com.example.core.managemnet.application.port.`in`.ManagementUseCase
 import com.example.core.user.application.port.command.UploadProfileCommand
 import com.example.core.user.member.application.`in`.MemberGoalUseCase
 import com.example.core.user.member.application.`in`.MemberUseCase
@@ -14,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -26,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile
 class MemberController(
     private val memberUseCase: MemberUseCase,
     private val memberGoalUseCase: MemberGoalUseCase,
+    private val managementUseCase: ManagementUseCase,
 ) {
     @PostMapping("/profile")
     @Operation(
@@ -76,6 +82,52 @@ class MemberController(
     ): ApiResponse<Unit> {
         memberUseCase.update(request.toCommand(userInfo.userId))
         return ApiResponse(data = Unit)
+    }
+
+    @PostMapping("/management/offer")
+    @Operation(
+        summary = "trainer 에게 제의 pt 제의",
+        description = "member 가 trainer 에게 pt 를 제안 하는 api 입니다.",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun offerManagement(
+        @Parameter(hidden = true) @AuthenticationUser
+        userInfo: UserInfo,
+        @RequestBody
+        request: OfferManagementRequest,
+    ): ApiResponse<Unit> {
+        managementUseCase.offer(request.toCommand(userInfo.userId))
+        return ApiResponse(data = Unit)
+    }
+
+    @PostMapping("/management/cancel")
+    @Operation(
+        summary = "pt 제의 취소",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun cancelManagement(
+        @Parameter(hidden = true) @AuthenticationUser
+        userInfo: UserInfo,
+        @RequestBody
+        request: CancelManagementRequest,
+    ): ApiResponse<Unit> {
+        managementUseCase.cancel(request.toCommand(userInfo.userId))
+        return ApiResponse(data = Unit)
+    }
+
+    @GetMapping("/management")
+    @Operation(
+        summary = "pt 목록 조회",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun getManagement(
+        @Parameter(hidden = true) @AuthenticationUser
+        userInfo: UserInfo,
+    ): ApiResponse<List<ManagementFromMemberResponse>> {
+        val response = managementUseCase.getManagementFromMember(userInfo.userId).map {
+            ManagementFromMemberResponse.from(it)
+        }
+        return ApiResponse(data = response)
     }
 
     @DeleteMapping("/goal")

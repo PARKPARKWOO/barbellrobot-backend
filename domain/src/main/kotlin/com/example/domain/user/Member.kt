@@ -15,7 +15,8 @@ data class Member(
     var exerciseMonths: Int,
     var tall: Double,
     var weight: Double,
-    var skeletalMuscleMass: Double?, // 골격근량
+    // 골격근량
+    var skeletalMuscleMass: Double?,
     var age: Int,
     val createdAt: LocalDateTime,
     val deletedAt: LocalDateTime?,

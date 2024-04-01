@@ -17,7 +17,6 @@ class WebMvcConfig(
     private val authenticationResolver: AuthenticationResolver,
     private val trainerInterceptor: TrainerInterceptor,
 ) : WebMvcConfigurer {
-
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(jwtTokenInterceptor)
             .addPathPatterns("/api/**")

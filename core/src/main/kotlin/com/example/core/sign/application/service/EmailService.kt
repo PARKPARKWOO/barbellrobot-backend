@@ -7,7 +7,7 @@ import com.example.core.sign.application.port.out.EmailVerifyPort
 import com.example.core.sign.application.port.out.SendEmailPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.util.UUID
 
 @Service
 class EmailService(

@@ -35,7 +35,6 @@ class MemberJpaAdapter(
             gender = command.gender,
             provider = null,
             profile = null,
-            managementEntity = null,
         )
         memberRepository.save(entity)
     }

@@ -2,7 +2,7 @@ package com.example.core.managemnet.application.port.command
 
 import java.util.UUID
 
-data class AddManagementMemberCommand(
+data class RejectCommand(
     val trainerId: UUID,
-    val memberId: UUID,
+    val managementId: Long,
 )

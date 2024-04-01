@@ -19,7 +19,6 @@ data class SignUpTrainerWithEmailCommand(
     val introduce: String,
     val authenticationString: UUID,
 ) : SignUpUserWithEmailCommand {
-
     fun toSignUpCommand(): SignUpTrainerCommand {
         return SignUpTrainerCommand(
             email = email,

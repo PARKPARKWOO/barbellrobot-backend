@@ -14,4 +14,4 @@ data class ExpiredJwtException(
 
 data class NoBearerTokenException(
     override val message: String,
-): JwtException(message)
+) : JwtException(message)

@@ -25,6 +25,7 @@ enum class ErrorCode(
     DUPLICATE_NICKNAME("nickname 이 중복됩니다."),
     SIGN_UP_COMMAND_TYPE_CASTING_ERROR("회원가입시 command 형변환 실패 하였습니다"),
     MEMBER_GOAL_NOT_FOUND("member 의 goal 이 생성되지 않았습니다."),
+
     // trainer
     TRAINER_NOT_FOUND("trainer 를 찾을 수 없습니다."),
     NOT_GRANT_TRAINER_ROLE("trainer 권한이 없습니다"),
@@ -33,6 +34,10 @@ enum class ErrorCode(
     NOT_FOUND_EXERCISE_GOAL("goal을 다시 확인해주세요"),
     NOT_FOUND_EXERCISE_AREA("area를 다시 확인해주세요"),
     NOT_FOUND_EXERCISE_ITEM("item 을 찾을 수 없습니다"),
+
+    // management
+    NOT_FOUND_MANAGEMENT("management id 를 확인해주세요"),
+    NOT_GRANT_MANAGEMENT("권한이 없습니다."),
 
     // history
     NOT_FOUND_USER_HISTORY("오늘 history를 찾을 수 없습니다"),

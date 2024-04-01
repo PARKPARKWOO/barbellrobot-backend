@@ -4,37 +4,53 @@ import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.managemnet.adapter.out.persistence.entity.ManagementEntity
 import com.example.core.managemnet.adapter.out.persistence.repository.ManagementRepository
-import com.example.core.managemnet.application.port.command.AddManagementMemberCommand
+import com.example.core.managemnet.application.port.command.OfferCommand
 import com.example.core.managemnet.application.port.out.ManagementJpaPort
-import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
-import com.example.core.user.trainer.adapter.out.persistence.repository.TrainerRepository
+import com.example.domain.management.Management
+import com.example.domain.management.ManagementStatus
 import com.example.domain.user.MemberSummary
-import com.example.domain.user.Trainer
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
 class ManagementJpaAdapter(
     private val managementRepository: ManagementRepository,
-    private val memberRepository: MemberRepository,
 ) : ManagementJpaPort {
-    override fun create(trainer: Trainer) {
+    override fun create(command: OfferCommand) {
         val managementEntity = ManagementEntity(
-            trainerId = trainer.id,
+            trainerId = command.trainerId,
+            memberId = command.memberId,
+            status = ManagementStatus.OFFER,
+            endDate = command.endDate,
         )
         managementRepository.save(managementEntity)
     }
 
-    override fun addManagementMember(command: AddManagementMemberCommand) {
-        val member = memberRepository.findById(command.memberId).orElseThrow {
-            throw ServiceException(ErrorCode.MEMBER_NOT_FOUND)
-        }
-        managementRepository.findFromTrainerId(command.trainerId)?.addManagementMember(member)
+    override fun findByMemberIdAndTrainerId(command: OfferCommand): Management? {
+        return managementRepository.findByMemberIdAndTrainerId(command.memberId, command.trainerId)?.toDomain()
     }
 
-    override fun getManagementMember(trainerId: UUID): List<MemberSummary>? {
-        return managementRepository.findFromTrainerId(trainerId)?.let {
-            it.memberList.map { member -> member.toDomain().summary() }
+    override fun update(management: Management) {
+        getEntity(management.id).update(management)
+    }
+
+    override fun getManagement(managementId: Long): Management {
+        return getEntity(managementId).toDomain()
+    }
+
+    override fun getManagementMemberSummary(trainerId: UUID): List<MemberSummary>? {
+        return managementRepository.findActiveFromTrainerId(trainerId)?.let {
+            it.map { dto -> dto.toDomain().summary() }
+        }
+    }
+
+    override fun getManagementFromMember(memberId: UUID): List<Management>? {
+        return managementRepository.findByMemberId(memberId)?.map { it.toDomain() }
+    }
+
+    private fun getEntity(managementId: Long): ManagementEntity {
+        return managementRepository.findById(managementId).orElseThrow {
+            throw ServiceException(ErrorCode.NOT_FOUND_MANAGEMENT)
         }
     }
 }

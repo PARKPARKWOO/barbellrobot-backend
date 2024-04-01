@@ -1,7 +1,6 @@
 package com.example.core.user.member.adapter.out.persistence.entity
 
 import com.example.core.common.persistence.BaseEntity
-import com.example.core.managemnet.adapter.out.persistence.entity.ManagementEntity
 import com.example.core.user.UserEntity
 import com.example.domain.user.Gender
 import com.example.domain.user.Member
@@ -13,8 +12,6 @@ import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.SQLDelete
@@ -32,7 +29,8 @@ class MemberEntity(
     var nickname: String,
     @Column(name = "password")
     var password: String,
-    @Column(name = "provider") // 소셜로그인 시
+    // 소셜로그인 시
+    @Column(name = "provider")
     var provider: String?,
     @Embedded
     @AttributeOverrides(
@@ -51,9 +49,6 @@ class MemberEntity(
     var gender: Gender,
     @Column(name = "profile", nullable = true)
     var profile: String?,
-    @ManyToOne
-    @JoinColumn(name = "management_id")
-    var managementEntity: ManagementEntity?,
 ) : BaseEntity(), UserEntity {
     fun toDomain(): Member {
         return Member(
