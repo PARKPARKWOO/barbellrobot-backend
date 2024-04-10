@@ -8,11 +8,16 @@ import com.example.api.sign.adapter.`in`.request.SignUpTrainerWithEmailRequest
 import com.example.api.sign.adapter.`in`.request.VerifyAuthenticationNumberRequest
 import com.example.api.sign.adapter.`in`.request.toCommand
 import com.example.api.sign.adapter.`in`.response.SuccessAuthenticationResponse
+import com.example.api.sign.adapter.`in`.response.VerifyNicknameResponse
+import com.example.common.log.Log
 import com.example.core.sign.application.port.`in`.EmailVerifyUseCase
 import com.example.core.sign.application.port.`in`.SignUpMemberUseCase
 import com.example.core.sign.application.port.`in`.SignUpTrainerUseCase
+import com.example.core.sign.application.port.`in`.VerifyNicknameUseCase
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.Valid
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -24,8 +29,13 @@ class SignUpController(
     private val signUpMemberUseCase: SignUpMemberUseCase,
     private val signUpTrainerUseCase: SignUpTrainerUseCase,
     private val emailVerifyUseCase: EmailVerifyUseCase,
-) {
+    private val verifyNicknameUseCase: VerifyNicknameUseCase,
+) : Log {
     @PostMapping("/email/member")
+    @Operation(
+        summary = "일반 회원 회원가입",
+    )
+    @PublicEndPoint
     fun signUpMember(
         @RequestBody @Valid
         request: SignUpMemberWithEmailRequest,
@@ -35,6 +45,10 @@ class SignUpController(
     }
 
     @PostMapping("/email/trainer")
+    @PublicEndPoint
+    @Operation(
+        summary = "trainer 회원가입",
+    )
     fun signUpTrainer(
         @RequestBody @Valid
         request: SignUpTrainerWithEmailRequest,
@@ -70,6 +84,20 @@ class SignUpController(
     ): ApiResponse<Unit> {
         emailVerifyUseCase.sendVerifyEmail(request.toCommand())
         return ApiResponse(data = Unit)
+    }
+
+    @GetMapping("/verify/nickname/{nickname}")
+    @PublicEndPoint
+    @Operation(
+        summary = "회원 가입 시 nickname 검증",
+    )
+    fun verifyNickname(
+        @PathVariable("nickname")
+        nickname: String,
+    ): ApiResponse<VerifyNicknameResponse> {
+        log.info("nickname")
+        val response = VerifyNicknameResponse(canNickname = verifyNicknameUseCase.verifyNickname(nickname))
+        return ApiResponse(data = response)
     }
 
     @PostMapping("/kakao/member")

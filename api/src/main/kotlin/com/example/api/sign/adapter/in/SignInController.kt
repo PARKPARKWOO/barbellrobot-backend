@@ -4,6 +4,7 @@ import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
 import com.example.api.sign.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.sign.adapter.`in`.response.JwtResponse
+import com.example.common.log.Log
 import com.example.core.sign.application.port.`in`.SignInMemberUseCase
 import com.example.core.sign.application.port.`in`.SignInTrainerUseCase
 import io.swagger.v3.oas.annotations.Operation
@@ -19,11 +20,12 @@ import org.springframework.web.bind.annotation.RestController
 class SignInController(
     private val signInTrainerUseCase: SignInTrainerUseCase,
     private val signInMemberUseCase: SignInMemberUseCase,
-) {
+) : Log {
     @PostMapping("/email/trainer")
     @Operation(
         summary = "email 과 password 로 로그인",
     )
+    @PublicEndPoint
     fun signInTrainerWithEmail(
         @RequestBody
         request: SignInWithEmailRequest,
@@ -45,6 +47,7 @@ class SignInController(
         @RequestBody @Valid
         request: SignInWithEmailRequest,
     ): ApiResponse<JwtResponse> {
+        log.info("요청 들어옴")
         val result = signInMemberUseCase.signInWithEmail(request.toCommand())
         val response = JwtResponse(
             accessToken = result.accessToken,

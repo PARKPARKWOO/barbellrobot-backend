@@ -11,7 +11,6 @@ import java.util.UUID
 
 @Service
 class EmailService(
-//    private val emailPort: SendEmailPort,
     private val emailVerifyPort: EmailVerifyPort,
     private val sendEmailPort: SendEmailPort,
 ) : EmailVerifyUseCase {
