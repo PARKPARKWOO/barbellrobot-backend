@@ -10,6 +10,7 @@ import com.example.api.history.adapter.`in`.response.AttendanceResponse
 import com.example.api.history.adapter.`in`.response.ExerciseHistoryResponse
 import com.example.api.history.adapter.`in`.response.HistoryResponse
 import com.example.api.history.adapter.`in`.response.UserHistoryResponse
+import com.example.common.log.Log
 import com.example.core.history.application.port.`in`.GenerateHistoryUseCase
 import com.example.core.history.application.port.`in`.HistoryFacadeUseCase
 import com.example.core.history.application.port.`in`.HistoryQueryUseCase
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -30,7 +32,7 @@ class HistoryController(
     private val generateHistoryUseCase: GenerateHistoryUseCase,
     private val historyFacadeUseCase: HistoryFacadeUseCase,
     private val historyQueryUseCase: HistoryQueryUseCase,
-) {
+) : Log {
     @PostMapping("/attendance")
     @Operation(
         summary = "출석 api",
@@ -70,7 +72,7 @@ class HistoryController(
     suspend fun uploadDiet(
         @Parameter(hidden = true) @AuthenticationUser
         userInfo: UserInfo,
-        @RequestBody
+        @ModelAttribute
         request: AddDietRequest,
     ): ApiResponse<Unit> {
         historyFacadeUseCase.addDietToday(request.toCommand(userInfo.userId))
