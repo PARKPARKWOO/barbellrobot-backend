@@ -7,7 +7,3 @@ data class SendAuthenticationNumberRequest(
     @field:NotNull
     val email: String,
 )
-
-fun SendAuthenticationNumberRequest.toCommand(): SendVerifyEmailCommand {
-    return SendVerifyEmailCommand(email)
-}

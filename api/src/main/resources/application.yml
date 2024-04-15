@@ -22,6 +22,17 @@ spring:
       file-size-threshold: 0B
       max-file-size: 100MB
       max-request-size: 100MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_USERNAME:wy9295@gmail.com}
+    password: ${GMAIL_PASSWORD:password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 aws:
   s3:

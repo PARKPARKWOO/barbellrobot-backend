@@ -1,6 +1,6 @@
 package com.example.core.sign.application.port
 
-import com.example.core.sign.application.port.out.command.VerifyAuthenticationSuccessCommand
+import com.example.core.mail.application.port.out.command.VerifyAuthenticationSuccessCommand
 import com.example.domain.user.Gender
 
 interface SignUpUserWithEmailCommand {

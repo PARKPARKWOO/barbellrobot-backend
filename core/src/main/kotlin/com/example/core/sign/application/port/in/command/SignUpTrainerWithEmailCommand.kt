@@ -1,7 +1,7 @@
 package com.example.core.sign.application.port.`in`.command
 
 import com.example.core.sign.application.port.SignUpUserWithEmailCommand
-import com.example.core.sign.application.port.out.command.VerifyAuthenticationSuccessCommand
+import com.example.core.mail.application.port.out.command.VerifyAuthenticationSuccessCommand
 import com.example.core.user.trainer.application.port.command.SignUpTrainerCommand
 import com.example.domain.user.Gender
 import java.util.UUID

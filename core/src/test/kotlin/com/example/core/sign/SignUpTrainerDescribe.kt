@@ -2,7 +2,7 @@ package com.example.core.sign
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.sign.application.port.out.EmailVerifyPort
+import com.example.core.mail.application.port.out.EmailVerifyPort
 import com.example.core.sign.application.service.SignUpTrainerService
 import com.example.core.sign.util.MemberServiceTestUtil
 import com.example.core.sign.util.TrainerServiceTestUtil

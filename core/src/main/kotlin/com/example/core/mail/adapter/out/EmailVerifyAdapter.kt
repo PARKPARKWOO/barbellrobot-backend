@@ -1,18 +1,17 @@
-package com.example.core.sign.adapter.out
+package com.example.core.mail.adapter.out
 
 import com.example.common.generate.GenerateRandom
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.common.redis.RedisDriver
-import com.example.core.sign.application.port.`in`.command.SendVerifyEmailCommand
+import com.example.core.mail.application.port.out.EmailVerifyPort
+import com.example.core.mail.application.port.out.command.VerifyAuthenticationSuccessCommand
 import com.example.core.sign.application.port.`in`.command.VerifyEmailCommand
-import com.example.core.sign.application.port.out.EmailVerifyPort
-import com.example.core.sign.application.port.out.command.VerifyAuthenticationSuccessCommand
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class UserRedisAdapter(
+class EmailVerifyAdapter(
     private val redisDriver: RedisDriver,
 ) : EmailVerifyPort {
     override fun verifyEmail(command: VerifyEmailCommand): UUID {
@@ -27,12 +26,13 @@ class UserRedisAdapter(
         return authenticationSuccess
     }
 
-    override fun saveAuthenticationNumber(command: SendVerifyEmailCommand) {
+    override fun saveAuthenticationNumber(email: String): Int {
         val authenticationNumber = GenerateRandom.generateNumber(
             GENERATE_AUTHENTICATION_NUMBER_FROM,
             GENERATE_AUTHENTICATION_NUMBER_UNTIL,
         )
-        redisDriver.setValue(getVerifyKey(command.email), authenticationNumber.toString(), EMAIL_VERIFY_TTL)
+        redisDriver.setValue(getVerifyKey(email), authenticationNumber.toString(), EMAIL_VERIFY_TTL)
+        return authenticationNumber
     }
 
     override fun verifyAuthenticationSuccess(command: VerifyAuthenticationSuccessCommand) {

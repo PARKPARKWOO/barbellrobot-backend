@@ -84,7 +84,7 @@ class SignUpController(
         @RequestBody @Valid
         request: SendAuthenticationNumberRequest,
     ): ApiResponse<Unit> {
-        emailVerifyUseCase.sendVerifyEmail(request.toCommand())
+        emailVerifyUseCase.sendVerifyEmail(request.email)
         return ApiResponse(data = Unit)
     }
 

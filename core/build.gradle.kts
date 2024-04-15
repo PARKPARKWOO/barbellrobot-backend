@@ -50,6 +50,9 @@ dependencies {
 
     // uuid generator
     implementation("com.fasterxml.uuid:java-uuid-generator:5.0.0")
+
+    // mail
+    implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
 }
 
 dependencyManagement {

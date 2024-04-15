@@ -1,4 +1,4 @@
-package com.example.core.sign.application.port.out.command
+package com.example.core.mail.application.port.out.command
 
 import java.util.UUID
 

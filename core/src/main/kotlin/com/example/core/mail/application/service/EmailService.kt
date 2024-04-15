@@ -1,10 +1,10 @@
-package com.example.core.sign.application.service
+package com.example.core.mail.application.service
 
+import com.example.core.mail.application.port.out.EmailVerifyPort
+import com.example.core.mail.application.port.out.SendEmailPort
 import com.example.core.sign.application.port.`in`.EmailVerifyUseCase
 import com.example.core.sign.application.port.`in`.command.SendVerifyEmailCommand
 import com.example.core.sign.application.port.`in`.command.VerifyEmailCommand
-import com.example.core.sign.application.port.out.EmailVerifyPort
-import com.example.core.sign.application.port.out.SendEmailPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -20,8 +20,12 @@ class EmailService(
     }
 
     @Transactional
-    override fun sendVerifyEmail(command: SendVerifyEmailCommand) {
-        emailVerifyPort.saveAuthenticationNumber(command)
-        sendEmailPort.sendAuthenticationNumber(command)
+    override fun sendVerifyEmail(email: String) {
+        val authenticationNumber = emailVerifyPort.saveAuthenticationNumber(email)
+        val sendVerifyEmailCommand = SendVerifyEmailCommand(
+            email = email,
+            authenticationNumber = authenticationNumber,
+        )
+        sendEmailPort.sendAuthenticationNumber(sendVerifyEmailCommand)
     }
 }
