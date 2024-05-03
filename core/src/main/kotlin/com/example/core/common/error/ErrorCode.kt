@@ -15,6 +15,7 @@ enum class ErrorCode(
     NO_BEARER_TOKEN(""),
     EXPIRED_JWT(""),
     PARSE_JWT_FAILED(""),
+    REISSUE_JWT_TOKEN_FAILURE(""),
 
     // resolver error
     AUTHENTICATION_RESOLVER_ERROR("authentication resolver error 에서 발생 하였습니다."),

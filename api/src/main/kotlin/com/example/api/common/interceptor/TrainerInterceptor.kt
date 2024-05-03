@@ -20,7 +20,7 @@ class TrainerInterceptor(
             return true
         }
         val token = request.getBearerTokenFromHeader()
-        val claim = jwtTokenService.parse(token)
+        val claim = jwtTokenService.parseAccessToken(token)
         if (claim[DomainConstants.USER_ROLE] != Role.ROLE_TRAINER) {
             throw ServiceException(ErrorCode.NOT_GRANT_TRAINER_ROLE)
         }

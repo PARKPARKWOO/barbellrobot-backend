@@ -5,4 +5,8 @@ import com.example.core.sign.application.port.`in`.command.SignInWithEmailComman
 
 interface SignInUserUseCase {
     fun signInWithEmail(command: SignInWithEmailCommand): JwtResponseDto
+
+    fun findUser(command: SignInWithEmailCommand): Map<String, Any>
+
+    fun reissueToken(refreshToken: String): JwtResponseDto
 }

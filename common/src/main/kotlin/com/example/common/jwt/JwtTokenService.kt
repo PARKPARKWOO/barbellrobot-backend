@@ -65,7 +65,7 @@ class JwtTokenService(
             .compact()
     }
 
-    fun parse(token: String): Map<String, Any> {
+    fun parseAccessToken(token: String): Map<String, Any> {
         return try {
             Jwts.parserBuilder()
                 .setSigningKey(accessTokenSecretKey)
@@ -76,6 +76,20 @@ class JwtTokenService(
             throw com.example.common.exception.ExpiredJwtException(e.message.toString())
         } catch (e: JwtException) {
             throw ParseJwtFailedException("failed to parse jwt: $token ")
+        }
+    }
+
+    fun parseRefreshToken(refreshToken: String): Map<String, Any> {
+        return try {
+            Jwts.parserBuilder()
+                .setSigningKey(refreshTokenSecretKey)
+                .build()
+                .parseClaimsJws(refreshToken)
+                .body
+        } catch (e: ExpiredJwtException) {
+            throw com.example.common.exception.ExpiredJwtException(e.message.toString())
+        } catch (e: JwtException) {
+            throw ParseJwtFailedException("failed to parse jwt: $refreshToken ")
         }
     }
 

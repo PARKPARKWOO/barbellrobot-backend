@@ -2,11 +2,13 @@ package com.example.api.sign.adapter.`in`
 
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
+import com.example.api.sign.adapter.`in`.request.ReissueTokenRequest
 import com.example.api.sign.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.sign.adapter.`in`.response.JwtResponse
 import com.example.common.log.Log
 import com.example.core.sign.application.port.`in`.SignInMemberUseCase
 import com.example.core.sign.application.port.`in`.SignInTrainerUseCase
+import com.example.core.sign.application.service.AbstractSignInService
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 class SignInController(
     private val signInTrainerUseCase: SignInTrainerUseCase,
     private val signInMemberUseCase: SignInMemberUseCase,
+    private val abstractSignInService: AbstractSignInService,
 ) : Log {
     @PostMapping("/email/trainer")
     @Operation(
@@ -30,11 +33,7 @@ class SignInController(
         @RequestBody
         request: SignInWithEmailRequest,
     ): ApiResponse<JwtResponse> {
-        val result = signInTrainerUseCase.signInWithEmail(request.toCommand())
-        val response = JwtResponse(
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-        )
+        val response = JwtResponse.from(signInTrainerUseCase.signInWithEmail(request.toCommand()))
         return ApiResponse(data = response)
     }
 
@@ -48,11 +47,20 @@ class SignInController(
         request: SignInWithEmailRequest,
     ): ApiResponse<JwtResponse> {
         log.info("요청 들어옴")
-        val result = signInMemberUseCase.signInWithEmail(request.toCommand())
-        val response = JwtResponse(
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-        )
+        val response = JwtResponse.from(signInMemberUseCase.signInWithEmail(request.toCommand()))
+        return ApiResponse(data = response)
+    }
+
+    @PostMapping("/reissue")
+    @Operation(
+        summary = "JWT Token 재발급",
+    )
+    @PublicEndPoint
+    fun reissueToken(
+        @RequestBody
+        request: ReissueTokenRequest,
+    ): ApiResponse<JwtResponse> {
+        val response = JwtResponse.from(abstractSignInService.reissueToken(request.refreshToken))
         return ApiResponse(data = response)
     }
 }

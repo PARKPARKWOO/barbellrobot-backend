@@ -27,7 +27,7 @@ class JwtTokenInterceptor(
             return true
         }
         val token = request.getBearerTokenFromHeader()
-        val claim = jwtTokenService.parse(token)
+        val claim = jwtTokenService.parseAccessToken(token)
         request.setAttribute(DomainConstants.USER_ID, claim[DomainConstants.USER_ID])
         request.setAttribute(DomainConstants.USER_ROLE, claim[DomainConstants.USER_ROLE])
         return true
