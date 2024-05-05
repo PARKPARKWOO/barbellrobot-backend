@@ -1,5 +1,6 @@
 package com.example.api.common.interceptor
 
+import com.example.api.common.annotation.OnlyTrainer
 import com.example.common.jwt.JwtTokenService
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
+import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
 
 @Component
@@ -19,6 +21,8 @@ class TrainerInterceptor(
         if (request.method.equals(HttpMethod.OPTIONS.name())) {
             return true
         }
+        val handlerMethod = handler as? HandlerMethod
+        handlerMethod?.getMethodAnnotation(OnlyTrainer::class.java) ?: return true
         val token = request.getBearerTokenFromHeader()
         val claim = jwtTokenService.parseAccessToken(token)
         if (claim[DomainConstants.USER_ROLE] != Role.ROLE_TRAINER) {

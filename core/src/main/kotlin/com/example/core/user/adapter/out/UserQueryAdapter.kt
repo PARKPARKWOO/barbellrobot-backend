@@ -33,4 +33,15 @@ class UserQueryAdapter(
                 .where(QTrainerEntity.trainerEntity.id.eq(userId))
                 .fetchOne()?.toUserEntity()
     }
+
+    override fun findByEmail(email: String): UserEntity? {
+        return jpaQueryFactory.select(QMemberEntity.memberEntity)
+            .from(QMemberEntity.memberEntity)
+            .where(QMemberEntity.memberEntity.email.eq(email))
+            .fetchOne()?.toUserEntity()
+            ?: jpaQueryFactory.select(QTrainerEntity.trainerEntity)
+                .from(QTrainerEntity.trainerEntity)
+                .where(QTrainerEntity.trainerEntity.email.eq(email))
+                .fetchOne()?.toUserEntity()
+    }
 }

@@ -7,6 +7,4 @@ interface SignInUserUseCase {
     fun signInWithEmail(command: SignInWithEmailCommand): JwtResponseDto
 
     fun findUser(command: SignInWithEmailCommand): Map<String, Any>
-
-    fun reissueToken(refreshToken: String): JwtResponseDto
 }

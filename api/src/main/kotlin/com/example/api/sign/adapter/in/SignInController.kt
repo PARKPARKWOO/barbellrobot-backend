@@ -6,6 +6,7 @@ import com.example.api.sign.adapter.`in`.request.ReissueTokenRequest
 import com.example.api.sign.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.sign.adapter.`in`.response.JwtResponse
 import com.example.common.log.Log
+import com.example.core.jwt.application.port.`in`.JwtReissueUseCase
 import com.example.core.sign.application.port.`in`.SignInMemberUseCase
 import com.example.core.sign.application.port.`in`.SignInTrainerUseCase
 import com.example.core.sign.application.service.AbstractSignInService
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController
 class SignInController(
     private val signInTrainerUseCase: SignInTrainerUseCase,
     private val signInMemberUseCase: SignInMemberUseCase,
-    private val abstractSignInService: AbstractSignInService,
+    private val reissueUseCase: JwtReissueUseCase,
 ) : Log {
     @PostMapping("/email/trainer")
     @Operation(
@@ -60,7 +61,7 @@ class SignInController(
         @RequestBody
         request: ReissueTokenRequest,
     ): ApiResponse<JwtResponse> {
-        val response = JwtResponse.from(abstractSignInService.reissueToken(request.refreshToken))
+        val response = JwtResponse.from(reissueUseCase.reissueToken(request.refreshToken))
         return ApiResponse(data = response)
     }
 }

@@ -26,6 +26,7 @@ enum class ErrorCode(
     DUPLICATE_NICKNAME("nickname 이 중복됩니다."),
     SIGN_UP_COMMAND_TYPE_CASTING_ERROR("회원가입시 command 형변환 실패 하였습니다"),
     MEMBER_GOAL_NOT_FOUND("member 의 goal 이 생성되지 않았습니다."),
+    DUPLICATE_EMAIL("중복된 이메일 입니다."),
 
     // trainer
     TRAINER_NOT_FOUND("trainer 를 찾을 수 없습니다."),
