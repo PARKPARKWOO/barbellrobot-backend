@@ -16,6 +16,8 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 1000
+    show-sql: true
+
   servlet:
     multipart:
       enabled: true

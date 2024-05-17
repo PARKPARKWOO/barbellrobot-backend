@@ -4,18 +4,14 @@ import com.example.core.history.adapter.out.persistence.entity.QDietFoodEntity.d
 import com.example.core.history.adapter.out.persistence.entity.QDietImageEntity.dietImageEntity
 import com.example.core.history.adapter.out.persistence.entity.QExerciseHistoryEntity.exerciseHistoryEntity
 import com.example.core.history.adapter.out.persistence.entity.QUserHistoryEntity.userHistoryEntity
-import com.example.core.history.adapter.out.persistence.entity.QUserHistoryImageEntity
 import com.example.core.history.adapter.out.persistence.entity.QUserHistoryImageEntity.userHistoryImageEntity
-import com.example.core.history.adapter.out.persistence.entity.QUserHistoryVideoEntity
 import com.example.core.history.adapter.out.persistence.entity.QUserHistoryVideoEntity.userHistoryVideoEntity
 import com.example.core.history.adapter.out.persistence.entity.UserHistoryEntity
 import com.example.core.history.dto.HistoryResponseDto
 import com.example.core.history.dto.QDietFoodQueryDto
 import com.example.core.history.dto.QDietImageQueryDto
 import com.example.core.history.dto.QExerciseHistoryResponseDto
-import com.example.core.history.dto.QUserHistoryQueryDto
 import com.example.core.history.dto.UserHistoryResponseDto
-import com.querydsl.core.types.ExpressionUtils
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
@@ -53,17 +49,18 @@ class UserHistoryQueryRepositoryImpl(
 //            .where(betweenDate(startDate, endDate).and(userHistoryEntity.userId.eq(userId)))
 //            .fetch()
         // subquery image video 혹은 다른방법
-        val userQueryDto = jpaQueryFactory.select(userHistoryEntity)
-            .from(userHistoryEntity)
-            .leftJoin(userHistoryImageEntity)
-            .on(userHistoryImageEntity.userHistoryEntity.id.eq(userId))
-            .leftJoin(userHistoryVideoEntity)
-            .on(userHistoryVideoEntity.userHistoryEntity.id.eq(userId))
-            .where(betweenDate(startDate, endDate).and(userHistoryEntity.userId.eq(userId)))
+        // Fetch UserHistory with related images and videos in one query
+        // Fetch UserHistories
+// Fetch UserHistories
+        val userHistories: List<UserHistoryEntity> = jpaQueryFactory
+            .selectFrom(userHistoryEntity)
+            .where(
+                betweenDate(startDate, endDate).and(userHistoryEntity.userId.eq(userId)),
+            )
             .fetch()
 
-        // userDietFood Query
-        val dietFoodResult = jpaQueryFactory.select(
+// Fetch diet foods
+        val dietFoods = jpaQueryFactory.select(
             QDietFoodQueryDto(
                 userHistoryEntity.id,
                 dietFoodEntity.food,
@@ -74,8 +71,8 @@ class UserHistoryQueryRepositoryImpl(
             .where(userHistoryEntity.userId.eq(userId))
             .fetch()
 
-        // userDietImage Query(get Image)
-        val dietImageResult = jpaQueryFactory.select(
+// Fetch diet images
+        val dietImages = jpaQueryFactory.select(
             QDietImageQueryDto(
                 userHistoryEntity.id,
                 dietImageEntity.image,
@@ -86,8 +83,21 @@ class UserHistoryQueryRepositoryImpl(
             .where(userHistoryEntity.userId.eq(userId))
             .fetch()
 
-        // userExerciseHistory Query
-        val exerciseHistoryDto = jpaQueryFactory.select(
+// Fetch user history images
+        val userHistoryImages = jpaQueryFactory.select(userHistoryImageEntity)
+            .from(userHistoryImageEntity)
+            .where(userHistoryImageEntity.userHistoryEntity.id.`in`(userHistories.map { it.id }))
+            .fetch()
+
+// Fetch user history videos
+        val userHistoryVideos = jpaQueryFactory.selectFrom(
+            userHistoryVideoEntity,
+        ).from(userHistoryVideoEntity)
+            .where(userHistoryVideoEntity.userHistoryEntity.id.`in`(userHistories.map { it.id }))
+            .fetch()
+
+// Fetch exercise histories
+        val exerciseHistories = jpaQueryFactory.select(
             QExerciseHistoryResponseDto(
                 exerciseHistoryEntity.id,
                 exerciseHistoryEntity.itemId,
@@ -97,31 +107,34 @@ class UserHistoryQueryRepositoryImpl(
                 exerciseHistoryEntity.createdAt,
             ),
         ).from(exerciseHistoryEntity)
-            .where(exerciseHistoryEntity.userHistoryId.`in`(userQueryDto.map { it.id }))
+            .where(exerciseHistoryEntity.userHistoryId.`in`(userHistories.map { it.id }))
             .fetch()
-        // queryDto -> responseDto
-        val userHistoryResponseDtos = userQueryDto.map { userHistory ->
-            // 해당 UserHistory에 대응하는 DietFood와 DietImage 찾기
-            val correspondingDietFoods = dietFoodResult.filter { it.historyId == userHistory.id }
-            val correspondingDietImages = dietImageResult.filter { it.historyId == userHistory.id }
 
-            // UserHistoryResponseDto 생성
+// Group data by userHistoryId
+        val dietFoodMap = dietFoods.groupBy { it.historyId }
+        val dietImageMap = dietImages.groupBy { it.historyId }
+        val userHistoryImageMap = userHistoryImages.groupBy { it.userHistoryEntity.id }
+        val userHistoryVideoMap = userHistoryVideos.groupBy { it.userHistoryEntity.id }
+        val exerciseHistoryMap = exerciseHistories.groupBy { it.userHistoryId }
+
+// Map to UserHistoryResponseDto
+        val userHistoryResponseDtos = userHistories.map { userHistory ->
             UserHistoryResponseDto(
                 id = userHistory.id,
                 today = userHistory.today,
                 attendance = userHistory.attendance,
-                dietFoodDtos = correspondingDietFoods,
-                dietImageDtos = correspondingDietImages,
-                todayImages = userHistory.todayImages,
-                todayVideo = userHistory.todayVideo,
+                dietFoodDtos = dietFoodMap[userHistory.id] ?: emptyList(),
+                dietImageDtos = dietImageMap[userHistory.id] ?: emptyList(),
+                todayImages =  userHistoryImageMap[userHistory.id]?.map { it.imageUrl } ?: emptyList(),
+                todayVideo = userHistoryVideoMap[userHistory.id]?.map { it.videoUrl } ?: emptyList(),
             )
         }
+
+// Return final result with exercise histories
         return userHistoryResponseDtos.map { dto ->
             HistoryResponseDto(
                 userHistoryResponseDto = dto,
-                exerciseHistoryResponseDto = exerciseHistoryDto.filter {
-                    it.userHistoryId == dto.id
-                },
+                exerciseHistoryResponseDto = exerciseHistoryMap[dto.id] ?: emptyList(),
             )
         }
     }
