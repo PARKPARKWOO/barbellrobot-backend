@@ -4,6 +4,10 @@ import com.example.core.history.adapter.out.persistence.entity.QDietFoodEntity.d
 import com.example.core.history.adapter.out.persistence.entity.QDietImageEntity.dietImageEntity
 import com.example.core.history.adapter.out.persistence.entity.QExerciseHistoryEntity.exerciseHistoryEntity
 import com.example.core.history.adapter.out.persistence.entity.QUserHistoryEntity.userHistoryEntity
+import com.example.core.history.adapter.out.persistence.entity.QUserHistoryImageEntity
+import com.example.core.history.adapter.out.persistence.entity.QUserHistoryImageEntity.userHistoryImageEntity
+import com.example.core.history.adapter.out.persistence.entity.QUserHistoryVideoEntity
+import com.example.core.history.adapter.out.persistence.entity.QUserHistoryVideoEntity.userHistoryVideoEntity
 import com.example.core.history.adapter.out.persistence.entity.UserHistoryEntity
 import com.example.core.history.dto.HistoryResponseDto
 import com.example.core.history.dto.QDietFoodQueryDto
@@ -11,6 +15,7 @@ import com.example.core.history.dto.QDietImageQueryDto
 import com.example.core.history.dto.QExerciseHistoryResponseDto
 import com.example.core.history.dto.QUserHistoryQueryDto
 import com.example.core.history.dto.UserHistoryResponseDto
+import com.querydsl.core.types.ExpressionUtils
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
@@ -47,17 +52,16 @@ class UserHistoryQueryRepositoryImpl(
 //                .or(multimediaEntity.id.`in`(userHistoryEntity.todayVideo)))
 //            .where(betweenDate(startDate, endDate).and(userHistoryEntity.userId.eq(userId)))
 //            .fetch()
-        val userQueryDto = jpaQueryFactory.select(
-            QUserHistoryQueryDto(
-                userHistoryEntity.id,
-                userHistoryEntity.today,
-                userHistoryEntity.attendance,
-                userHistoryEntity.todayImageIds,
-                userHistoryEntity.todayVideo,
-            ),
-        ).from(userHistoryEntity)
+        // subquery image video 혹은 다른방법
+        val userQueryDto = jpaQueryFactory.select(userHistoryEntity)
+            .from(userHistoryEntity)
+            .leftJoin(userHistoryImageEntity)
+            .on(userHistoryImageEntity.userHistoryEntity.id.eq(userId))
+            .leftJoin(userHistoryVideoEntity)
+            .on(userHistoryVideoEntity.userHistoryEntity.id.eq(userId))
             .where(betweenDate(startDate, endDate).and(userHistoryEntity.userId.eq(userId)))
             .fetch()
+
         // userDietFood Query
         val dietFoodResult = jpaQueryFactory.select(
             QDietFoodQueryDto(
@@ -123,5 +127,5 @@ class UserHistoryQueryRepositoryImpl(
     }
 
     private fun betweenDate(startDate: LocalDate, endDate: LocalDate) =
-        userHistoryEntity.today.between(startDate, endDate)
+        userHistoryEntity.today.goe(startDate).and(userHistoryEntity.today.lt(endDate.plusDays(1)))
 }

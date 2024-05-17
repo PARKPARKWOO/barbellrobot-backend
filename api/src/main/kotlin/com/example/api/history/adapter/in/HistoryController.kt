@@ -110,7 +110,7 @@ class HistoryController(
         @Parameter(hidden = true) @AuthenticationUser
         userInfo: UserInfo,
     ): ApiResponse<List<HistoryResponse>> {
-        val response = historyQueryUseCase.getHistoryFromWeek(userInfo.userId)?.map { historyDto ->
+        val response = historyQueryUseCase.getHistoryFromMonth(userInfo.userId)?.map { historyDto ->
             HistoryResponse(
                 userHistoryResponse = UserHistoryResponse.from(historyDto.userHistoryResponseDto),
                 exerciseHistoryResponse = historyDto.exerciseHistoryResponseDto?.map {

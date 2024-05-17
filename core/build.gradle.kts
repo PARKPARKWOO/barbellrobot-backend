@@ -6,6 +6,10 @@ allOpen {
     annotation("jakarta.persistence.MappedSuperclass")
 }
 
+repositories {
+    maven { url = uri("https://repo.spring.io/milestone") }
+}
+
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
@@ -53,11 +57,17 @@ dependencies {
 
     // mail
     implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
+
+    // gemini
+//    implementation("io.springboot.ai:spring-ai-vertex-ai-gemini-spring-boot-starter:1.0.3")
 }
+
+extra["springAiVersion"] = "0.8.1"
 
 dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
     }
 }
 

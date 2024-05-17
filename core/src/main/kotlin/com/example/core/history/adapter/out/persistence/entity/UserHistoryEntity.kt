@@ -1,12 +1,9 @@
 package com.example.core.history.adapter.out.persistence.entity
 
 import com.example.domain.history.UserHistory
-import jakarta.persistence.CollectionTable
 import jakarta.persistence.Column
-import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
 import jakarta.persistence.Table
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.JdbcTypeCode
@@ -38,14 +35,6 @@ class UserHistoryEntity(
     var userId: UUID,
     @Column(name = "attendance")
     var attendance: Boolean = true,
-    @Column(name = "today_images")
-    @ElementCollection
-    @CollectionTable(name = "user_history_today_images", joinColumns = [JoinColumn(name = "user_history_id")])
-    var todayImageIds: MutableList<String> = mutableListOf(),
-    @Column(name = "today_video")
-    @ElementCollection
-    @CollectionTable(name = "user_history_today_video", joinColumns = [JoinColumn(name = "user_history_id")])
-    var todayVideo: MutableList<String> = mutableListOf(),
 ) {
     @Column(name = "updated_at")
     @LastModifiedDate
@@ -57,9 +46,7 @@ class UserHistoryEntity(
             id = id,
             userId = userId,
             createdAt = today,
-            todayVideo = todayVideo,
             updatedAt = updatedAt,
-            todayImages = todayImageIds,
         )
     }
 }
