@@ -59,7 +59,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
 
     // gemini
-//    implementation("io.springboot.ai:spring-ai-vertex-ai-gemini-spring-boot-starter:1.0.3")
+    implementation("io.springboot.ai:spring-ai-vertex-ai-gemini-spring-boot-starter:1.0.3")
 }
 
 extra["springAiVersion"] = "0.8.1"

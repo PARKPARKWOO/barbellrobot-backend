@@ -44,6 +44,9 @@ enum class ErrorCode(
     // history
     NOT_FOUND_USER_HISTORY("오늘 history를 찾을 수 없습니다"),
 
+    // prompt
+    NOT_FOUND_PROMPT("prompt 를 찾을 수 없습니다"),
+
     // unknown
     UN_KNOWN_EXCEPTION("알수 없는 에러가 발생 하였습니다."),
 }

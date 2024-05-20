@@ -17,11 +17,11 @@ import java.util.UUID
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-class BaseEntity {
+abstract class BaseEntity {
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    var id: UUID = Generators.timeBasedEpochGenerator().generate()
+    val id: UUID = Generators.timeBasedEpochGenerator().generate()
 
     @Column(name = "created_at")
     @CreatedDate

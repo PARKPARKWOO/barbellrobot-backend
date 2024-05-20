@@ -50,6 +50,24 @@ class MemberEntity(
     @Column(name = "profile", nullable = true)
     var profile: String?,
 ) : BaseEntity(), UserEntity {
+    companion object {
+        fun from(domain: Member): MemberEntity = MemberEntity(
+            email = domain.email,
+            nickname = domain.nickname,
+            password = domain.password,
+            profile = domain.profile,
+            memberInfo = MemberInfo(
+                tall = domain.tall,
+                weight = domain.weight,
+                skeletalMuscleMass = domain.skeletalMuscleMass,
+                age = domain.age,
+                exerciseMonths = domain.exerciseMonths,
+            ),
+            provider = domain.provider,
+            role = domain.role,
+            gender = domain.gender,
+        )
+    }
     fun toDomain(): Member {
         return Member(
             id = this.id,

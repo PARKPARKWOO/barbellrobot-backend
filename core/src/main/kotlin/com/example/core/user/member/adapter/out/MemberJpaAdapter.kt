@@ -9,6 +9,7 @@ import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
 import com.example.core.user.member.application.out.MemberJpaPort
+import com.example.core.user.member.dto.MemberAndGoalQueryDto
 import com.example.domain.user.Member
 import com.example.domain.user.Role
 import org.springframework.stereotype.Component
@@ -56,6 +57,10 @@ class MemberJpaAdapter(
 
     override fun update(member: Member) {
         getEntity(member.id).update(member)
+    }
+
+    override fun getMemberAndGoal(id: UUID): MemberAndGoalQueryDto? {
+        return memberRepository.findMemberAndGoal(id)
     }
 
     private fun getEntity(id: UUID): MemberEntity {

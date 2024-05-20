@@ -56,8 +56,8 @@ class HistoryService(
     }
 
     /**
-     * 주의 시작은 월요일,
-     * 주의 마지막은 일요일
+     * 시작은 월요일,
+     * 마지막은 일요일
      */
     private fun getStartOfWeek(today: LocalDate) =
         today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))

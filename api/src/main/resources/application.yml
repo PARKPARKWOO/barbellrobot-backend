@@ -40,6 +40,7 @@ spring:
       ai:
         gemini:
           project-id: ${GEMINI_PROJECT_ID}
+          location: ${GEMINI_LOCATION}
 
 aws:
   s3:
