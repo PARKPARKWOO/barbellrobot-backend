@@ -13,7 +13,7 @@ import com.example.core.user.member.application.out.MemberJpaPort
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.util.UUID
 
 @Service
 class MemberService(

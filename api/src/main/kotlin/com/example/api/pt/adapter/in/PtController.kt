@@ -5,6 +5,7 @@ import com.example.api.common.config.SwaggerConfig
 import com.example.api.common.resolver.UserInfo
 import com.example.api.common.response.ApiResponse
 import com.example.api.pt.adapter.`in`.request.GeneratePtRequest
+import com.example.api.pt.adapter.`in`.response.GeneratePtResponse
 import com.example.core.pt.application.port.`in`.GeneratePtUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -30,8 +31,10 @@ class PtController(
         userInfo: UserInfo,
         @RequestBody
         request: GeneratePtRequest,
-    ): ApiResponse<String> {
-        val response = ptUseCase.generatePt(request.toCommand(userInfo.userId))
+    ): ApiResponse<GeneratePtResponse> {
+        val response = GeneratePtResponse(
+            content = ptUseCase.generatePt(request.toCommand(userInfo.userId)),
+        )
         return ApiResponse(data = response)
     }
 }

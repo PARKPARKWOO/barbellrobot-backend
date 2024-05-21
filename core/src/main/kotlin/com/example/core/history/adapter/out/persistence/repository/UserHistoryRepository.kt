@@ -70,7 +70,6 @@ class UserHistoryQueryRepositoryImpl(
             .leftJoin(userHistoryEntity).on(userHistoryEntity.id.eq(dietFoodEntity.historyId))
             .where(userHistoryEntity.userId.eq(userId))
             .fetch()
-
 // Fetch diet images
         val dietImages = jpaQueryFactory.select(
             QDietImageQueryDto(
@@ -82,20 +81,17 @@ class UserHistoryQueryRepositoryImpl(
             .leftJoin(userHistoryEntity).on(userHistoryEntity.id.eq(dietImageEntity.historyId))
             .where(userHistoryEntity.userId.eq(userId))
             .fetch()
-
 // Fetch user history images
         val userHistoryImages = jpaQueryFactory.select(userHistoryImageEntity)
             .from(userHistoryImageEntity)
             .where(userHistoryImageEntity.userHistoryEntity.id.`in`(userHistories.map { it.id }))
             .fetch()
-
 // Fetch user history videos
         val userHistoryVideos = jpaQueryFactory.selectFrom(
             userHistoryVideoEntity,
         ).from(userHistoryVideoEntity)
             .where(userHistoryVideoEntity.userHistoryEntity.id.`in`(userHistories.map { it.id }))
             .fetch()
-
 // Fetch exercise histories
         val exerciseHistories = jpaQueryFactory.select(
             QExerciseHistoryResponseDto(
@@ -109,14 +105,12 @@ class UserHistoryQueryRepositoryImpl(
         ).from(exerciseHistoryEntity)
             .where(exerciseHistoryEntity.userHistoryId.`in`(userHistories.map { it.id }))
             .fetch()
-
 // Group data by userHistoryId
         val dietFoodMap = dietFoods.groupBy { it.historyId }
         val dietImageMap = dietImages.groupBy { it.historyId }
         val userHistoryImageMap = userHistoryImages.groupBy { it.userHistoryEntity.id }
         val userHistoryVideoMap = userHistoryVideos.groupBy { it.userHistoryEntity.id }
         val exerciseHistoryMap = exerciseHistories.groupBy { it.userHistoryId }
-
 // Map to UserHistoryResponseDto
         val userHistoryResponseDtos = userHistories.map { userHistory ->
             UserHistoryResponseDto(
@@ -125,11 +119,10 @@ class UserHistoryQueryRepositoryImpl(
                 attendance = userHistory.attendance,
                 dietFoodDtos = dietFoodMap[userHistory.id] ?: emptyList(),
                 dietImageDtos = dietImageMap[userHistory.id] ?: emptyList(),
-                todayImages =  userHistoryImageMap[userHistory.id]?.map { it.imageUrl } ?: emptyList(),
+                todayImages = userHistoryImageMap[userHistory.id]?.map { it.imageUrl } ?: emptyList(),
                 todayVideo = userHistoryVideoMap[userHistory.id]?.map { it.videoUrl } ?: emptyList(),
             )
         }
-
 // Return final result with exercise histories
         return userHistoryResponseDtos.map { dto ->
             HistoryResponseDto(

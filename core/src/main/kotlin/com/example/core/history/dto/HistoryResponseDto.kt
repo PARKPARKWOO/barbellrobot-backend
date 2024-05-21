@@ -31,15 +31,6 @@ data class UserHistoryQueryDto
         var todayImages: List<UserHistoryImageQueryDto>?,
         var todayVideo: List<UserHistoryVideoQueryDto>?,
     )
-    {
-        fun addImage(dto: List<UserHistoryImageQueryDto>?) {
-            todayImages = dto
-        }
-
-        fun addVideo(dto: List<UserHistoryVideoQueryDto>?) {
-            todayVideo = dto
-        }
-    }
 
 data class UserHistoryImageQueryDto
     @QueryProjection

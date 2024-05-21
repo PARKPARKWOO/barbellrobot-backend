@@ -16,23 +16,25 @@ class PtService(
     private val ptJpaPort: PtJpaPort,
 ) : GeneratePtUseCase {
     override fun generatePt(command: GeneratePtCommand): String {
-        val memberAndGoal = memberUseCase.getMemberAndGoal(command.memberId)
-        val callPtCommand = CallPtCommand(
-            goal = memberAndGoal.goal,
-            exerciseMonths = memberAndGoal.exerciseMonths,
-            tall = memberAndGoal.tall,
-            weight = memberAndGoal.weight,
-            age = memberAndGoal.age,
-            gender = memberAndGoal.gender,
-            day = command.day,
-            time = command.time,
-        )
-        val response = geminiUseCase.callPt(callPtCommand)
-        val savePtCommand = SavePtCommand(
-            memberId = command.memberId,
-            content = response,
-        )
-        ptJpaPort.save(savePtCommand)
-        return response
+        return ptJpaPort.findByThisWeek(command.memberId)?.content ?: run {
+            val memberAndGoal = memberUseCase.getMemberAndGoal(command.memberId)
+            val callPtCommand = CallPtCommand(
+                goal = memberAndGoal.goal,
+                exerciseMonths = memberAndGoal.exerciseMonths,
+                tall = memberAndGoal.tall,
+                weight = memberAndGoal.weight,
+                age = memberAndGoal.age,
+                gender = memberAndGoal.gender,
+                day = command.day,
+                time = command.time,
+            )
+            val response = geminiUseCase.callPt(callPtCommand)
+            val savePtCommand = SavePtCommand(
+                memberId = command.memberId,
+                content = response,
+            )
+            ptJpaPort.save(savePtCommand)
+            return response
+        }
     }
 }

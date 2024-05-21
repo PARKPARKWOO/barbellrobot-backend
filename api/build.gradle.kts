@@ -18,6 +18,9 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
 
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.666")
+
+    // encryption
+    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
 }
 
 dependencyManagement {
