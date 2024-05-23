@@ -7,7 +7,9 @@ allOpen {
 }
 
 repositories {
+    mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
+    maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
 dependencies {
@@ -59,7 +61,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
 
     // gemini
-    implementation("io.springboot.ai:spring-ai-vertex-ai-gemini-spring-boot-starter:1.0.3")
+    implementation("org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter")
+//    implementation("org.springframework.ai:spring-ai-bom:0.8.1-SNAPSHOT")
 }
 
 extra["springAiVersion"] = "0.8.1"

@@ -52,8 +52,8 @@ object PromptUtil {
                     }
                 ]
             ],
-            warn : {주의 사항}
-            ,tip : {}
+            warn : {주의 사항},
+            tip : {}
             }
             """.trimIndent()
     }

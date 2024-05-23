@@ -1,3 +1,9 @@
+repositories {
+    mavenCentral()
+    maven { url = uri("https://repo.spring.io/milestone") }
+    maven { url = uri("https://repo.spring.io/snapshot") }
+}
+
 dependencies {
     implementation(project(":core"))
     implementation(project(":common"))
@@ -23,8 +29,11 @@ dependencies {
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
 }
 
+extra["springAiVersion"] = "0.8.1"
+
 dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
     }
 }
