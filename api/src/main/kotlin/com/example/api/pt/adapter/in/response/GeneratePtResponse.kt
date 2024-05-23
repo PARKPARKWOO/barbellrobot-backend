@@ -3,7 +3,6 @@ package com.example.api.pt.adapter.`in`.response
 import com.example.domain.pt.Day
 import com.example.domain.pt.Exercise
 import com.example.domain.pt.PtConsulting
-import java.util.*
 
 data class GeneratePtResponse(
     val greetingMessage: String,

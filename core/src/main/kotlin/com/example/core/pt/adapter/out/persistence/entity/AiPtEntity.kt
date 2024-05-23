@@ -8,7 +8,6 @@ import jakarta.persistence.Entity
 import jakarta.persistence.FetchType.LAZY
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
-import org.hibernate.annotations.JdbcType
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
 

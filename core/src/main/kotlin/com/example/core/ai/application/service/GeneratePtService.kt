@@ -4,7 +4,6 @@ import com.example.core.ai.application.dto.ExerciseList
 import com.example.domain.pt.PtConsulting
 import com.fasterxml.jackson.annotation.JsonClassDescription
 import com.google.common.base.Function
-import java.time.LocalDate
 import java.util.UUID
 
 typealias DayModel = com.example.domain.pt.Day
