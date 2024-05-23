@@ -1,5 +1,6 @@
 package com.example.core.ai.application.port.command
 
+import com.example.domain.exercise.ExerciseItem
 import com.example.domain.user.Gender
 
 data class CallPtCommand(
@@ -11,4 +12,5 @@ data class CallPtCommand(
     val gender: Gender,
     val day: Int,
     val time: Int,
+    val exerciseItemList: List<ExerciseItem>,
 )

@@ -1,6 +1,10 @@
 package com.example.core.common.config
 
+import com.example.core.ai.application.service.GeneratePtService
 import com.google.cloud.vertexai.VertexAI
+import org.springframework.ai.model.function.FunctionCallback
+import org.springframework.ai.model.function.FunctionCallbackWrapper
+import org.springframework.ai.model.function.FunctionCallbackWrapper.Builder.SchemaType.OPEN_API_SCHEMA
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatOptions
 import org.springframework.beans.factory.annotation.Value
@@ -29,6 +33,17 @@ class GeminiConfig(
                 .withTemperature(GEMINI_TEMPERATURE)
                 .build(),
         )
+    }
+
+    @Bean
+    fun generatePtService(): FunctionCallback {
+        val callback = FunctionCallbackWrapper.builder(GeneratePtService())
+            .withName(GeneratePtService.FUNCTION_NAME)
+            .withDescription("Generate pt for user")
+            .withSchemaType(OPEN_API_SCHEMA)
+            .build()
+        chatClient().functionCallbackRegister[GeneratePtService.FUNCTION_NAME] = callback
+        return callback
     }
 
     companion object {

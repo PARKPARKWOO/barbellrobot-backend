@@ -71,4 +71,9 @@ class ExerciseItemService(
         itemAreaRelationshipJpaPort.deleteItemId(id)
         itemGoalRelationshipJpaPort.deleteByItemId(id)
     }
+
+    @Transactional(readOnly = true)
+    override fun findAll(): List<ExerciseItem> {
+        return exerciseItemJpaPort.findAll()
+    }
 }

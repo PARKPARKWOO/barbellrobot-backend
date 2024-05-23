@@ -36,6 +36,10 @@ class ExerciseItemJpaAdapter(
         exerciseItemRepository.delete(entity)
     }
 
+    override fun findAll(): List<ExerciseItem> {
+        return exerciseItemRepository.findAll().map { it.toDomain() }
+    }
+
     private fun getEntity(id: Long): ExerciseItemEntity {
         return exerciseItemRepository.findById(id).orElseThrow {
             throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_ITEM)

@@ -2,6 +2,7 @@ package com.example.core.pt.adapter.out.persistence.repository
 
 import com.example.core.pt.adapter.out.persistence.entity.AiPtEntity
 import com.example.core.pt.adapter.out.persistence.entity.QAiPtEntity.aiPtEntity
+import com.example.core.user.member.adapter.out.persistence.entity.QMemberEntity.memberEntity
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
@@ -21,6 +22,7 @@ class AiPtQueryRepositoryImpl(
 ) : AiPtQueryRepository {
     override fun findByBetweenDateTime(memberId: UUID, startDateTime: LocalDate, endTime: LocalDate): AiPtEntity? {
         return jpaQueryFactory.selectFrom(aiPtEntity)
+            .leftJoin(aiPtEntity.member, memberEntity).fetchJoin()
             .where(
                 betweenDateTime(startDateTime, endTime)
                     .and(aiPtEntity.member.id.eq(memberId)),

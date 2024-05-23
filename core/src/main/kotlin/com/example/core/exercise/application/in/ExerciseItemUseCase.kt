@@ -12,4 +12,6 @@ interface ExerciseItemUseCase {
     fun queryItem(id: Long): QueryItemDto
 
     fun deleteItem(id: Long)
+
+    fun findAll(): List<ExerciseItem>
 }
