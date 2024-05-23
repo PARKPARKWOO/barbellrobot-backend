@@ -32,9 +32,7 @@ class PtController(
         @RequestBody
         request: GeneratePtRequest,
     ): ApiResponse<GeneratePtResponse> {
-        val response = GeneratePtResponse(
-            content = ptUseCase.generatePt(request.toCommand(userInfo.userId)),
-        )
+        val response = GeneratePtResponse.from(ptUseCase.generatePt(request.toCommand(userInfo.userId)).consulting)
         return ApiResponse(data = response)
     }
 }

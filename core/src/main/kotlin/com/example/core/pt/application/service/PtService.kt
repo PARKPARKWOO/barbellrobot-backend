@@ -1,5 +1,6 @@
 package com.example.core.pt.application.service
 
+import com.example.common.mapper.convert
 import com.example.core.ai.application.port.command.CallPtCommand
 import com.example.core.ai.application.port.`in`.GeminiUseCase
 import com.example.core.ai.application.service.GeneratePtService.GeneratePtResponseDto
@@ -9,6 +10,7 @@ import com.example.core.pt.application.command.SavePtCommand
 import com.example.core.pt.application.port.`in`.GeneratePtUseCase
 import com.example.core.pt.application.port.out.PtJpaPort
 import com.example.core.user.member.application.`in`.MemberUseCase
+import com.example.domain.pt.AiPt
 import com.google.gson.Gson
 import org.springframework.stereotype.Service
 
@@ -19,8 +21,8 @@ class PtService(
     private val ptJpaPort: PtJpaPort,
     private val exerciseItemUseCase: ExerciseItemUseCase,
 ) : GeneratePtUseCase {
-    override fun generatePt(command: GeneratePtCommand): String {
-        return ptJpaPort.findByThisWeek(command.memberId)?.content ?: run {
+    override fun generatePt(command: GeneratePtCommand): AiPt {
+        return ptJpaPort.findByThisWeek(command.memberId)?.consulting.convert() ?: run {
             val memberAndGoal = memberUseCase.getMemberAndGoal(command.memberId)
             val exerciseList = exerciseItemUseCase.findAll()
             val callPtCommand = CallPtCommand(
@@ -35,14 +37,12 @@ class PtService(
                 exerciseItemList = exerciseList,
             )
             val response = geminiUseCase.callPt(callPtCommand)
+            val dto = parseStringToJson(response)
             val savePtCommand = SavePtCommand(
                 memberId = command.memberId,
-                content = response,
+                consulting = dto.toDomain(command.memberId),
             )
-
-            ptJpaPort.save(savePtCommand)
-            val parseStringToJson = parseStringToJson(response)
-            return response
+            return ptJpaPort.save(savePtCommand)
         }
     }
 

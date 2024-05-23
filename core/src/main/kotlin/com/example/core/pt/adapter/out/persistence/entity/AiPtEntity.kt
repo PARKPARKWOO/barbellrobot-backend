@@ -1,5 +1,6 @@
 package com.example.core.pt.adapter.out.persistence.entity
 
+import com.example.common.mapper.convert
 import com.example.core.common.persistence.BaseEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import jakarta.persistence.Column
@@ -7,6 +8,9 @@ import jakarta.persistence.Entity
 import jakarta.persistence.FetchType.LAZY
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import org.hibernate.annotations.JdbcType
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 
 const val AI_PT_TABLE_NAME = "ai_pt"
 
@@ -17,11 +21,12 @@ typealias AiPtModel = com.example.domain.pt.AiPt
 class AiPtEntity(
     @ManyToOne(fetch = LAZY)
     val member: MemberEntity,
-    @Column(name = "content", columnDefinition = "TEXT")
-    val content: String,
+    @Column(name = "consulting", columnDefinition = "JSON")
+    @JdbcTypeCode(SqlTypes.JSON)
+    var consulting: Map<String, Any>,
 ) : BaseEntity() {
     fun toDomain(): AiPtModel = AiPtModel(
-        content = content,
+        consulting = consulting.convert(),
         createdAt = createdAt,
         member = member.toDomain(),
     )

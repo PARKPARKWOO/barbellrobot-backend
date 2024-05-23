@@ -38,7 +38,23 @@ object PromptUtil {
             {$exerciseList}
 
             #응답
-            {greetingMessage : {String}, day : [target : {운동 부위 }exercise : [{exerciseId : {},set : {운동 세트},weight : {Int},count : {몇 회},advice : {너의 조언을 입력}}]],warn : {주의 사항},tip : {}}
+            {
+             greetingMessage : {String},
+             day : [
+                target : {운동 부위 },
+                exercise : [
+                    {
+                        exerciseId : {},
+                        set : {운동 세트},
+                        weight : {Int},
+                        count : {몇 회},
+                        advice : {너의 조언을 입력}
+                    }
+                ]
+            ],
+            warn : {주의 사항}
+            ,tip : {}
+            }
             """.trimIndent()
     }
 }

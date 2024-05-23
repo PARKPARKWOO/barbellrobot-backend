@@ -5,7 +5,7 @@ import com.example.core.pt.application.command.SavePtCommand
 import java.util.UUID
 
 interface PtJpaPort {
-    fun save(command: SavePtCommand)
+    fun save(command: SavePtCommand): AiPtModel
 
     fun findByThisWeek(memberId: UUID): AiPtModel?
 }

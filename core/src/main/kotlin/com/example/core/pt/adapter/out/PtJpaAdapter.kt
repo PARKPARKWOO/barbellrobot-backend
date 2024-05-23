@@ -1,6 +1,7 @@
 package com.example.core.pt.adapter.out
 
 import com.example.common.date.DateTimeConvert
+import com.example.common.mapper.serializeToMap
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.pt.adapter.out.persistence.entity.AiPtEntity
@@ -19,12 +20,12 @@ class PtJpaAdapter(
     private val aiPtRepository: AiPtRepository,
     private val memberRepository: MemberRepository,
 ) : PtJpaPort {
-    override fun save(command: SavePtCommand) {
+    override fun save(command: SavePtCommand): AiPtModel {
         val aiPtEntity = AiPtEntity(
             member = getMember(command.memberId),
-            content = command.content,
+            consulting = command.consulting.serializeToMap(),
         )
-        aiPtRepository.save(aiPtEntity)
+        return aiPtRepository.save(aiPtEntity).toDomain()
     }
 
     override fun findByThisWeek(memberId: UUID): AiPtModel? {

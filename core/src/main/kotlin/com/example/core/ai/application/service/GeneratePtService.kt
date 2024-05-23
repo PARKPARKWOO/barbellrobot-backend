@@ -1,8 +1,14 @@
 package com.example.core.ai.application.service
 
 import com.example.core.ai.application.dto.ExerciseList
+import com.example.domain.pt.PtConsulting
 import com.fasterxml.jackson.annotation.JsonClassDescription
 import com.google.common.base.Function
+import java.time.LocalDate
+import java.util.UUID
+
+typealias DayModel = com.example.domain.pt.Day
+typealias ExerciseModel = com.example.domain.pt.Exercise
 
 class GeneratePtService : Function<GeneratePtService.GeneratePtRequestDto, GeneratePtService.GeneratePtResponseDto> {
     @JsonClassDescription("Get a list of exercises.")
@@ -11,11 +17,19 @@ class GeneratePtService : Function<GeneratePtService.GeneratePtRequestDto, Gener
     )
 
     data class GeneratePtResponseDto(
-        val greetingMessage: String? = null,
-        val day: List<Day>? = null,
-        val warn: String? = null,
-        val tip: String? = null,
-    )
+        val greetingMessage: String = "",
+        val day: List<Day> = emptyList(),
+        val warn: String = "",
+        val tip: String = "",
+    ) {
+        fun toDomain(memberId: UUID): PtConsulting = PtConsulting(
+            memberId = memberId,
+            greetingMessage = greetingMessage,
+            day = day.map { it.toDomain() },
+            warn = warn,
+            tip = tip,
+        )
+    }
 
     override fun apply(input: GeneratePtRequestDto?): GeneratePtResponseDto {
         return GeneratePtResponseDto(
@@ -43,14 +57,27 @@ class GeneratePtService : Function<GeneratePtService.GeneratePtRequestDto, Gener
 }
 
 data class Day(
-    val target: String?,
-    val exercise: List<Exercise>?,
-)
+    val target: String,
+    val exercise: List<Exercise>,
+) {
+    fun toDomain(): DayModel = DayModel(
+        target = target,
+        exercise = exercise.map { it.toDomain() },
+    )
+}
 
 data class Exercise(
-    val exerciseId: Long?,
-    val set: Int?,
-    val weight: String?,
-    val count: Int?,
-    val advice: String?,
-)
+    val exerciseId: Long = 0,
+    val set: Int = 0,
+    val weight: String = "",
+    val count: Int = 0,
+    val advice: String = "",
+) {
+    fun toDomain(): ExerciseModel = ExerciseModel(
+        exerciseId = exerciseId,
+        set = set,
+        weight = weight,
+        count = count,
+        advice = advice,
+    )
+}
