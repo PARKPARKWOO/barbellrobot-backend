@@ -1,6 +1,5 @@
 package com.example.core.pt.application.service
 
-import com.example.common.mapper.convert
 import com.example.core.ai.application.port.command.CallPtCommand
 import com.example.core.ai.application.port.`in`.GeminiUseCase
 import com.example.core.ai.application.service.GeneratePtService.GeneratePtResponseDto
@@ -22,7 +21,7 @@ class PtService(
     private val exerciseItemUseCase: ExerciseItemUseCase,
 ) : GeneratePtUseCase {
     override fun generatePt(command: GeneratePtCommand): AiPt {
-        return ptJpaPort.findByThisWeek(command.memberId)?.consulting.convert() ?: run {
+        return ptJpaPort.findByThisWeek(command.memberId) ?: run {
             val memberAndGoal = memberUseCase.getMemberAndGoal(command.memberId)
             val exerciseList = exerciseItemUseCase.findAll()
             val callPtCommand = CallPtCommand(
