@@ -5,6 +5,8 @@ import com.example.api.common.response.ApiResponse
 import com.example.api.exercise.adapter.`in`.request.CreateExerciseAreaRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseAreaResponse
 import com.example.core.exercise.application.`in`.ExerciseAreaUseCase
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,10 +17,15 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/area")
+@Tag(name = "운동 부위")
 class ExerciseAreaController(
     private val exerciseAreaUseCase: ExerciseAreaUseCase,
 ) {
     @PostMapping
+    @Operation(
+        summary = "운동 부위 추가",
+        description = "가슴, 어깨 등...",
+    )
     @PublicEndPoint
     fun createArea(
         @RequestBody
@@ -29,6 +36,9 @@ class ExerciseAreaController(
     }
 
     @GetMapping("/all")
+    @Operation(
+        summary = "현재 저장하고있는 부위 호출",
+    )
     @PublicEndPoint
     fun getAllArea(): ApiResponse<List<ExerciseAreaResponse>> {
         val response = exerciseAreaUseCase.getAllExerciseArea().map { area ->

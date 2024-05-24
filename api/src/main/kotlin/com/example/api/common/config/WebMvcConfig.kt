@@ -21,7 +21,7 @@ class WebMvcConfig(
         registry.addInterceptor(jwtTokenInterceptor)
             .addPathPatterns("/api/**")
         registry.addInterceptor(trainerInterceptor)
-            .addPathPatterns("/api/v1/trainer/**")
+            .addPathPatterns("/api/**")
     }
 
     override fun addCorsMappings(registry: CorsRegistry) {

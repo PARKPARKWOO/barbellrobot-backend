@@ -5,6 +5,7 @@ import com.example.api.common.response.ApiResponse
 import com.example.api.exercise.adapter.`in`.request.CreateExerciseGoalRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseGoalResponse
 import com.example.core.exercise.application.`in`.ExerciseGoalUseCase
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,6 +16,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/goal")
+@Tag(
+    name = "운동 목표",
+    description = """
+    user 가 목표로 하는 것들
+    예시) 다이어트, 근성장
+""",
+)
 class ExerciseGoalController(
     private val exerciseGoalUseCase: ExerciseGoalUseCase,
 ) {

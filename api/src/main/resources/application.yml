@@ -16,6 +16,8 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 1000
+    show-sql: true
+
   servlet:
     multipart:
       enabled: true
@@ -33,6 +35,12 @@ spring:
           auth: true
           starttls:
             enable: true
+  ai:
+    vertex:
+      ai:
+        gemini:
+          project-id: ${GEMINI_PROJECT_ID}
+          location: ${GEMINI_LOCATION}
 
 aws:
   s3:

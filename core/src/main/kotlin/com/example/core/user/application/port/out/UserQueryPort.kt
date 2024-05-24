@@ -7,4 +7,6 @@ interface UserQueryPort {
     fun findByNickname(nickname: String): UserEntity?
 
     fun findById(userId: UUID): UserEntity?
+
+    fun findByEmail(email: String): UserEntity?
 }

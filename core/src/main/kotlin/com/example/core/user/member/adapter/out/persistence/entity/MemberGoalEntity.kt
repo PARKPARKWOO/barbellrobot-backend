@@ -1,13 +1,13 @@
 package com.example.core.user.member.adapter.out.persistence.entity
 
-import jakarta.persistence.CollectionTable
-import jakarta.persistence.Column
-import jakarta.persistence.ElementCollection
+import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType.LAZY
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType.IDENTITY
 import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
-import java.util.UUID
 
 const val MEMBER_GOAL_TABLE_NAME = "member_goal"
 
@@ -15,18 +15,10 @@ const val MEMBER_GOAL_TABLE_NAME = "member_goal"
 @Table(name = MEMBER_GOAL_TABLE_NAME)
 class MemberGoalEntity(
     @Id
-    @Column(name = "id")
-    val memberId: UUID,
-    @Column(name = "goal_ids")
-    @ElementCollection
-    @CollectionTable(name = "member_goals", joinColumns = [JoinColumn(name = "member_goal_id")])
-    val exerciseGoalIds: MutableList<Long> = mutableListOf(),
-) {
-    fun addGoal(goals: List<Long>) {
-        exerciseGoalIds.addAll(goals)
-    }
-
-    fun deleteGoal(goal: Long) {
-        this.exerciseGoalIds.remove(goal)
-    }
-}
+    @GeneratedValue(strategy = IDENTITY)
+    val id: Long = 0L,
+    @ManyToOne(fetch = LAZY)
+    val memberEntity: MemberEntity,
+    @ManyToOne(fetch = LAZY)
+    val exerciseGoalEntity: ExerciseGoalEntity,
+)

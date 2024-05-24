@@ -10,9 +10,7 @@ import com.example.core.sign.application.port.`in`.SignInUserUseCase
 import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
 import com.example.domain.constants.DomainConstants
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
 
-@Service
 abstract class AbstractSignInService(
     private val redisDriver: RedisDriver,
     @Value("\${jwt.refresh-token.expire-millis}")
@@ -26,18 +24,6 @@ abstract class AbstractSignInService(
         val token = jwtTokenService.build(claim)
         saveRefreshToken(token.refreshToken, claim[DomainConstants.USER_ID].toString())
         return token
-    }
-
-    override fun reissueToken(refreshToken: String): JwtResponseDto {
-        val claim = jwtTokenService.parseRefreshToken(refreshToken)
-        val id = claim[DomainConstants.USER_ID].toString()
-        val value = redisDriver.getValue(Constants.REFRESH_TOKEN_PREFIX + id)
-        if (refreshToken == value) {
-            val newToken = jwtTokenService.build(claim)
-            saveRefreshToken(newToken.refreshToken, id)
-            return newToken
-        }
-        throw ServiceException(ErrorCode.REISSUE_JWT_TOKEN_FAILURE)
     }
 
     private fun saveRefreshToken(refreshToken: String, id: String) {

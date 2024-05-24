@@ -28,8 +28,20 @@ data class UserHistoryQueryDto
         val id: UUID,
         val today: LocalDate,
         val attendance: Boolean,
-        var todayImages: List<String>?,
-        var todayVideo: List<String>?,
+        var todayImages: List<UserHistoryImageQueryDto>?,
+        var todayVideo: List<UserHistoryVideoQueryDto>?,
+    )
+
+data class UserHistoryImageQueryDto
+    @QueryProjection
+    constructor(
+        val imageUrl: String,
+    )
+
+data class UserHistoryVideoQueryDto
+    @QueryProjection
+    constructor(
+        val videoUrl: String,
     )
 
 data class DietFoodQueryDto

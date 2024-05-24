@@ -12,4 +12,6 @@ interface ExerciseItemJpaPort {
     fun findById(id: Long): ExerciseItem
 
     fun delete(id: Long)
+
+    fun findAll(): List<ExerciseItem>
 }

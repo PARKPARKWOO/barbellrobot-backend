@@ -1,5 +1,9 @@
 package com.example.core.history.application.service
 
+import com.example.common.date.DateTimeConvert.getEndOfMonth
+import com.example.common.date.DateTimeConvert.getEndOfWeek
+import com.example.common.date.DateTimeConvert.getStartOfMonth
+import com.example.common.date.DateTimeConvert.getStartOfWeek
 import com.example.core.history.application.port.`in`.GenerateHistoryUseCase
 import com.example.core.history.application.port.`in`.HistoryQueryUseCase
 import com.example.core.history.application.port.`in`.command.AddDietJpaCommand
@@ -12,9 +16,7 @@ import com.example.core.history.application.port.out.query.FindUserHistoryQuery
 import com.example.core.history.dto.HistoryResponseDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.temporal.TemporalAdjusters
 import java.util.UUID
 
 @Service
@@ -54,22 +56,6 @@ class HistoryService(
             userHistoryJpaPort.addFood(command.toFoodCommand())
         }
     }
-
-    /**
-     * 주의 시작은 월요일,
-     * 주의 마지막은 일요일
-     */
-    private fun getStartOfWeek(today: LocalDate) =
-        today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-
-    private fun getEndOfWeek(today: LocalDate) =
-        today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
-
-    private fun getStartOfMonth(date: LocalDate): LocalDate =
-        date.with(TemporalAdjusters.firstDayOfMonth())
-
-    private fun getEndOfMonth(date: LocalDate): LocalDate =
-        date.with(TemporalAdjusters.lastDayOfMonth())
 
     @Transactional(readOnly = true)
     override fun getHistoryFromWeek(userId: UUID): List<HistoryResponseDto>? {
