@@ -22,6 +22,8 @@ interface UserHistoryRepository : JpaRepository<UserHistoryEntity, UUID>, UserHi
 
 interface UserHistoryQueryRepository {
     fun getHistoryBetween(userId: UUID, startDate: LocalDate, endDate: LocalDate): List<HistoryResponseDto>?
+
+    fun findUserHistoryToday(userId: UUID, today: LocalDate): UserHistoryEntity?
 }
 
 @Repository
@@ -33,24 +35,6 @@ class UserHistoryQueryRepositoryImpl(
         startDate: LocalDate,
         endDate: LocalDate,
     ): List<HistoryResponseDto>? {
-        // startDay - endDay userHistory Query
-//        val userQueryDto = jpaQueryFactory.select(
-//            QUserHistoryQueryDto(
-//                userHistoryEntity.id,
-//                userHistoryEntity.today,
-//                userHistoryEntity.attendance,
-//                multimediaEntity.uri,
-//                multimediaEntity.uri,
-//            ),
-//        )
-//            .from(userHistoryEntity)
-//            .leftJoin(multimediaEntity).on(multimediaEntity.id.eq(userHistoryEntity.todayImageIds)
-//                .or(multimediaEntity.id.`in`(userHistoryEntity.todayVideo)))
-//            .where(betweenDate(startDate, endDate).and(userHistoryEntity.userId.eq(userId)))
-//            .fetch()
-        // subquery image video 혹은 다른방법
-        // Fetch UserHistory with related images and videos in one query
-        // Fetch UserHistories
 // Fetch UserHistories
         val userHistories: List<UserHistoryEntity> = jpaQueryFactory
             .selectFrom(userHistoryEntity)
@@ -130,6 +114,13 @@ class UserHistoryQueryRepositoryImpl(
                 exerciseHistoryResponseDto = exerciseHistoryMap[dto.id] ?: emptyList(),
             )
         }
+    }
+
+    override fun findUserHistoryToday(userId: UUID, today: LocalDate): UserHistoryEntity? {
+        return jpaQueryFactory.selectFrom(userHistoryEntity)
+            .where(userHistoryEntity.userId.eq(userId)
+                .and(userHistoryEntity.today.eq(today)))
+            .fetchOne()
     }
 
     private fun betweenDate(startDate: LocalDate, endDate: LocalDate) =

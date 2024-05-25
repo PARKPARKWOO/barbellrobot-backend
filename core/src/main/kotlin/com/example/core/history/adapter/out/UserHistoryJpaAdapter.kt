@@ -12,6 +12,7 @@ import com.example.core.history.application.port.out.command.AddDietImageCommand
 import com.example.core.history.application.port.out.command.AttendanceTodayCommand
 import com.example.core.history.application.port.out.query.FindUserHistoryQuery
 import com.example.core.history.dto.HistoryResponseDto
+import com.example.domain.history.UserHistory
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -21,6 +22,13 @@ class UserHistoryJpaAdapter(
     private val dietFoodRepository: DietFoodRepository,
     private val dietImageRepository: DietImageRepository,
 ) : UserHistoryJpaPort {
+    override fun findUserHistory(query: AttendanceTodayCommand): UserHistory? {
+        return userHistoryRepository.findUserHistoryToday(
+            userId = query.userId,
+            today = query.today,
+        )?.toDomain()
+    }
+
     override fun attendanceToday(command: AttendanceTodayCommand): UUID {
         val userHistoryEntity = UserHistoryEntity(
             userId = command.userId,

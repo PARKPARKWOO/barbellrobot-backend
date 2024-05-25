@@ -44,7 +44,10 @@ class HistoryService(
             userId = userId,
             today = LocalDate.now(),
         )
-        return userHistoryJpaPort.attendanceToday(attendanceTodayCommand)
+        return userHistoryJpaPort.findUserHistory(attendanceTodayCommand)?.id
+            ?: run {
+                userHistoryJpaPort.attendanceToday(attendanceTodayCommand)
+            }
     }
 
     @Transactional
