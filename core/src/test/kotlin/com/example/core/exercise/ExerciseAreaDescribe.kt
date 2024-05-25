@@ -1,7 +1,7 @@
 package com.example.core.exercise
 
-import com.example.core.exercise.application.out.ExerciseAreaJpaPort
-import com.example.core.exercise.application.out.ItemAreaRelationshipJpaPort
+import com.example.core.exercise.application.port.out.ExerciseAreaJpaPort
+import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPort
 import com.example.core.exercise.application.service.ExerciseAreaService
 import com.example.core.exercise.util.ExerciseAreaTestUtil
 import io.kotest.core.spec.style.DescribeSpec

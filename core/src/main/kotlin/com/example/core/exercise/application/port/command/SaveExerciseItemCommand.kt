@@ -1,8 +1,7 @@
-package com.example.core.exercise.application.`in`.command
+package com.example.core.exercise.application.port.command
 
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
-import com.example.core.exercise.application.out.command.SaveExerciseItemOutCommand
 
 data class SaveExerciseItemCommand(
     val exerciseName: String,

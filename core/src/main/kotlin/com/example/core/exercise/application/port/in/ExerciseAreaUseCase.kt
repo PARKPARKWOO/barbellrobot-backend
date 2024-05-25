@@ -1,6 +1,6 @@
-package com.example.core.exercise.application.`in`
+package com.example.core.exercise.application.port.`in`
 
-import com.example.core.exercise.application.`in`.command.SaveExerciseAreaCommand
+import com.example.core.exercise.application.port.command.SaveExerciseAreaCommand
 import com.example.domain.exercise.ExerciseArea
 
 interface ExerciseAreaUseCase {

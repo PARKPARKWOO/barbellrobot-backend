@@ -3,15 +3,15 @@ package com.example.core.exercise.application.service
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.exercise.application.dto.QueryItemDto
-import com.example.core.exercise.application.`in`.ExerciseItemUseCase
-import com.example.core.exercise.application.`in`.command.SaveExerciseItemCommand
-import com.example.core.exercise.application.out.ExerciseAreaJpaPort
-import com.example.core.exercise.application.out.ExerciseGoalJpaPort
-import com.example.core.exercise.application.out.ExerciseItemJpaPort
-import com.example.core.exercise.application.out.ItemAreaRelationshipJpaPort
-import com.example.core.exercise.application.out.ItemGoalRelationshipJpaPort
-import com.example.core.exercise.application.out.command.AddItemAreaRelationCommand
-import com.example.core.exercise.application.out.command.AddItemGoalRelationCommand
+import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
+import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
+import com.example.core.exercise.application.port.out.ExerciseAreaJpaPort
+import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
+import com.example.core.exercise.application.port.out.ExerciseItemJpaPort
+import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPort
+import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPort
+import com.example.core.exercise.application.port.command.AddItemAreaRelationCommand
+import com.example.core.exercise.application.port.command.AddItemGoalRelationCommand
 import com.example.domain.exercise.ExerciseItem
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -75,5 +75,10 @@ class ExerciseItemService(
     @Transactional(readOnly = true)
     override fun findAll(): List<ExerciseItem> {
         return exerciseItemJpaPort.findAll()
+    }
+
+    @Transactional(readOnly = true)
+    override fun findAllItemsQuery(): List<QueryItemDto> {
+        return exerciseItemJpaPort.findAllItemsQuery()
     }
 }

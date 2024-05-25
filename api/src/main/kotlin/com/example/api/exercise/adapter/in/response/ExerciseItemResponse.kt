@@ -1,7 +1,5 @@
 package com.example.api.exercise.adapter.`in`.response
 
-import com.example.domain.exercise.ExerciseArea
-import com.example.domain.exercise.ExerciseGoal
 import com.example.domain.exercise.ExerciseItem
 
 data class ExerciseItemResponse(
@@ -9,24 +7,13 @@ data class ExerciseItemResponse(
     val exerciseName: String,
     val videoUri: String?,
     val imageUri: String?,
-    val exerciseAreas: List<ExerciseAreaResponse>?,
-    val exerciseGoals: List<ExerciseGoalResponse>?,
 ) {
     companion object {
-        @JvmStatic
-        fun of(item: ExerciseItem, areas: List<ExerciseArea>?, goals: List<ExerciseGoal>?): ExerciseItemResponse {
-            return ExerciseItemResponse(
-                id = item.id,
-                imageUri = item.imageUri,
-                videoUri = item.videoUri,
-                exerciseName = item.exerciseName,
-                exerciseAreas = areas?.map { area ->
-                    ExerciseAreaResponse.from(area)
-                },
-                exerciseGoals = goals?.map { goal ->
-                    ExerciseGoalResponse.from(goal)
-                },
-            )
-        }
+        fun from(domain: ExerciseItem): ExerciseItemResponse = ExerciseItemResponse(
+            id = domain.id,
+            exerciseName = domain.exerciseName,
+            videoUri = domain.videoUri,
+            imageUri = domain.imageUri,
+        )
     }
 }

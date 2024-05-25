@@ -2,11 +2,11 @@ package com.example.core.exercise
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.exercise.application.out.ExerciseAreaJpaPort
-import com.example.core.exercise.application.out.ExerciseGoalJpaPort
-import com.example.core.exercise.application.out.ExerciseItemJpaPort
-import com.example.core.exercise.application.out.ItemAreaRelationshipJpaPort
-import com.example.core.exercise.application.out.ItemGoalRelationshipJpaPort
+import com.example.core.exercise.application.port.out.ExerciseAreaJpaPort
+import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
+import com.example.core.exercise.application.port.out.ExerciseItemJpaPort
+import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPort
+import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPort
 import com.example.core.exercise.application.service.ExerciseItemService
 import com.example.core.exercise.util.ExerciseAreaTestUtil
 import com.example.core.exercise.util.ExerciseGoalTestUtil

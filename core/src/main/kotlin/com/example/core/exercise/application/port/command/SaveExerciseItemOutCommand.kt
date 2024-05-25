@@ -1,4 +1,4 @@
-package com.example.core.exercise.application.out.command
+package com.example.core.exercise.application.port.command
 
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity

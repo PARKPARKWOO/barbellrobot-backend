@@ -1,6 +1,6 @@
-package com.example.core.exercise.application.`in`
+package com.example.core.exercise.application.port.`in`
 
-import com.example.core.exercise.application.`in`.command.SaveExerciseGoalCommand
+import com.example.core.exercise.application.port.command.SaveExerciseGoalCommand
 import com.example.domain.exercise.ExerciseGoal
 
 interface ExerciseGoalUseCase {

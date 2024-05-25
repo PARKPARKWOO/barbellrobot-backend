@@ -1,7 +1,7 @@
 package com.example.core.exercise.util
 
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
-import com.example.core.exercise.application.`in`.command.SaveExerciseAreaCommand
+import com.example.core.exercise.application.port.command.SaveExerciseAreaCommand
 
 object ExerciseAreaTestUtil {
     const val ID = 1L

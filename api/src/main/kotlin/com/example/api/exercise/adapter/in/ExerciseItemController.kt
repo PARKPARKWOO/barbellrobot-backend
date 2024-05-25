@@ -3,8 +3,8 @@ package com.example.api.exercise.adapter.`in`
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
 import com.example.api.exercise.adapter.`in`.request.CreateExerciseItemRequest
-import com.example.api.exercise.adapter.`in`.response.ExerciseItemResponse
-import com.example.core.exercise.application.`in`.ExerciseItemUseCase
+import com.example.api.exercise.adapter.`in`.response.ExerciseItemDetailResponse
+import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/item")
+@RequestMapping("/api/v1")
 @Tag(
     name = "운동 아이템",
     description = """
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController
 class ExerciseItemController(
     private val exerciseItemUseCase: ExerciseItemUseCase,
 ) {
-    @PostMapping
+    @PostMapping("/item")
     @PublicEndPoint
     @Operation(
         summary = "운동 을 추가합니다. ex) 벤치프레스",
@@ -39,7 +39,7 @@ class ExerciseItemController(
         return ApiResponse(data = Unit)
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/item/{id}")
     @Operation(
         summary = "운동 아이템 조회",
         description = """
@@ -52,22 +52,31 @@ class ExerciseItemController(
     fun findItem(
         @PathVariable("id")
         id: Long,
-    ): ApiResponse<ExerciseItemResponse> {
+    ): ApiResponse<ExerciseItemDetailResponse> {
         val queryItem = exerciseItemUseCase.queryItem(id)
-        val response = ExerciseItemResponse.of(
-            item = queryItem.item,
-            areas = queryItem.areas,
-            goals = queryItem.goals,
-        )
+        val response = ExerciseItemDetailResponse.from(queryItem)
         return ApiResponse(data = response)
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/item/{id}")
     @PublicEndPoint
     fun deleteItem(
         @PathVariable("id") id: Long,
     ): ApiResponse<Unit> {
         exerciseItemUseCase.deleteItem(id)
         return ApiResponse(data = Unit)
+    }
+
+    @GetMapping("/items")
+    @PublicEndPoint
+    @Operation(
+        summary = "운동 목록 filter",
+    )
+    fun findItems(): ApiResponse<List<ExerciseItemDetailResponse>> {
+        return ApiResponse(
+            data = exerciseItemUseCase.findAllItemsQuery().map {
+                ExerciseItemDetailResponse.from(it)
+            },
+        )
     }
 }

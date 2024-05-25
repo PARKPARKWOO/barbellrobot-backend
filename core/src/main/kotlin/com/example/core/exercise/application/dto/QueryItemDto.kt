@@ -11,4 +11,5 @@ data class QueryItemDto
         val item: ExerciseItem,
         val goals: List<ExerciseGoal>?,
         val areas: List<ExerciseArea>?,
+        val count: Int,
     )

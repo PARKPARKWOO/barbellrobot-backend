@@ -1,4 +1,4 @@
-package com.example.core.exercise.application.out.command
+package com.example.core.exercise.application.port.command
 
 data class AddItemAreaRelationCommand(
     val itemId: Long,

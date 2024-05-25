@@ -1,6 +1,6 @@
 package com.example.core.exercise.util
 
-import com.example.core.exercise.application.`in`.command.SaveExerciseItemCommand
+import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
 
 object ExerciseItemTestUtil {
     const val ID = 1L

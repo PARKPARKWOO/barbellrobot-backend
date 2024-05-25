@@ -1,6 +1,6 @@
 package com.example.api.exercise.adapter.`in`.request
 
-import com.example.core.exercise.application.`in`.command.SaveExerciseItemCommand
+import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
 
 data class CreateExerciseItemRequest(
     val exerciseName: String,

@@ -2,7 +2,7 @@ package com.example.core.user.member.adapter.out
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.exercise.application.out.ExerciseGoalJpaPort
+import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberGoalEntity
 import com.example.core.user.member.adapter.out.persistence.repository.MemberGoalRepository

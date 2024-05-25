@@ -5,8 +5,8 @@ import com.example.core.common.error.ServiceException
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseItemEntity
 import com.example.core.exercise.adapter.out.persistence.repository.ExerciseItemRepository
 import com.example.core.exercise.application.dto.QueryItemDto
-import com.example.core.exercise.application.out.ExerciseItemJpaPort
-import com.example.core.exercise.application.out.command.SaveExerciseItemOutCommand
+import com.example.core.exercise.application.port.out.ExerciseItemJpaPort
+import com.example.core.exercise.application.port.command.SaveExerciseItemOutCommand
 import com.example.domain.exercise.ExerciseItem
 import org.springframework.stereotype.Component
 
@@ -38,6 +38,10 @@ class ExerciseItemJpaAdapter(
 
     override fun findAll(): List<ExerciseItem> {
         return exerciseItemRepository.findAll().map { it.toDomain() }
+    }
+
+    override fun findAllItemsQuery(): List<QueryItemDto> {
+        return exerciseItemRepository.findItemDetailAll()
     }
 
     private fun getEntity(id: Long): ExerciseItemEntity {

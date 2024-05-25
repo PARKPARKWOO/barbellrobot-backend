@@ -1,6 +1,6 @@
 package com.example.api.exercise.adapter.`in`.request
 
-import com.example.core.exercise.application.`in`.command.SaveExerciseAreaCommand
+import com.example.core.exercise.application.port.command.SaveExerciseAreaCommand
 
 data class CreateExerciseAreaRequest(
     val area: String,

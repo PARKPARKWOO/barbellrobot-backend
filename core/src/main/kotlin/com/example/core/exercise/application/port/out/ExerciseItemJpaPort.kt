@@ -1,7 +1,7 @@
-package com.example.core.exercise.application.out
+package com.example.core.exercise.application.port.out
 
 import com.example.core.exercise.application.dto.QueryItemDto
-import com.example.core.exercise.application.out.command.SaveExerciseItemOutCommand
+import com.example.core.exercise.application.port.command.SaveExerciseItemOutCommand
 import com.example.domain.exercise.ExerciseItem
 
 interface ExerciseItemJpaPort {
@@ -14,4 +14,6 @@ interface ExerciseItemJpaPort {
     fun delete(id: Long)
 
     fun findAll(): List<ExerciseItem>
+
+    fun findAllItemsQuery(): List<QueryItemDto>
 }

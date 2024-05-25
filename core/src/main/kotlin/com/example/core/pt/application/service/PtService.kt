@@ -3,7 +3,7 @@ package com.example.core.pt.application.service
 import com.example.core.ai.application.port.command.CallPtCommand
 import com.example.core.ai.application.port.`in`.GeminiUseCase
 import com.example.core.ai.application.service.GeneratePtService.GeneratePtResponseDto
-import com.example.core.exercise.application.`in`.ExerciseItemUseCase
+import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
 import com.example.core.pt.application.command.GeneratePtCommand
 import com.example.core.pt.application.command.SavePtCommand
 import com.example.core.pt.application.port.`in`.GeneratePtUseCase

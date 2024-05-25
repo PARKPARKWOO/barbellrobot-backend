@@ -1,9 +1,9 @@
 package com.example.core.exercise.application.service
 
-import com.example.core.exercise.application.`in`.ExerciseAreaUseCase
-import com.example.core.exercise.application.`in`.command.SaveExerciseAreaCommand
-import com.example.core.exercise.application.out.ExerciseAreaJpaPort
-import com.example.core.exercise.application.out.ItemAreaRelationshipJpaPort
+import com.example.core.exercise.application.port.`in`.ExerciseAreaUseCase
+import com.example.core.exercise.application.port.command.SaveExerciseAreaCommand
+import com.example.core.exercise.application.port.out.ExerciseAreaJpaPort
+import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPort
 import com.example.domain.exercise.ExerciseArea
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
