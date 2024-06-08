@@ -9,7 +9,7 @@ data class QueryItemDto
     @QueryProjection
     constructor(
         val item: ExerciseItem,
-        val goals: List<ExerciseGoal>?,
-        val areas: List<ExerciseArea>?,
+        val goals: List<ExerciseGoal>,
+        val areas: List<ExerciseArea>,
         val count: Int,
     )

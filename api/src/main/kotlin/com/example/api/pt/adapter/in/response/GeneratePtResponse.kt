@@ -35,7 +35,7 @@ data class DayResponse(
 data class ConsultingExercise(
     val exerciseId: Long,
     val set: Int,
-    val weight: String,
+    val weight: String?,
     val count: Int,
     val advice: String,
 ) {

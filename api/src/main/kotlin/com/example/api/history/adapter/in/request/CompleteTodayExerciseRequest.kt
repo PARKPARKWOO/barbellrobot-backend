@@ -18,13 +18,13 @@ data class CompleteTodayExerciseRequest(
 
 data class CompleteExerciseItemRequest(
     val itemId: Long,
-    val weight: Double,
+    val weight: Double?,
     val exerciseSet: Int,
 ) {
     fun toCommand(): CompleteExerciseItem {
         return CompleteExerciseItem(
             itemId = itemId,
-            weight = weight,
+            weight = weight ?: 0.0,
             exerciseSet = exerciseSet,
         )
     }

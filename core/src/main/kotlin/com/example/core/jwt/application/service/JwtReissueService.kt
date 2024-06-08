@@ -21,7 +21,7 @@ class JwtReissueService(
     override fun reissueToken(refreshToken: String): JwtResponseDto {
         val claim = jwtTokenService.parseRefreshToken(refreshToken)
         val id = claim[DomainConstants.USER_ID].toString()
-        val value = redisDriver.getValue(Constants.REFRESH_TOKEN_PREFIX + id)
+        val value = redisDriver.getValue(Constants.REFRESH_TOKEN_PREFIX + id, String::class.java)
         if (refreshToken == value) {
             val newToken = jwtTokenService.build(claim)
             saveRefreshToken(newToken.refreshToken, id)

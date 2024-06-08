@@ -12,6 +12,7 @@ import com.example.core.pt.application.port.out.PtJpaPort
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.util.UUID
 
@@ -20,6 +21,7 @@ class PtJpaAdapter(
     private val aiPtRepository: AiPtRepository,
     private val memberRepository: MemberRepository,
 ) : PtJpaPort {
+    @Transactional
     override fun save(command: SavePtCommand): AiPtModel {
         val aiPtEntity = AiPtEntity(
             member = getMember(command.memberId),

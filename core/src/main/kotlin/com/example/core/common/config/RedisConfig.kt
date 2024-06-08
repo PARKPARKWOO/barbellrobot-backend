@@ -10,6 +10,7 @@ import org.springframework.data.redis.connection.RedisPassword
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer
 import org.springframework.orm.jpa.JpaTransactionManager
 import org.springframework.transaction.PlatformTransactionManager
@@ -31,15 +32,17 @@ class RedisConfig(
     }
 
     @Bean
-    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, String> {
-        val redisTemplate = RedisTemplate<String, String>()
+    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
+        val redisTemplate = RedisTemplate<String, Any>()
         redisTemplate.connectionFactory = redisConnectionFactory
         redisTemplate.setEnableTransactionSupport(true)
-
+        val jsonSerializer = GenericJackson2JsonRedisSerializer()
         val stringSerializer = StringRedisSerializer()
 
         redisTemplate.keySerializer = stringSerializer
-        redisTemplate.valueSerializer = stringSerializer
+        redisTemplate.valueSerializer = jsonSerializer
+        redisTemplate.hashKeySerializer = stringSerializer
+        redisTemplate.hashValueSerializer = jsonSerializer
         return redisTemplate
     }
 

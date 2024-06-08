@@ -22,7 +22,7 @@ class PtController(
 ) {
     @PostMapping
     @Operation(
-        summary = "이번주 운동 pt",
+        summary = "이번주 pt 받기",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
     fun generatePt(

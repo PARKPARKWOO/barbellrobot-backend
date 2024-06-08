@@ -15,7 +15,7 @@ class EmailVerifyAdapter(
     private val redisDriver: RedisDriver,
 ) : EmailVerifyPort {
     override fun verifyEmail(command: VerifyEmailCommand): UUID {
-        redisDriver.getValue(getVerifyKey(command.email))?.let { authenticationNumber ->
+        redisDriver.getValue(getVerifyKey(command.email), String::class.java)?.let { authenticationNumber ->
             if (authenticationNumber.toInt() != command.authenticationNumber) {
                 throw ServiceException(ErrorCode.AUTHENTICATION_NUMBER_FAIL)
             }
@@ -37,7 +37,7 @@ class EmailVerifyAdapter(
 
     override fun verifyAuthenticationSuccess(command: VerifyAuthenticationSuccessCommand) {
         val key = getSuccessKey(command.email)
-        redisDriver.getValue(key) ?: ServiceException(ErrorCode.AUTHENTICATION_NUMBER_UN_RESOLVE)
+        redisDriver.getValue(key, String::class.java) ?: ServiceException(ErrorCode.AUTHENTICATION_NUMBER_UN_RESOLVE)
     }
 
     private fun getVerifyKey(email: String) = EMAIL_VERIFY_KEY_PREFIX + email

@@ -68,7 +68,7 @@ data class Day(
 data class Exercise(
     val exerciseId: Long = 0,
     val set: Int = 0,
-    val weight: String = "",
+    val weight: String? = "",
     val count: Int = 0,
     val advice: String = "",
 ) {
