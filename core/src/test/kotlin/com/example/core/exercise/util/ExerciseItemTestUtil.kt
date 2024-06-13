@@ -1,6 +1,7 @@
 package com.example.core.exercise.util
 
 import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
+import org.springframework.mock.web.MockMultipartFile
 
 object ExerciseItemTestUtil {
     const val ID = 1L
@@ -11,8 +12,8 @@ object ExerciseItemTestUtil {
     val areaIds = listOf(1L)
     val saveCommand = SaveExerciseItemCommand(
         exerciseName = EXERCISE_NAME,
-        videoUri = VIDEO_URI,
-        imageUri = IMAGE_URI,
+        video = null,
+        image = null,
         exerciseGoals = goalIds.toMutableList(),
         exerciseAreas = areaIds.toMutableList(),
     )

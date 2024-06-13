@@ -53,6 +53,8 @@ dependencies {
 
     // coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
 
     // uuid generator
     implementation("com.fasterxml.uuid:java-uuid-generator:5.0.0")
@@ -63,6 +65,8 @@ dependencies {
     // gemini
     implementation("org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter")
 //    implementation("org.springframework.ai:spring-ai-bom:0.8.1-SNAPSHOT")
+    // multi-part-file mock
+    implementation("org.springframework:spring-mock:2.0.8")
 }
 
 extra["springAiVersion"] = "0.8.1"

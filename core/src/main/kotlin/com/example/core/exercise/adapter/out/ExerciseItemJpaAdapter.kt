@@ -17,8 +17,8 @@ class ExerciseItemJpaAdapter(
     override fun saveExerciseItem(command: SaveExerciseItemOutCommand): Long {
         val entity = ExerciseItemEntity(
             exerciseName = command.exerciseName,
-            videoUri = command.videoUri,
-            imageUri = command.imageUri,
+            videoUri = command.videoUri.toMutableList(),
+            imageUri = command.imageUri.toMutableList(),
         )
         return exerciseItemRepository.save(entity).id
     }

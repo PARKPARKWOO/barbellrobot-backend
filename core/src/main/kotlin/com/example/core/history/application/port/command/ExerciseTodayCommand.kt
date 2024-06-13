@@ -1,4 +1,4 @@
-package com.example.core.history.application.port.`in`.command
+package com.example.core.history.application.port.command
 
 import java.util.UUID
 
@@ -12,4 +12,5 @@ data class CompleteExerciseItem(
     var itemId: Long,
     var weight: Double,
     var exerciseSet: Int,
+    val count: Int?,
 )

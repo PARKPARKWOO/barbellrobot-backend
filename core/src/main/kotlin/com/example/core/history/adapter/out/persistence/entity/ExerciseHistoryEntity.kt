@@ -26,6 +26,8 @@ class ExerciseHistoryEntity(
     var weight: Double,
     @Column(name = "exercise_set")
     var exerciseSet: Int,
+    @Column(name = "count", nullable = true)
+    var count: Int?,
     @Column(name = "user_history_id")
     @JdbcTypeCode(SqlTypes.VARCHAR)
     var userHistoryId: UUID,

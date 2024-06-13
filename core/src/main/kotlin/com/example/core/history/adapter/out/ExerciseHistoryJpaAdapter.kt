@@ -18,6 +18,7 @@ class ExerciseHistoryJpaAdapter(
             exerciseSet = command.exerciseSet,
             userHistoryId = command.userHistoryId,
             createdAt = LocalDate.now(),
+            count = command.count,
         )
         exerciseHistoryRepository.save(exerciseHistoryEntity)
     }
@@ -30,6 +31,7 @@ class ExerciseHistoryJpaAdapter(
                 exerciseSet = dto.exerciseSet,
                 userHistoryId = dto.userHistoryId,
                 createdAt = LocalDate.now(),
+                count = dto.count,
             )
         }
         val entities = command.map(transform)

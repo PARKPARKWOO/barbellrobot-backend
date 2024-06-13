@@ -1,4 +1,4 @@
-package com.example.core.history.application.port.`in`.command
+package com.example.core.history.application.port.command
 
 import com.example.domain.history.Diet
 import org.springframework.web.multipart.MultipartFile

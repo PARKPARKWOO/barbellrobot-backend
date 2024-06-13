@@ -4,15 +4,16 @@ import com.example.common.date.DateTimeConvert.getEndOfMonth
 import com.example.common.date.DateTimeConvert.getEndOfWeek
 import com.example.common.date.DateTimeConvert.getStartOfMonth
 import com.example.common.date.DateTimeConvert.getStartOfWeek
+import com.example.core.history.application.port.command.AddDietJpaCommand
+import com.example.core.history.application.port.command.ExerciseTodayCommand
 import com.example.core.history.application.port.`in`.GenerateHistoryUseCase
 import com.example.core.history.application.port.`in`.HistoryQueryUseCase
-import com.example.core.history.application.port.`in`.command.AddDietJpaCommand
-import com.example.core.history.application.port.`in`.command.ExerciseTodayCommand
 import com.example.core.history.application.port.out.ExerciseHistoryJpaPort
 import com.example.core.history.application.port.out.UserHistoryJpaPort
 import com.example.core.history.application.port.out.command.AttendanceTodayCommand
 import com.example.core.history.application.port.out.command.SaveExerciseHistoryCommand
 import com.example.core.history.application.port.out.query.FindUserHistoryQuery
+import com.example.core.history.application.port.query.GetHistoryMonthQuery
 import com.example.core.history.dto.HistoryResponseDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -33,6 +34,7 @@ class HistoryService(
                     weight = it.weight,
                     exerciseSet = it.exerciseSet,
                     userHistoryId = command.userHistoryId,
+                    count = it.count,
                 )
             },
         )
@@ -72,14 +74,14 @@ class HistoryService(
     }
 
     @Transactional(readOnly = true)
-    override fun getHistoryFromMonth(userId: UUID): List<HistoryResponseDto>? {
-        val today = LocalDate.now()
-        val query = FindUserHistoryQuery(
-            userId = userId,
+    override fun getHistoryFromMonth(query: GetHistoryMonthQuery): List<HistoryResponseDto>? {
+        val today = query.localDate
+        val jpaQuery = FindUserHistoryQuery(
+            userId = query.userId,
             startDate = getStartOfMonth(today),
             endDate = getEndOfMonth(today),
         )
-        return userHistoryJpaPort.queryUserHistory(query)
+        return userHistoryJpaPort.queryUserHistory(jpaQuery)
     }
 
     @Transactional(readOnly = true)

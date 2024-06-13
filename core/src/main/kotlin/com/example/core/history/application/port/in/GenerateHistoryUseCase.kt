@@ -1,7 +1,7 @@
 package com.example.core.history.application.port.`in`
 
-import com.example.core.history.application.port.`in`.command.AddDietJpaCommand
-import com.example.core.history.application.port.`in`.command.ExerciseTodayCommand
+import com.example.core.history.application.port.command.AddDietJpaCommand
+import com.example.core.history.application.port.command.ExerciseTodayCommand
 import java.util.UUID
 
 interface GenerateHistoryUseCase {

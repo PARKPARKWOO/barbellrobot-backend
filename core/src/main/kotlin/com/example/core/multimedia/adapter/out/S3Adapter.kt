@@ -17,6 +17,8 @@ class S3Adapter(
     private val amazonS3: AmazonS3,
     @Value("\${cloud-front.domain}")
     private val cloudFrontDomain: String,
+    @Value("\${aws.s3.bucket-name}")
+    private val bucketName: String,
 ) : S3Port {
     override suspend fun uploadFiles(files: List<MultipartFile>): List<String>? {
         return coroutineScope {
@@ -28,13 +30,13 @@ class S3Adapter(
                 async {
                     val fileName = "${UUID.randomUUID()}_${file.originalFilename}"
                     val putObjectRequest = PutObjectRequest(
-                        "TODO BucketName",
+                        bucketName,
                         fileName,
                         file.inputStream,
                         metadata,
                     )
                     amazonS3.putObject(putObjectRequest)
-                    cloudFrontDomain + fileName
+                    "$cloudFrontDomain/$fileName"
                 }
             }
         }.awaitAll()

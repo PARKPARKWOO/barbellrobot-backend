@@ -7,4 +7,5 @@ data class SaveExerciseHistoryCommand(
     var weight: Double,
     var exerciseSet: Int,
     var userHistoryId: UUID,
+    val count: Int?,
 )

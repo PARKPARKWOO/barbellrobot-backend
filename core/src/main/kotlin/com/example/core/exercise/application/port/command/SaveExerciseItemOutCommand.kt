@@ -5,8 +5,8 @@ import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEnti
 
 data class SaveExerciseItemOutCommand(
     val exerciseName: String,
-    val videoUri: String?,
-    val imageUri: String?,
+    val videoUri: List<String>,
+    val imageUri: List<String>,
     var exerciseAreas: MutableList<ExerciseAreaEntity>,
     var exerciseGoals: MutableList<ExerciseGoalEntity>,
 )

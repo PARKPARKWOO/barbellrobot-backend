@@ -5,7 +5,7 @@ import com.example.core.exercise.application.port.command.SaveExerciseItemComman
 import com.example.domain.exercise.ExerciseItem
 
 interface ExerciseItemUseCase {
-    fun saveExerciseItem(command: SaveExerciseItemCommand)
+    suspend fun saveExerciseItem(command: SaveExerciseItemCommand)
 
     fun findById(id: Long): ExerciseItem
 

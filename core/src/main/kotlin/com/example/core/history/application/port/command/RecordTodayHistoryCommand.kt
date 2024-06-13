@@ -1,4 +1,4 @@
-package com.example.core.history.application.port.`in`.command
+package com.example.core.history.application.port.command
 
 import org.springframework.web.multipart.MultipartFile
 import java.util.UUID

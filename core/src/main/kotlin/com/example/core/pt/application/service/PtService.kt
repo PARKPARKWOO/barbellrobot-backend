@@ -3,6 +3,7 @@ package com.example.core.pt.application.service
 import com.example.core.ai.application.port.command.CallPtCommand
 import com.example.core.ai.application.port.`in`.GeminiUseCase
 import com.example.core.ai.application.service.GeneratePtService.GeneratePtResponseDto
+import com.example.core.common.util.Tx
 import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
 import com.example.core.pt.application.command.GeneratePtCommand
 import com.example.core.pt.application.command.SavePtCommand
@@ -12,6 +13,7 @@ import com.example.core.user.member.application.`in`.MemberUseCase
 import com.example.domain.pt.AiPt
 import com.google.gson.Gson
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class PtService(
@@ -43,6 +45,10 @@ class PtService(
             )
             return ptJpaPort.save(savePtCommand)
         }
+    }
+
+    override fun getPt(memberId: UUID): AiPt? {
+        return Tx.readTx { ptJpaPort.findByThisWeek(memberId) }
     }
 
     private fun parseStringToJson(inputString: String): GeneratePtResponseDto {

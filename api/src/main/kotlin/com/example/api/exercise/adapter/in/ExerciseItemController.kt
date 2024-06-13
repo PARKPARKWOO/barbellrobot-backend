@@ -2,8 +2,8 @@ package com.example.api.exercise.adapter.`in`
 
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
-import com.example.api.exercise.adapter.`in`.request.CreateExerciseItemRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseItemDetailResponse
+import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
 import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api/v1")
@@ -26,16 +27,31 @@ import org.springframework.web.bind.annotation.RestController
 class ExerciseItemController(
     private val exerciseItemUseCase: ExerciseItemUseCase,
 ) {
-    @PostMapping("/item")
+    @PostMapping(path = ["/item"], consumes = ["multipart/form-data"])
     @PublicEndPoint
     @Operation(
         summary = "운동 을 추가합니다. ex) 벤치프레스",
     )
-    fun createItem(
-        @RequestBody
-        request: CreateExerciseItemRequest,
+    suspend fun createItem(
+        @RequestParam("exerciseName")
+        exerciseName: String,
+        @RequestParam(name = "video", required = false)
+        video: List<MultipartFile>?,
+        @RequestParam(name = "image", required = false)
+        image: List<MultipartFile>?,
+        @RequestParam(name = "exerciseAreas")
+        exerciseAreas: MutableList<Long>,
+        @RequestParam(name = "exerciseGoals")
+        exerciseGoals: MutableList<Long>,
     ): ApiResponse<Unit> {
-        exerciseItemUseCase.saveExerciseItem(request.toCommand())
+        val command = SaveExerciseItemCommand(
+            exerciseName = exerciseName,
+            video = video,
+            image = image,
+            exerciseAreas = exerciseAreas,
+            exerciseGoals = exerciseGoals,
+        )
+        exerciseItemUseCase.saveExerciseItem(command)
         return ApiResponse(data = Unit)
     }
 

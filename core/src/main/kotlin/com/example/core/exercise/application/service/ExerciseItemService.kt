@@ -2,17 +2,24 @@ package com.example.core.exercise.application.service
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
+import com.example.core.common.util.Tx
+import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
+import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
 import com.example.core.exercise.application.dto.QueryItemDto
-import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
+import com.example.core.exercise.application.port.command.AddItemAreaRelationCommand
+import com.example.core.exercise.application.port.command.AddItemGoalRelationCommand
 import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
+import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
 import com.example.core.exercise.application.port.out.ExerciseAreaJpaPort
 import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
 import com.example.core.exercise.application.port.out.ExerciseItemJpaPort
 import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPort
 import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPort
-import com.example.core.exercise.application.port.command.AddItemAreaRelationCommand
-import com.example.core.exercise.application.port.command.AddItemGoalRelationCommand
+import com.example.core.multimedia.application.port.`in`.MultimediaUploadUseCase
 import com.example.domain.exercise.ExerciseItem
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -23,36 +30,77 @@ class ExerciseItemService(
     private val exerciseAreaJpaPort: ExerciseAreaJpaPort,
     private val itemGoalRelationshipJpaPort: ItemGoalRelationshipJpaPort,
     private val itemAreaRelationshipJpaPort: ItemAreaRelationshipJpaPort,
+    private val multimediaUploadUseCase: MultimediaUploadUseCase,
 ) : ExerciseItemUseCase {
-    @Transactional
-    override fun saveExerciseItem(command: SaveExerciseItemCommand) {
-        val exerciseGoals = exerciseGoalJpaPort.getExerciseGoals(command.exerciseGoals)
-            ?: throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_GOAL)
-        val exerciseAreas = exerciseAreaJpaPort.getExerciseAreas(command.exerciseAreas)
-            ?: throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_AREA)
-        if (exerciseAreas.size != command.exerciseAreas.size) {
-            throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_AREA)
+    override suspend fun saveExerciseItem(command: SaveExerciseItemCommand) {
+        val (area, goal) = coroutineScope {
+            val goalJob = async {
+                getExerciseGoals(command.exerciseGoals)
+                    ?: throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_GOAL)
+            }
+
+            val areaJob = async {
+                getExerciseAreas(command.exerciseAreas)
+                    ?: throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_AREA)
+            }
+            awaitAll(areaJob, goalJob)
         }
-        if (exerciseGoals.size != command.exerciseGoals.size) {
-            throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_GOAL)
-        }
+        val imageUrls = command.image?.let {
+            multimediaUploadUseCase.uploadMultipartFiles(it)
+        } ?: emptyList()
+
+        val videoUrls = command.video?.let {
+            multimediaUploadUseCase.uploadMultipartFiles(it)
+        } ?: emptyList()
+        val goals = goal.map { it as ExerciseGoalEntity }
+        val areas = area.map { it as ExerciseAreaEntity }
         val itemId = exerciseItemJpaPort.saveExerciseItem(
             command.toOutCommand(
-                exerciseGoals = exerciseGoals.toMutableList(),
-                exerciseAreas = exerciseAreas.toMutableList(),
+                exerciseGoals = goals.toMutableList(),
+                exerciseAreas = areas.toMutableList(),
+                video = videoUrls.toMutableList(),
+                image = imageUrls.toMutableList(),
             ),
         )
+        saveItemRelationship(itemId, goals.map { it.id }, areas.map { it.id })
+    }
+
+    private suspend fun saveItemRelationship(
+        itemId: Long,
+        goalIds: List<Long>,
+        areaIds: List<Long>,
+    ) = coroutineScope {
         val addItemGoalRelationCommand = AddItemGoalRelationCommand(
             itemId = itemId,
-            goalIds = command.exerciseGoals,
+            goalIds = goalIds,
         )
-        itemGoalRelationshipJpaPort.addRelationship(addItemGoalRelationCommand)
-
+        val itemGoalJob = async {
+            saveItemGoalRelationship(addItemGoalRelationCommand)
+        }
         val addItemAreaRelationCommand = AddItemAreaRelationCommand(
             itemId = itemId,
-            areaIds = command.exerciseAreas,
+            areaIds = areaIds,
         )
-        itemAreaRelationshipJpaPort.addRelationship(addItemAreaRelationCommand)
+        val itemAreaJob = async {
+            saveItemAreaRelationship(addItemAreaRelationCommand)
+        }
+        awaitAll(itemAreaJob, itemGoalJob)
+    }
+
+    private fun getExerciseGoals(ids: List<Long>) = Tx.readTx {
+        exerciseGoalJpaPort.getExerciseGoals(ids)
+    }
+
+    private fun getExerciseAreas(ids: List<Long>) = Tx.readTx {
+        exerciseAreaJpaPort.getExerciseAreas(ids)
+    }
+
+    private fun saveItemAreaRelationship(command: AddItemAreaRelationCommand) = Tx.writeTx {
+        itemAreaRelationshipJpaPort.addRelationship(command)
+    }
+
+    private fun saveItemGoalRelationship(command: AddItemGoalRelationCommand) = Tx.writeTx {
+        itemGoalRelationshipJpaPort.addRelationship(command)
     }
 
     @Transactional(readOnly = true)

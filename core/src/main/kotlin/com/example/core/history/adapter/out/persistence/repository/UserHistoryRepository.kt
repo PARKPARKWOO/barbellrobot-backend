@@ -118,8 +118,10 @@ class UserHistoryQueryRepositoryImpl(
 
     override fun findUserHistoryToday(userId: UUID, today: LocalDate): UserHistoryEntity? {
         return jpaQueryFactory.selectFrom(userHistoryEntity)
-            .where(userHistoryEntity.userId.eq(userId)
-                .and(userHistoryEntity.today.eq(today)))
+            .where(
+                userHistoryEntity.userId.eq(userId)
+                    .and(userHistoryEntity.today.eq(today)),
+            )
             .fetchOne()
     }
 

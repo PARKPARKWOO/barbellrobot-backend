@@ -14,6 +14,7 @@ import com.example.common.log.Log
 import com.example.core.history.application.port.`in`.GenerateHistoryUseCase
 import com.example.core.history.application.port.`in`.HistoryFacadeUseCase
 import com.example.core.history.application.port.`in`.HistoryQueryUseCase
+import com.example.core.history.application.port.query.GetHistoryMonthQuery
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/api/v1/history")
@@ -109,8 +112,21 @@ class HistoryController(
     fun getHistoryFromMonth(
         @Parameter(hidden = true) @AuthenticationUser
         userInfo: UserInfo,
+        @RequestParam(name = "month", required = false)
+        month: Int?,
+        @RequestParam(name = "year", required = false)
+        year: Int?,
     ): ApiResponse<List<HistoryResponse>> {
-        val response = historyQueryUseCase.getHistoryFromMonth(userInfo.userId)?.map { historyDto ->
+        log.info("month")
+        val currentDate = LocalDate.now()
+        val queryYear = year ?: currentDate.year
+        val queryMonth = month ?: currentDate.monthValue
+        val localDate = LocalDate.of(queryYear, queryMonth, 1)
+        val query = GetHistoryMonthQuery(
+            userId = userInfo.userId,
+            localDate = localDate,
+        )
+        val response = historyQueryUseCase.getHistoryFromMonth(query)?.map { historyDto ->
             HistoryResponse(
                 userHistoryResponse = UserHistoryResponse.from(historyDto.userHistoryResponseDto),
                 exerciseHistoryResponse = historyDto.exerciseHistoryResponseDto?.map {
