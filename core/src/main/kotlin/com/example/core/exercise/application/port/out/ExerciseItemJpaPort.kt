@@ -16,4 +16,6 @@ interface ExerciseItemJpaPort {
     fun findAll(): List<ExerciseItem>
 
     fun findAllItemsQuery(): List<QueryItemDto>
+
+    fun findInIds(ids: List<Long>): List<QueryItemDto>
 }

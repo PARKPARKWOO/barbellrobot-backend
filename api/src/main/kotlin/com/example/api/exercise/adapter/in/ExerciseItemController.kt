@@ -88,9 +88,12 @@ class ExerciseItemController(
     @Operation(
         summary = "운동 목록 filter",
     )
-    fun findItems(): ApiResponse<List<ExerciseItemDetailResponse>> {
+    fun findItems(
+        @RequestParam("itemIds", required = false)
+        itemIds: List<Long>?
+    ): ApiResponse<List<ExerciseItemDetailResponse>> {
         return ApiResponse(
-            data = exerciseItemUseCase.findAllItemsQuery().map {
+            data = exerciseItemUseCase.findAllItemsQuery(itemIds).map {
                 ExerciseItemDetailResponse.from(it)
             },
         )

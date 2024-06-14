@@ -126,7 +126,9 @@ class ExerciseItemService(
     }
 
     @Transactional(readOnly = true)
-    override fun findAllItemsQuery(): List<QueryItemDto> {
-        return exerciseItemJpaPort.findAllItemsQuery()
+    override fun findAllItemsQuery(ids: List<Long>?): List<QueryItemDto> {
+        return ids?.let {
+            exerciseItemJpaPort.findInIds(it)
+        } ?: exerciseItemJpaPort.findAllItemsQuery()
     }
 }

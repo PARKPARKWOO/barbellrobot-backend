@@ -23,6 +23,8 @@ interface ExerciseItemQueryRepository {
     fun findItemAndAreaAndGoal(id: Long): QueryItemDto?
 
     fun findItemDetailAll(): List<QueryItemDto>
+
+    fun findInIds(ids: List<Long>): List<QueryItemDto>
 }
 
 @Repository
@@ -99,24 +101,90 @@ class ExerciseItemQueryRepositoryImpl(
             it[exerciseHistoryEntity.itemId]!! to it[exerciseHistoryEntity.itemId.count()]!!
         }
 
-        return exerciseItems.map { item ->
-            val areas = itemAreaRelationships
-                .filter { it.exerciseItemId == item.id }
-                .mapNotNull { relationship ->
-                    exerciseAreas.find { it.id == relationship.exerciseAreaId }
-                }
-            val goals = itemGoalRelationships
-                .filter { it.exerciseItemId == item.id }
-                .mapNotNull { relationship ->
-                    exerciseGoals.find { it.id == relationship.exerciseGoalId }
-                }
-            val count = historyCountMap[item.id]?.toInt() ?: 0
-            QueryItemDto(
-                item = item.toDomain(),
-                goals = goals.map { it.toDomain() },
-                areas = areas.map { it.toDomain() },
-                count = count,
-            )
+        return getItemQueryDto(
+            exerciseItems = exerciseItems,
+            exerciseAreas = exerciseAreas,
+            exerciseGoals = exerciseGoals,
+            itemAreaRelationships = itemAreaRelationships,
+            itemGoalRelationships = itemGoalRelationships,
+            historyCountMap = historyCountMap,
+        )
+    }
+
+    override fun findInIds(ids: List<Long>): List<QueryItemDto> {
+        val exerciseItems: List<ExerciseItemEntity> = jpaQueryFactory
+            .selectFrom(exerciseItemEntity)
+            .where(exerciseItemEntity.id.`in`(ids))
+            .fetch()
+
+        val itemAreaRelationships: List<ItemAreaRelationshipEntity> = jpaQueryFactory
+            .selectFrom(itemAreaRelationshipEntity)
+            .where(itemAreaRelationshipEntity.exerciseItemId.`in`(ids))
+            .fetch()
+
+        val itemGoalRelationships: List<ItemGoalRelationshipEntity> = jpaQueryFactory
+            .selectFrom(itemGoalRelationshipEntity)
+            .where(itemGoalRelationshipEntity.exerciseItemId.`in`(ids))
+            .fetch()
+
+        val exerciseAreas: List<ExerciseAreaEntity> = jpaQueryFactory
+            .selectFrom(exerciseAreaEntity)
+            .where(exerciseAreaEntity.id.`in`(itemAreaRelationships.map { it.exerciseAreaId }))
+            .fetch()
+
+        val exerciseGoals: List<ExerciseGoalEntity> = jpaQueryFactory
+            .selectFrom(exerciseGoalEntity)
+            .where(exerciseGoalEntity.id.`in`(itemGoalRelationships.map { it.exerciseGoalId }))
+            .fetch()
+
+        val historyCounts: List<Tuple> = jpaQueryFactory
+            .select(exerciseHistoryEntity.itemId, exerciseHistoryEntity.itemId.count())
+            .from(exerciseHistoryEntity)
+            .where(exerciseHistoryEntity.itemId.`in`(ids))
+            .groupBy(exerciseHistoryEntity.itemId)
+            .fetch()
+
+        val historyCountMap: Map<Long, Long> = getHistoryCountMap(historyCounts)
+
+        return getItemQueryDto(
+            exerciseItems = exerciseItems,
+            exerciseAreas = exerciseAreas,
+            exerciseGoals = exerciseGoals,
+            itemAreaRelationships = itemAreaRelationships,
+            itemGoalRelationships = itemGoalRelationships,
+            historyCountMap = historyCountMap,
+        )
+    }
+
+    private fun getHistoryCountMap(historyCounts: List<Tuple>): Map<Long, Long> =
+        historyCounts.associate {
+            it[exerciseHistoryEntity.itemId]!! to it[exerciseHistoryEntity.itemId.count()]!!
         }
+
+    private fun getItemQueryDto(
+        exerciseItems: List<ExerciseItemEntity>,
+        itemAreaRelationships: List<ItemAreaRelationshipEntity>,
+        exerciseAreas: List<ExerciseAreaEntity>,
+        itemGoalRelationships: List<ItemGoalRelationshipEntity>,
+        exerciseGoals: List<ExerciseGoalEntity>,
+        historyCountMap: Map<Long, Long>
+        ): List<QueryItemDto> = exerciseItems.map { item ->
+        val areas = itemAreaRelationships
+            .filter { it.exerciseItemId == item.id }
+            .mapNotNull { relationship ->
+                exerciseAreas.find { it.id == relationship.exerciseAreaId }
+            }
+        val goals = itemGoalRelationships
+            .filter { it.exerciseItemId == item.id }
+            .mapNotNull { relationship ->
+                exerciseGoals.find { it.id == relationship.exerciseGoalId }
+            }
+        val count = historyCountMap[item.id]?.toInt() ?: 0
+        QueryItemDto(
+            item = item.toDomain(),
+            goals = goals.map { it.toDomain() },
+            areas = areas.map { it.toDomain() },
+            count = count,
+        )
     }
 }

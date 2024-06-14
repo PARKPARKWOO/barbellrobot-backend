@@ -15,5 +15,5 @@ interface ExerciseItemUseCase {
 
     fun findAll(): List<ExerciseItem>
 
-    fun findAllItemsQuery(): List<QueryItemDto>
+    fun findAllItemsQuery(ids: List<Long>?): List<QueryItemDto>
 }
