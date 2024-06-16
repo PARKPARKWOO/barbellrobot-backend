@@ -6,6 +6,4 @@ interface SignUpUserUseCase {
     fun signUpWithEmail(command: SignUpUserWithEmailCommand)
 
     fun saveUser(command: SignUpUserWithEmailCommand)
-
-    fun signUpWithKakao()
 }

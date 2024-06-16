@@ -29,7 +29,7 @@ class SignUpMemberDescribe : DescribeSpec(
             context("Success Request") {
                 it("SignUp Success") {
                     every { emailVerifyPort.verifyAuthenticationSuccess(any()) } returns Unit
-                    every { memberJpaPort.signUpMember(any()) } returns Unit
+                    every { memberJpaPort.signUpWithEmailMember(any()) } returns Unit
                     every { userQueryPort.findByNickname(any()) } returns null
                     memberService.signUpWithEmail(signUpWithEmailCommand)
                 }

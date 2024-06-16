@@ -6,15 +6,18 @@ import com.example.core.managemnet.adapter.out.persistence.entity.ManagementEnti
 import com.example.core.managemnet.adapter.out.persistence.repository.ManagementRepository
 import com.example.core.managemnet.application.port.command.OfferCommand
 import com.example.core.managemnet.application.port.out.ManagementJpaPort
+import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
+import com.example.core.user.member.application.out.MemberInfoJpaPort
+import com.example.core.user.member.dto.MemberSummaryDto
 import com.example.domain.management.Management
 import com.example.domain.management.ManagementStatus
-import com.example.domain.user.MemberSummary
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
 class ManagementJpaAdapter(
     private val managementRepository: ManagementRepository,
+    private val memberInfoJpaPort: MemberInfoJpaPort,
 ) : ManagementJpaPort {
     override fun create(command: OfferCommand) {
         val managementEntity = ManagementEntity(
@@ -38,10 +41,17 @@ class ManagementJpaAdapter(
         return getEntity(managementId).toDomain()
     }
 
-    override fun getManagementMemberSummary(trainerId: UUID): List<MemberSummary>? {
-        return managementRepository.findActiveFromTrainerId(trainerId)?.let {
-            it.map { dto -> dto.toDomain().summary() }
-        }
+    override fun getManagementMemberSummary(trainerId: UUID): List<MemberSummaryDto> {
+        TODO()
+//        return managementRepository.findActiveFromTrainerId(trainerId)?.let {
+//            it.map { dto ->
+//                dto.toDomain(getMemberInfo(dto.id)).summary()
+//            }
+//        }
+    }
+
+    private fun getMemberInfo(memberId: UUID): MemberInfo? {
+        return memberInfoJpaPort.getInfo(memberId)
     }
 
     override fun getManagementFromMember(memberId: UUID): List<Management>? {

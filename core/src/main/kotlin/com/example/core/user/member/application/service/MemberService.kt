@@ -1,13 +1,12 @@
 package com.example.core.user.member.application.service
 
-import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ErrorCode.MEMBER_NOT_FOUND
 import com.example.core.common.error.ServiceException
 import com.example.core.multimedia.application.port.`in`.MultimediaUploadUseCase
-import com.example.core.user.adapter.out.UserQueryAdapter
 import com.example.core.user.application.port.command.UpdateProfileCommand
 import com.example.core.user.application.service.AbstractUserService
 import com.example.core.user.member.application.command.UpdateMemberInfoCommand
+import com.example.core.user.member.application.`in`.MemberInfoUseCase
 import com.example.core.user.member.application.`in`.MemberUseCase
 import com.example.core.user.member.application.out.MemberJpaPort
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
@@ -19,7 +18,7 @@ import java.util.UUID
 class MemberService(
     private val multimediaUploadUseCase: MultimediaUploadUseCase,
     private val memberJpaPort: MemberJpaPort,
-    private val userQueryAdapter: UserQueryAdapter,
+    private val memberInfoUseCase: MemberInfoUseCase,
 ) : MemberUseCase, AbstractUserService(multimediaUploadUseCase) {
     override fun updateProfile(command: UpdateProfileCommand) {
         memberJpaPort.updateProfile(command)
@@ -27,21 +26,10 @@ class MemberService(
 
     @Transactional
     override fun update(command: UpdateMemberInfoCommand) {
-        val member = memberJpaPort.getMember(command.id)
-        if (member.nickname != command.nickname) {
-            // nickname 중복시
-            userQueryAdapter.findByNickname(command.nickname)?.let {
-                throw ServiceException(ErrorCode.DUPLICATE_NICKNAME)
-            } ?: member.updateNickname(command.nickname)
-        }
-        member.updateInfo(
-            exerciseMonths = command.exerciseMonths,
-            tall = command.tall,
-            weight = command.weight,
-            skeletalMuscleMass = command.skeletalMuscleMass,
-            gender = command.gender,
-        )
-        memberJpaPort.update(member)
+//        val memberDetail = memberInfoUseCase.getInfo(command.id)
+//            ?: throw ServiceException(ErrorCode.MISSING_DETAIL_INFORMATION)
+        memberInfoUseCase.updateNickname(command.toUpdateNickname())
+        memberInfoUseCase.update(command)
     }
 
     @Transactional(readOnly = true)

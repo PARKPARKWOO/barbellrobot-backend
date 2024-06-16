@@ -36,7 +36,7 @@ class SignUpController(
         summary = "일반 회원 회원가입",
     )
     @PublicEndPoint
-    fun signUpMember(
+    fun signUpWithEmailMember(
         @RequestBody @Valid
         request: SignUpMemberWithEmailRequest,
     ): ApiResponse<Unit> {
@@ -50,7 +50,7 @@ class SignUpController(
     @Operation(
         summary = "trainer 회원가입",
     )
-    fun signUpTrainer(
+    fun signUpWithEmailTrainer(
         @RequestBody @Valid
         request: SignUpTrainerWithEmailRequest,
     ): ApiResponse<Unit> {
@@ -100,17 +100,5 @@ class SignUpController(
         log.info("nickname")
         val response = VerifyNicknameResponse(canNickname = verifyNicknameUseCase.verifyNickname(nickname))
         return ApiResponse(data = response)
-    }
-
-    @PostMapping("/kakao/member")
-    @Operation(
-        summary = "member Kakao 회원가입",
-    )
-    @PublicEndPoint
-    fun signUpWithKakao(
-//        @RequestBody
-//        request: SignUpMemberWithKakaoRequest,
-    ) {
-        signUpMemberUseCase.signUpWithKakao()
     }
 }

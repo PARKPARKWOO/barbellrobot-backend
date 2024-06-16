@@ -19,8 +19,4 @@ class SignUpTrainerService(
             ?: TODO("error 정의 필요")
         trainerJpaPort.signUpTrainer(trainerCommand.toSignUpCommand())
     }
-
-    override fun signUpWithKakao() {
-        TODO("Not yet implemented")
-    }
 }

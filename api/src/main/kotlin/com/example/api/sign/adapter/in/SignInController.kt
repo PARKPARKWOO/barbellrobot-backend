@@ -4,13 +4,14 @@ import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
 import com.example.api.sign.adapter.`in`.request.ReissueTokenRequest
 import com.example.api.sign.adapter.`in`.request.SignInWithEmailRequest
+import com.example.api.sign.adapter.`in`.request.SignInWithKakaoRequest
 import com.example.api.sign.adapter.`in`.response.JwtResponse
 import com.example.common.log.Log
 import com.example.core.jwt.application.port.`in`.JwtReissueUseCase
 import com.example.core.sign.application.port.`in`.SignInMemberUseCase
 import com.example.core.sign.application.port.`in`.SignInTrainerUseCase
 import io.swagger.v3.oas.annotations.Operation
-import jakarta.validation.Valid
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -30,7 +31,7 @@ class SignInController(
     )
     @PublicEndPoint
     fun signInTrainerWithEmail(
-        @RequestBody
+        @RequestBody @Validated
         request: SignInWithEmailRequest,
     ): ApiResponse<JwtResponse> {
         val response = JwtResponse.from(signInTrainerUseCase.signInWithEmail(request.toCommand()))
@@ -43,7 +44,7 @@ class SignInController(
     )
     @PublicEndPoint
     fun signInMemberWithEmail(
-        @RequestBody @Valid
+        @RequestBody @Validated
         request: SignInWithEmailRequest,
     ): ApiResponse<JwtResponse> {
         log.info("요청 들어옴")
@@ -62,6 +63,17 @@ class SignInController(
     ): ApiResponse<JwtResponse> {
         log.info("reissue")
         val response = JwtResponse.from(reissueUseCase.reissueToken(request.refreshToken))
+        return ApiResponse(data = response)
+    }
+
+    @PostMapping("/kakao/member")
+    @PublicEndPoint
+    fun signInWithKakao(
+        @RequestBody
+        request: SignInWithKakaoRequest,
+    ): ApiResponse<JwtResponse> {
+        log.info(request.accessToken)
+        val response = JwtResponse.from(signInMemberUseCase.signInWithKakao(request.toCommand()))
         return ApiResponse(data = response)
     }
 }

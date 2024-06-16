@@ -2,15 +2,15 @@ package com.example.core.user.member.adapter.out.persistence.entity
 
 import com.example.core.common.persistence.BaseEntity
 import com.example.core.user.UserEntity
-import com.example.domain.user.Gender
 import com.example.domain.user.Member
+import com.example.domain.user.Provider
 import com.example.domain.user.Role
 import jakarta.persistence.AttributeOverride
 import jakarta.persistence.AttributeOverrides
 import jakarta.persistence.Column
-import jakarta.persistence.Embedded
+import jakarta.persistence.Embeddable
 import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
+import jakarta.persistence.EnumType.STRING
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 import org.hibernate.annotations.DynamicUpdate
@@ -23,79 +23,34 @@ const val MEMBER_TABLE_NAME = "member"
 @SQLDelete(sql = "UPDATE $MEMBER_TABLE_NAME set deleted_at = now() WHERE id = ?")
 @DynamicUpdate
 class MemberEntity(
-    @Column(name = "email")
-    var email: String,
-    @Column(name = "nickname")
-    var nickname: String,
-    @Column(name = "password")
-    var password: String,
-    // 소셜로그인 시
-    @Column(name = "provider")
-    var provider: String?,
-    @Embedded
+    @Column(name = "email", nullable = true)
+    var email: String?,
+    @Column(name = "password", nullable = true)
+    var password: String?,
     @AttributeOverrides(
-        AttributeOverride(name = "tall", column = Column(name = "tall")),
-        AttributeOverride(name = "weight", column = Column(name = "weight")),
-        AttributeOverride(name = "skeletalMuscleMass", column = Column(name = "skeletal_muscle_mass")),
-        AttributeOverride(name = "age", column = Column(name = "age")),
-        AttributeOverride(name = "exerciseMonths", column = Column(name = "exercise_months")),
+        AttributeOverride(name = "social_id", column = Column(name = "social_id")),
+        AttributeOverride(name = "provider", column = Column(name = "provider")),
     )
-    var memberInfo: MemberInfo,
+    var socialProvider: SocialProvider?,
     @Column(name = "role")
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     override var role: Role,
-    @Column(name = "gender")
-    @Enumerated(EnumType.STRING)
-    var gender: Gender,
     @Column(name = "profile", nullable = true)
     var profile: String?,
 ) : BaseEntity(), UserEntity {
-    companion object {
-        fun from(domain: Member): MemberEntity = MemberEntity(
-            email = domain.email,
-            nickname = domain.nickname,
-            password = domain.password,
-            profile = domain.profile,
-            memberInfo = MemberInfo(
-                tall = domain.tall,
-                weight = domain.weight,
-                skeletalMuscleMass = domain.skeletalMuscleMass,
-                age = domain.age,
-                exerciseMonths = domain.exerciseMonths,
-            ),
-            provider = domain.provider,
-            role = domain.role,
-            gender = domain.gender,
-        )
-    }
     fun toDomain(): Member {
         return Member(
             id = this.id,
             email = this.email,
             password = this.password,
-            provider = this.provider,
-            exerciseMonths = this.memberInfo.exerciseMonths,
-            tall = this.memberInfo.tall,
-            weight = this.memberInfo.weight,
-            skeletalMuscleMass = this.memberInfo.skeletalMuscleMass,
-            age = this.memberInfo.age,
-            gender = this.gender,
+            socialProvider = socialProvider?.let {
+                com.example.domain.user.SocialProvider(it.socialId, it.provider)
+            },
             createdAt = this.createdAt,
             deletedAt = this.deletedAt,
             role = this.role,
-            nickname = this.nickname,
             profile = this.profile,
         )
-    }
-
-    fun update(member: Member) {
-        this.gender = member.gender
-        this.memberInfo.age = member.age
-        this.memberInfo.tall = member.tall
-        this.memberInfo.weight = member.weight
-        this.memberInfo.skeletalMuscleMass = member.skeletalMuscleMass
-        this.memberInfo.exerciseMonths = member.exerciseMonths
-        this.nickname = nickname
     }
 
     override fun toUserEntity(): UserEntity {
@@ -106,3 +61,11 @@ class MemberEntity(
         this.profile = uri
     }
 }
+
+@Embeddable
+data class SocialProvider(
+    @Column(name = "social_id")
+    val socialId: String,
+    @Enumerated(STRING)
+    val provider: Provider,
+)

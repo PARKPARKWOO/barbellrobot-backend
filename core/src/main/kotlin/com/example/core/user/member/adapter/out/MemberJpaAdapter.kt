@@ -4,10 +4,15 @@ import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
 import com.example.core.sign.application.port.`in`.command.SignUpMemberWithEmailCommand
+import com.example.core.sign.application.port.`in`.query.FindUserWithSocialQuery
 import com.example.core.user.application.port.command.UpdateProfileCommand
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
+import com.example.core.user.member.adapter.out.persistence.entity.SocialProvider
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
+import com.example.core.user.member.application.command.SaveMemberCommand
+import com.example.core.user.member.application.command.SaveMemberInfoCommand
+import com.example.core.user.member.application.out.MemberInfoJpaPort
 import com.example.core.user.member.application.out.MemberJpaPort
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
 import com.example.domain.user.Member
@@ -18,45 +23,65 @@ import java.util.UUID
 @Component
 class MemberJpaAdapter(
     private val memberRepository: MemberRepository,
+    private val memberInfoJpaPort: MemberInfoJpaPort,
 ) : MemberJpaPort {
-    override fun signUpMember(command: SignUpMemberWithEmailCommand) {
-        val memberInfo = MemberInfo(
-            tall = command.tall,
-            weight = command.weight,
-            age = command.age,
-            skeletalMuscleMass = command.skeletalMuscleMass,
-            exerciseMonths = command.exerciseMonths,
-        )
+    override fun signUpWithEmailMember(command: SignUpMemberWithEmailCommand) {
         val entity = MemberEntity(
             email = command.email,
-            nickname = command.nickname,
             password = command.password,
-            memberInfo = memberInfo,
             role = Role.ROLE_FREE,
-            gender = command.gender,
-            provider = null,
+            socialProvider = null,
             profile = null,
         )
-        memberRepository.save(entity)
+        val member = memberRepository.save(entity)
+        val saveMemberInfoCommand = SaveMemberInfoCommand(
+            memberId = member.id,
+            nickname = command.nickname,
+            tall = command.tall,
+            weight = command.weight,
+            skeletalMuscleMass = command.skeletalMuscleMass,
+            gender = command.gender,
+            age = command.age,
+            exerciseMonths = command.exerciseMonths,
+        )
+        memberInfoJpaPort.save(saveMemberInfoCommand)
+    }
+
+    override fun save(command: SaveMemberCommand): Member {
+        val memberEntity = MemberEntity(
+            email = command.email,
+            password = command.password,
+            socialProvider = command.socialProvider?.let {
+                SocialProvider(it.socialId, it.provider)
+            },
+            profile = null,
+            role = Role.ROLE_FREE,
+        )
+        return memberRepository.save(memberEntity).toDomain()
     }
 
     override fun getMember(id: UUID): Member {
         return getEntity(id).toDomain()
     }
 
+    override fun getMember(query: FindUserWithSocialQuery): Member? {
+        return memberRepository.findWithSocial(query)?.toDomain()
+    }
+
     override fun signInWithEmail(command: SignInWithEmailCommand): Member? {
-        return memberRepository.findByEmailAndPassword(
+        val member = memberRepository.findByEmailAndPassword(
             email = command.email,
             password = command.password,
-        )?.toDomain()
+        )
+        return member?.toDomain()
+    }
+
+    private fun getInfo(memberId: UUID): MemberInfo? {
+        return memberInfoJpaPort.getInfo(memberId)
     }
 
     override fun updateProfile(command: UpdateProfileCommand) {
         getEntity(command.userId).uploadProfile(command.uri)
-    }
-
-    override fun update(member: Member) {
-        getEntity(member.id).update(member)
     }
 
     override fun getMemberAndGoal(id: UUID): MemberAndGoalQueryDto? {

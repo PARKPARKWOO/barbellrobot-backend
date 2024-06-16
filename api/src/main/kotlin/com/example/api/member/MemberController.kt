@@ -6,13 +6,16 @@ import com.example.api.common.resolver.UserInfo
 import com.example.api.common.response.ApiResponse
 import com.example.api.member.request.AddGoalRequest
 import com.example.api.member.request.CancelManagementRequest
+import com.example.api.member.request.CreateMemberInfoRequest
 import com.example.api.member.request.DeleteMemberGoalRequest
 import com.example.api.member.request.OfferManagementRequest
 import com.example.api.member.request.UpdateMemberInfoRequest
 import com.example.api.member.response.ManagementFromMemberResponse
+import com.example.api.member.response.MemberDetailResponse
 import com.example.core.managemnet.application.port.`in`.ManagementUseCase
 import com.example.core.user.application.port.command.UploadProfileCommand
 import com.example.core.user.member.application.`in`.MemberGoalUseCase
+import com.example.core.user.member.application.`in`.MemberInfoUseCase
 import com.example.core.user.member.application.`in`.MemberUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -33,6 +36,7 @@ class MemberController(
     private val memberUseCase: MemberUseCase,
     private val memberGoalUseCase: MemberGoalUseCase,
     private val managementUseCase: ManagementUseCase,
+    private val memberInfoUseCase: MemberInfoUseCase,
 ) {
     @PostMapping("/profile")
     @Operation(
@@ -145,6 +149,38 @@ class MemberController(
         request: DeleteMemberGoalRequest,
     ): ApiResponse<Unit> {
         memberGoalUseCase.deleteGoal(request.toCommand(userInfo.userId))
+        return ApiResponse(data = Unit)
+    }
+
+    @GetMapping
+    @Operation(
+        summary = "member 정보 조회",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun getMemberInfo(
+        @AuthenticationUser
+        @Parameter(hidden = true)
+        userInfo: UserInfo,
+    ): ApiResponse<MemberDetailResponse> {
+        val response = MemberDetailResponse.from(memberInfoUseCase.getDetail(userInfo.userId))
+        println(response.toString())
+        return ApiResponse(data = response)
+    }
+
+    @PostMapping
+    @Operation(
+        summary = "member Info 추가",
+        description = "소셜 로그인 시 디테일 한 정보를 입력받아야함",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun createMemberInfo(
+        @AuthenticationUser
+        @Parameter(hidden = true)
+        userInfo: UserInfo,
+        @RequestBody
+        request: CreateMemberInfoRequest,
+    ): ApiResponse<Unit> {
+        memberInfoUseCase.save(request.toCommand(userInfo.userId))
         return ApiResponse(data = Unit)
     }
 }

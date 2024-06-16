@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestParam
 
-@FeignClient
+@FeignClient(name = "kaKaoFeignClient", url = "https://kapi.kakao.com")
 interface KaKaoFeignClient {
     @PostMapping(path = ["/oauth/token"], consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE])
     fun getToken(

@@ -1,8 +1,8 @@
 package com.example.core.managemnet.application.port.out
 
 import com.example.core.managemnet.application.port.command.OfferCommand
+import com.example.core.user.member.dto.MemberSummaryDto
 import com.example.domain.management.Management
-import com.example.domain.user.MemberSummary
 import java.util.UUID
 
 interface ManagementJpaPort {
@@ -14,7 +14,7 @@ interface ManagementJpaPort {
 
     fun getManagement(managementId: Long): Management
 
-    fun getManagementMemberSummary(trainerId: UUID): List<MemberSummary>?
+    fun getManagementMemberSummary(trainerId: UUID): List<MemberSummaryDto>
 
     fun getManagementFromMember(memberId: UUID): List<Management>?
 }

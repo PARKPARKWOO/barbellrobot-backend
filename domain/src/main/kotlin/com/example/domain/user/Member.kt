@@ -6,18 +6,10 @@ import java.util.UUID
 
 data class Member(
     val id: UUID,
-    var nickname: String,
-    val email: String,
-    var password: String,
+    val email: String?,
+    var password: String?,
     val role: Role,
-    var gender: Gender,
-    val provider: String?,
-    var exerciseMonths: Int,
-    var tall: Double,
-    var weight: Double,
-    // 골격근량
-    var skeletalMuscleMass: Double?,
-    var age: Int,
+    val socialProvider: SocialProvider?,
     val createdAt: LocalDateTime,
     val deletedAt: LocalDateTime?,
     var profile: String?,
@@ -28,28 +20,32 @@ data class Member(
         claims[DomainConstants.USER_ROLE] = role
         return claims
     }
+}
 
-    fun updateNickname(nickname: String) {
-        this.nickname = nickname
-    }
-
+data class MemberInfo(
+    val memberId: UUID,
+    var gender: Gender,
+    var nickname: String,
+    var exerciseMonths: Int,
+    var tall: Double,
+    var weight: Double,
+    // 골격근량
+    var skeletalMuscleMass: Double?,
+    var age: Int,
+) {
     fun updateInfo(
         exerciseMonths: Int,
         tall: Double,
         weight: Double,
         skeletalMuscleMass: Double?,
         gender: Gender,
+        age: Int,
     ) {
         this.exerciseMonths = exerciseMonths
         this.tall = tall
         this.weight = weight
         this.skeletalMuscleMass = skeletalMuscleMass
         this.gender = gender
+        this.age = age
     }
-
-    fun summary() = MemberSummary(
-        id = id,
-        nickname = nickname,
-        profile = profile,
-    )
 }

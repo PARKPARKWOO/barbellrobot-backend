@@ -1,23 +1,20 @@
 package com.example.api.trainer.response
 
-import com.example.domain.user.MemberSummary
-import java.util.UUID
+import com.example.core.user.member.dto.MemberSummaryDto
 
 data class ManagementMemberResponse(
     val memberSummaryList: List<MemberSummaryResponse>,
 )
 
 data class MemberSummaryResponse(
-    val memberId: UUID,
     val nickname: String,
     val profile: String?,
 ) {
     companion object {
         @JvmStatic
-        fun from(domain: MemberSummary) = MemberSummaryResponse(
-            memberId = domain.id,
-            nickname = domain.nickname,
-            profile = domain.profile,
+        fun from(dto: MemberSummaryDto) = MemberSummaryResponse(
+            nickname = dto.nickname,
+            profile = dto.profile,
         )
     }
 }
