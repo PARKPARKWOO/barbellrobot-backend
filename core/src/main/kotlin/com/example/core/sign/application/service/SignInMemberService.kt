@@ -30,8 +30,8 @@ class SignInMemberService(
         memberJpaPort.signInWithEmail(command)?.getClaims()
             ?: throw ServiceException(ErrorCode.MEMBER_NOT_FOUND)
 
-    override fun findUserWithSocial(query: FindUserWithSocialQuery): Map<String, Any> {
-        return memberJpaPort.getMember(query)?.getClaims() ?: run {
+    override fun findUserWithSocial(query: FindUserWithSocialQuery): Map<String, Any> =
+        memberJpaPort.getMember(query)?.getClaims() ?: run {
             val saveMemberCommand = SaveMemberCommand(
                 email = "",
                 password = "",
@@ -42,5 +42,4 @@ class SignInMemberService(
             )
             memberJpaPort.save(saveMemberCommand)
         }.getClaims()
-    }
 }

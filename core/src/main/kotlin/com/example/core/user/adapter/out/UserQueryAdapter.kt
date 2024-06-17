@@ -16,7 +16,8 @@ class UserQueryAdapter(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : UserQueryPort {
     override fun findByNickname(nickname: String): UserHealthDetail? {
-        return jpaQueryFactory.select(memberInfo)
+        return jpaQueryFactory
+            .select(memberInfo)
             .from(memberInfo)
             .where(memberInfo.nickname.eq(nickname))
             .fetchOne()
@@ -27,7 +28,8 @@ class UserQueryAdapter(
     }
 
     override fun findById(userId: UUID): UserEntity? {
-        return jpaQueryFactory.select(QMemberEntity.memberEntity)
+        return jpaQueryFactory
+            .select(QMemberEntity.memberEntity)
             .from(QMemberEntity.memberEntity)
             .where(QMemberEntity.memberEntity.id.eq(userId))
             .fetchOne()?.toUserEntity()
@@ -38,7 +40,8 @@ class UserQueryAdapter(
     }
 
     override fun findByEmail(email: String): UserEntity? {
-        return jpaQueryFactory.select(QMemberEntity.memberEntity)
+        return jpaQueryFactory
+            .select(QMemberEntity.memberEntity)
             .from(QMemberEntity.memberEntity)
             .where(QMemberEntity.memberEntity.email.eq(email))
             .fetchOne()?.toUserEntity()

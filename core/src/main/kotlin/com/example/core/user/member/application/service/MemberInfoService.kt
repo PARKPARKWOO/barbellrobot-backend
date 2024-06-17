@@ -50,8 +50,6 @@ class MemberInfoService(
 
     override fun save(command: SaveMemberInfoCommand) = memberInfoJpaPort.save(command)
 
-    override fun getDetail(memberId: UUID): MemberDetailQueryDto {
-        return Tx.readTx { memberInfoJpaPort.getDetail(memberId) }
-            ?: throw ServiceException(ErrorCode.MEMBER_NOT_FOUND)
-    }
+    override fun getDetail(memberId: UUID): MemberDetailQueryDto = Tx.readTx { memberInfoJpaPort.getDetail(memberId) }
+        ?: throw ServiceException(ErrorCode.MEMBER_NOT_FOUND)
 }

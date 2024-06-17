@@ -60,12 +60,10 @@ class ManagementService(
     }
 
     @Transactional(readOnly = true)
-    override fun getManagementFromMember(memberId: UUID): List<Management> {
-        return managementJpaPort.getManagementFromMember(memberId) ?: emptyList()
-    }
+    override fun getManagementFromMember(memberId: UUID): List<Management> =
+        managementJpaPort.getManagementFromMember(memberId) ?: emptyList()
 
     @Transactional(readOnly = true)
-    override fun getMemberSummary(trainerId: UUID): List<MemberSummaryDto> {
-        return managementJpaPort.getManagementMemberSummary(trainerId)
-    }
+    override fun getMemberSummary(trainerId: UUID): List<MemberSummaryDto> =
+        managementJpaPort.getManagementMemberSummary(trainerId)
 }

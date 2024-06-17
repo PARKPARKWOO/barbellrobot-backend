@@ -19,9 +19,7 @@ class MemberInfoJpaAdapter(
         getEntity(memberInfo.memberId)?.update(memberInfo)
     }
 
-    override fun getInfo(memberId: UUID): MemberInfoEntity? {
-        return getEntity(memberId)
-    }
+    override fun getInfo(memberId: UUID): MemberInfoEntity? = getEntity(memberId)
 
     override fun updateNickname(command: UpdateNicknameCommand) {
         getEntity(command.id)?.updateNickname(command.nickname)
@@ -41,12 +39,8 @@ class MemberInfoJpaAdapter(
         memberInfoRepository.save(memberInfo)
     }
 
-    override fun getDetail(memberId: UUID): MemberDetailQueryDto? {
-        return memberInfoRepository.findMemberDetailQuery(memberId)
-    }
+    override fun getDetail(memberId: UUID): MemberDetailQueryDto? = memberInfoRepository.findMemberDetailQuery(memberId)
 
-    private fun getEntity(memberId: UUID): MemberInfoEntity? {
-        return memberInfoRepository.findById(memberId)
-            .getOrNull()
-    }
+    private fun getEntity(memberId: UUID): MemberInfoEntity? = memberInfoRepository.findById(memberId)
+        .getOrNull()
 }
