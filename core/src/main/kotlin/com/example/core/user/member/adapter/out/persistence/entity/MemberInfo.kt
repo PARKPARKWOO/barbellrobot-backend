@@ -5,7 +5,6 @@ import com.example.domain.user.Gender
 import com.example.domain.user.MemberInfo
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
 import jakarta.persistence.EnumType.STRING
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
@@ -62,7 +61,5 @@ class MemberInfo(
         this.gender = memberInfo.gender
     }
 
-    override fun toModel(): UserHealthDetail {
-        return this
-    }
+    override fun toModel(): UserHealthDetail = this
 }

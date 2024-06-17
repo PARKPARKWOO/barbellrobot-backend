@@ -20,7 +20,6 @@ interface MemberRepository : JpaRepository<MemberEntity, UUID>, MemberQueryRepos
 
 interface MemberQueryRepository {
     fun findMemberAndGoal(memberId: UUID): MemberAndGoalQueryDto?
-
     fun findWithSocial(query: FindUserWithSocialQuery): MemberEntity?
 }
 
@@ -28,6 +27,7 @@ interface MemberQueryRepository {
 class MemberQueryRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : MemberQueryRepository {
+
     override fun findMemberAndGoal(memberId: UUID): MemberAndGoalQueryDto? {
         val memberDetails = jpaQueryFactory
             .select(

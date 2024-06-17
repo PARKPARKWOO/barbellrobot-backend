@@ -41,6 +41,8 @@ class MemberInfoJpaAdapter(
 
     override fun getDetail(memberId: UUID): MemberDetailQueryDto? = memberInfoRepository.findMemberDetailQuery(memberId)
 
-    private fun getEntity(memberId: UUID): MemberInfoEntity? = memberInfoRepository.findById(memberId)
-        .getOrNull()
+    private fun getEntity(memberId: UUID): MemberInfoEntity? =
+        memberInfoRepository
+            .findById(memberId)
+            .getOrNull()
 }

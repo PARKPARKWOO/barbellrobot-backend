@@ -11,7 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
 
-interface MemberInfoRepository : JpaRepository<MemberInfo, UUID>, MemberInfoQueryRepository
+interface MemberInfoRepository :
+    JpaRepository<MemberInfo, UUID>,
+    MemberInfoQueryRepository
 
 interface MemberInfoQueryRepository {
     fun findMemberDetailQuery(memberId: UUID): MemberDetailQueryDto?
@@ -21,8 +23,9 @@ interface MemberInfoQueryRepository {
 class MemberInfoQueryRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : MemberInfoQueryRepository {
-    override fun findMemberDetailQuery(memberId: UUID): MemberDetailQueryDto? {
-        return jpaQueryFactory
+
+    override fun findMemberDetailQuery(memberId: UUID): MemberDetailQueryDto? =
+        jpaQueryFactory
             .select(
                 QMemberDetailQueryDto(
                     memberEntity.id,
@@ -48,5 +51,4 @@ class MemberInfoQueryRepositoryImpl(
             .leftJoin(memberInfo).on(memberEntity.id.eq(memberInfo.userId))
             .where(memberEntity.id.eq(memberId))
             .fetchOne()
-    }
 }

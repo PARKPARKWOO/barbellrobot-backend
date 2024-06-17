@@ -15,17 +15,16 @@ import java.util.UUID
 class UserQueryAdapter(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : UserQueryPort {
-    override fun findByNickname(nickname: String): UserHealthDetail? {
-        return jpaQueryFactory
-            .select(memberInfo)
-            .from(memberInfo)
-            .where(memberInfo.nickname.eq(nickname))
+    override fun findByNickname(nickname: String): UserHealthDetail? = jpaQueryFactory
+        .select(memberInfo)
+        .from(memberInfo)
+        .where(memberInfo.nickname.eq(nickname))
+        .fetchOne()
+        ?: jpaQueryFactory
+            .select(trainerInfo)
+            .from(trainerInfo)
+            .where(trainerInfo.nickname.eq(nickname))
             .fetchOne()
-            ?: jpaQueryFactory.select(trainerInfo)
-                .from(trainerInfo)
-                .where(trainerInfo.nickname.eq(nickname))
-                .fetchOne()
-    }
 
     override fun findById(userId: UUID): UserEntity? {
         return jpaQueryFactory

@@ -23,8 +23,8 @@ class SignInMemberService(
     @Value("\${jwt.refresh-token.expire-millis}")
     private val refreshTokenExpireTime: Long,
     private val kaKaoFeignClient: KaKaoFeignClient,
-) : SignInMemberUseCase,
-    AbstractSignInService(redisDriver, refreshTokenExpireTime, jwtTokenService, kaKaoFeignClient) {
+) : AbstractSignInService(redisDriver, refreshTokenExpireTime, jwtTokenService, kaKaoFeignClient),
+    SignInMemberUseCase {
     @Transactional(readOnly = true)
     override fun findUserWithEmail(command: SignInWithEmailCommand): Map<String, Any> =
         memberJpaPort.signInWithEmail(command)?.getClaims()

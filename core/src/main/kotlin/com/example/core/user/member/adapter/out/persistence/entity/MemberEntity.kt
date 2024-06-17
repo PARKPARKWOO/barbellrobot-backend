@@ -15,6 +15,7 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.SQLDelete
+import com.example.domain.user.SocialProvider as SocialProviderModel
 
 const val MEMBER_TABLE_NAME = "member"
 
@@ -44,7 +45,7 @@ class MemberEntity(
             email = this.email,
             password = this.password,
             socialProvider = socialProvider?.let {
-                com.example.domain.user.SocialProvider(it.socialId, it.provider)
+                SocialProviderModel(it.socialId, it.provider)
             },
             createdAt = this.createdAt,
             deletedAt = this.deletedAt,
@@ -53,9 +54,7 @@ class MemberEntity(
         )
     }
 
-    override fun toUserEntity(): UserEntity {
-        return this
-    }
+    override fun toUserEntity(): UserEntity = this
 
     override fun uploadProfile(uri: String) {
         this.profile = uri

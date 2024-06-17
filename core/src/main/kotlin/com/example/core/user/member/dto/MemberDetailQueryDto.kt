@@ -33,8 +33,8 @@ data class MemberInfoQueryDto
         val age: Int?,
     ) {
         fun isNotNull(): Boolean = gender != null &&
-                nickname != null &&
-                tall != null &&
-                weight != null &&
-                age != null
-}
+            nickname != null &&
+            tall != null &&
+            weight != null &&
+            age != null
+    }

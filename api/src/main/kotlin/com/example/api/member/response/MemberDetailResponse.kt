@@ -10,8 +10,8 @@ data class MemberDetailResponse(
     val memberInfoResponse: MemberInfoResponse?,
 ) {
     companion object {
-        fun from(dto: MemberDetailQueryDto): MemberDetailResponse {
-            return dto.memberInfoQueryDto?.let {
+        fun from(dto: MemberDetailQueryDto): MemberDetailResponse = dto
+            .memberInfoQueryDto?.let {
                 if (it.isNotNull()) {
                     MemberDetailResponse(
                         profile = dto.profile,
@@ -34,12 +34,12 @@ data class MemberDetailResponse(
                     )
                 }
             } ?: MemberDetailResponse(
-                profile = dto.profile,
-                role = dto.role,
-                memberInfoResponse = null,
-            )
-        }
+            profile = dto.profile,
+            role = dto.role,
+            memberInfoResponse = null,
+        )
     }
+}
 }
 
 data class MemberInfoResponse(

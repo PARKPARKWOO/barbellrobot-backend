@@ -21,8 +21,8 @@ class SignInTrainerService(
     @Value("\${jwt.refresh-token.expire-millis}")
     private val refreshTokenExpireTime: Long,
     private val kaKaoFeignClient: KaKaoFeignClient,
-) : SignInTrainerUseCase,
-    AbstractSignInService(redisDriver, refreshTokenExpireTime, jwtTokenService, kaKaoFeignClient) {
+) : AbstractSignInService(redisDriver, refreshTokenExpireTime, jwtTokenService, kaKaoFeignClient),
+    SignInTrainerUseCase {
     @Transactional(readOnly = true)
     override fun findUserWithEmail(command: SignInWithEmailCommand): Map<String, Any> {
         return trainerJpaPort.signInWithEmail(command)?.getClaims()
