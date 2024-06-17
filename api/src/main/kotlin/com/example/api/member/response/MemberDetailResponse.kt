@@ -11,29 +11,30 @@ data class MemberDetailResponse(
 ) {
     companion object {
         fun from(dto: MemberDetailQueryDto): MemberDetailResponse = dto
-            .memberInfoQueryDto?.let {
-            if (it.isNotNull()) {
-                MemberDetailResponse(
-                    profile = dto.profile,
-                    role = dto.role,
-                    memberInfoResponse = MemberInfoResponse(
-                        nickname = it.nickname!!,
-                        tall = it.tall!!,
-                        weight = it.weight!!,
-                        skeletalMuscleMass = it.skeletalMuscleMass,
-                        gender = it.gender!!,
-                        age = it.age!!,
-                        exerciseMonths = it.exerciseMonths!!,
-                    ),
-                )
-            } else {
-                MemberDetailResponse(
-                    profile = dto.profile,
-                    role = dto.role,
-                    memberInfoResponse = null,
-                )
-            }
-        } ?: MemberDetailResponse(
+            .memberInfoQueryDto
+            ?.let {
+                if (it.isNotNull()) {
+                    MemberDetailResponse(
+                        profile = dto.profile,
+                        role = dto.role,
+                        memberInfoResponse = MemberInfoResponse(
+                            nickname = it.nickname!!,
+                            tall = it.tall!!,
+                            weight = it.weight!!,
+                            skeletalMuscleMass = it.skeletalMuscleMass,
+                            gender = it.gender!!,
+                            age = it.age!!,
+                            exerciseMonths = it.exerciseMonths!!,
+                        ),
+                    )
+                } else {
+                    MemberDetailResponse(
+                        profile = dto.profile,
+                        role = dto.role,
+                        memberInfoResponse = null,
+                    )
+                }
+            } ?: MemberDetailResponse(
             profile = dto.profile,
             role = dto.role,
             memberInfoResponse = null,

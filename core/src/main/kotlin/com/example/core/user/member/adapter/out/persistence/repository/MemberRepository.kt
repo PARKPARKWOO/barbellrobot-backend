@@ -9,6 +9,8 @@ import com.example.core.user.member.adapter.out.persistence.entity.QMemberInfo.m
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
 import com.example.core.user.member.dto.QMemberDetailQueryDto
 import com.example.core.user.member.dto.QMemberInfoQueryDto
+import com.example.domain.user.Provider
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
@@ -80,9 +82,14 @@ class MemberQueryRepositoryImpl(
         return jpaQueryFactory
             .selectFrom(memberEntity)
             .where(
-                memberEntity.socialProvider.socialId.eq(query.id)
-                    .and(memberEntity.socialProvider.provider.eq(query.provider)),
-            )
-            .fetchOne()
+                eqSocialId(query.id)
+                    .and(eqSocialProvider(query.provider)),
+            ).fetchOne()
     }
+
+    private fun eqSocialId(id: String): BooleanExpression =
+        memberEntity.socialProvider.socialId.eq(id)
+
+    private fun eqSocialProvider(provider: Provider): BooleanExpression =
+        memberEntity.socialProvider.provider.eq(provider)
 }
