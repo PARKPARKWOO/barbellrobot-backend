@@ -23,18 +23,20 @@ object MemberServiceTestUtil {
 
     val memberEntity = MemberEntity(
         email = signUpWithEmailCommand.email,
-        nickname = signUpWithEmailCommand.nickname,
         password = signUpWithEmailCommand.password,
-        provider = null,
-        memberInfo = MemberInfo(
-            tall = signUpWithEmailCommand.tall,
-            weight = signUpWithEmailCommand.weight,
-            skeletalMuscleMass = signUpWithEmailCommand.skeletalMuscleMass,
-            age = signUpWithEmailCommand.age,
-            exerciseMonths = signUpWithEmailCommand.exerciseMonths,
-        ),
         role = Role.ROLE_FREE,
-        gender = signUpWithEmailCommand.gender,
+        socialProvider = null,
         profile = null,
+    )
+
+    val memberInfo = MemberInfo(
+        userId = memberEntity.id,
+        nickname = "",
+        tall = 0.0,
+        weight = 0.0,
+        skeletalMuscleMass = null,
+        gender = Gender.FEMALE,
+        age = 0,
+        exerciseMonths = 0,
     )
 }

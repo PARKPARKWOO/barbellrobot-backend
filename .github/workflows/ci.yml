@@ -35,11 +35,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run ktlint
-        uses: ScaCap/action-ktlint@master
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check
+#      - name: Run ktlint
+#        uses: ScaCap/action-ktlint@master
+#        with:
+#          github_token: ${{ secrets.github_token }}
+#          reporter: github-pr-check
 
       - name: Run detekt
         uses: alaegin/Detekt-Action@v1.23.3

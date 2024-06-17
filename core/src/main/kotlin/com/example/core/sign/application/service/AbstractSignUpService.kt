@@ -15,8 +15,6 @@ abstract class AbstractSignUpService(
 ) : SignUpUserUseCase {
     abstract override fun saveUser(command: SignUpUserWithEmailCommand)
 
-    abstract override fun signUpWithKakao()
-
     @Transactional
     override fun signUpWithEmail(command: SignUpUserWithEmailCommand) {
         verifyNickname(command.nickname)

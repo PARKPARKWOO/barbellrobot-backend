@@ -25,6 +25,9 @@ dependencies {
 
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.666")
 
+    // valid
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
     // encryption
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
 }

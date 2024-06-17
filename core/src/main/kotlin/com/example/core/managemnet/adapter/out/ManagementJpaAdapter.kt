@@ -6,9 +6,9 @@ import com.example.core.managemnet.adapter.out.persistence.entity.ManagementEnti
 import com.example.core.managemnet.adapter.out.persistence.repository.ManagementRepository
 import com.example.core.managemnet.application.port.command.OfferCommand
 import com.example.core.managemnet.application.port.out.ManagementJpaPort
+import com.example.core.user.member.dto.MemberSummaryDto
 import com.example.domain.management.Management
 import com.example.domain.management.ManagementStatus
-import com.example.domain.user.MemberSummary
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -38,10 +38,13 @@ class ManagementJpaAdapter(
         return getEntity(managementId).toDomain()
     }
 
-    override fun getManagementMemberSummary(trainerId: UUID): List<MemberSummary>? {
-        return managementRepository.findActiveFromTrainerId(trainerId)?.let {
-            it.map { dto -> dto.toDomain().summary() }
-        }
+    override fun getManagementMemberSummary(trainerId: UUID): List<MemberSummaryDto> {
+        TODO()
+//        return managementRepository.findActiveFromTrainerId(trainerId)?.let {
+//            it.map { dto ->
+//                dto.toDomain(getMemberInfo(dto.id)).summary()
+//            }
+//        }
     }
 
     override fun getManagementFromMember(memberId: UUID): List<Management>? {

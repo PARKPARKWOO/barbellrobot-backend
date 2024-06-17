@@ -4,8 +4,10 @@ import com.example.common.jwt.JwtTokenService
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.common.redis.RedisDriver
+import com.example.core.oauth.application.out.KaKaoFeignClient
 import com.example.core.sign.application.port.`in`.SignInTrainerUseCase
 import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
+import com.example.core.sign.application.port.`in`.query.FindUserWithSocialQuery
 import com.example.core.user.trainer.application.port.out.TrainerJpaPort
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -18,10 +20,15 @@ class SignInTrainerService(
     private val redisDriver: RedisDriver,
     @Value("\${jwt.refresh-token.expire-millis}")
     private val refreshTokenExpireTime: Long,
-) : SignInTrainerUseCase, AbstractSignInService(redisDriver, refreshTokenExpireTime, jwtTokenService) {
+    private val kaKaoFeignClient: KaKaoFeignClient,
+) : AbstractSignInService(redisDriver, refreshTokenExpireTime, jwtTokenService, kaKaoFeignClient),
+    SignInTrainerUseCase {
     @Transactional(readOnly = true)
-    override fun findUser(command: SignInWithEmailCommand): Map<String, Any> {
-        return trainerJpaPort.signInWithEmail(command)?.getClaims()
+    override fun findUserWithEmail(command: SignInWithEmailCommand): Map<String, Any> =
+        trainerJpaPort.signInWithEmail(command)?.getClaims()
             ?: throw ServiceException(ErrorCode.MEMBER_NOT_FOUND)
+
+    override fun findUserWithSocial(query: FindUserWithSocialQuery): Map<String, Any> {
+        TODO()
     }
 }

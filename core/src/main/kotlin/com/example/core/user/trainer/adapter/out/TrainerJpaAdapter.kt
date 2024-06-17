@@ -4,7 +4,6 @@ import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
 import com.example.core.user.application.port.command.UpdateProfileCommand
-import com.example.core.user.trainer.adapter.out.persistence.entity.GymAddress
 import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerEntity
 import com.example.core.user.trainer.adapter.out.persistence.repository.TrainerRepository
 import com.example.core.user.trainer.application.port.command.SignUpTrainerCommand
@@ -20,18 +19,8 @@ class TrainerJpaAdapter(
 ) : TrainerJpaPort {
     override fun signUpTrainer(command: SignUpTrainerCommand): Trainer {
         val trainerEntity = TrainerEntity(
-            nickname = command.nickname,
             email = command.email,
             password = command.password,
-            gymName = command.gymName,
-            gymAddress = GymAddress(
-                street = command.street,
-                city = command.city,
-                country = command.country,
-            ),
-            exerciseYears = command.exerciseYears,
-            gender = command.gender,
-            introduce = command.introduce,
             role = Role.ROLE_TRAINER,
             profile = null,
         )

@@ -8,8 +8,8 @@ import com.example.core.managemnet.application.port.command.OfferCommand
 import com.example.core.managemnet.application.port.command.RejectCommand
 import com.example.core.managemnet.application.port.`in`.ManagementUseCase
 import com.example.core.managemnet.application.port.out.ManagementJpaPort
+import com.example.core.user.member.dto.MemberSummaryDto
 import com.example.domain.management.Management
-import com.example.domain.user.MemberSummary
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -60,12 +60,10 @@ class ManagementService(
     }
 
     @Transactional(readOnly = true)
-    override fun getManagementFromMember(memberId: UUID): List<Management> {
-        return managementJpaPort.getManagementFromMember(memberId) ?: emptyList()
-    }
+    override fun getManagementFromMember(memberId: UUID): List<Management> =
+        managementJpaPort.getManagementFromMember(memberId) ?: emptyList()
 
     @Transactional(readOnly = true)
-    override fun getMemberSummary(trainerId: UUID): List<MemberSummary> {
-        return managementJpaPort.getManagementMemberSummary(trainerId) ?: emptyList()
-    }
+    override fun getMemberSummary(trainerId: UUID): List<MemberSummaryDto> =
+        managementJpaPort.getManagementMemberSummary(trainerId)
 }
