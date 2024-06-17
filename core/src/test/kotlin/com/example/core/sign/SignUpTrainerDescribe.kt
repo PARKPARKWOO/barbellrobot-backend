@@ -36,7 +36,7 @@ class SignUpTrainerDescribe : DescribeSpec(
             }
             context("Duplicate Nickname") {
                 it("ServiceException ErrorCode DUPLICATE_NICKNAME") {
-                    every { userQueryPort.findByNickname(any()) } returns MemberServiceTestUtil.memberEntity
+                    every { userQueryPort.findByNickname(any()) } returns TrainerServiceTestUtil.trainerInfo
                     every { emailVerifyPort.verifyAuthenticationSuccess(any()) } returns Unit
                     val exception = shouldThrow<ServiceException> {
                         signUpTrainerService.signUpWithEmail(signUpWithEmailCommand)

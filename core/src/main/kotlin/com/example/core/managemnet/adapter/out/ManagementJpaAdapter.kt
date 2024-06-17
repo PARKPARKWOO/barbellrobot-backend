@@ -6,8 +6,6 @@ import com.example.core.managemnet.adapter.out.persistence.entity.ManagementEnti
 import com.example.core.managemnet.adapter.out.persistence.repository.ManagementRepository
 import com.example.core.managemnet.application.port.command.OfferCommand
 import com.example.core.managemnet.application.port.out.ManagementJpaPort
-import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
-import com.example.core.user.member.application.out.MemberInfoJpaPort
 import com.example.core.user.member.dto.MemberSummaryDto
 import com.example.domain.management.Management
 import com.example.domain.management.ManagementStatus
@@ -17,7 +15,6 @@ import java.util.UUID
 @Component
 class ManagementJpaAdapter(
     private val managementRepository: ManagementRepository,
-    private val memberInfoJpaPort: MemberInfoJpaPort,
 ) : ManagementJpaPort {
     override fun create(command: OfferCommand) {
         val managementEntity = ManagementEntity(
@@ -48,10 +45,6 @@ class ManagementJpaAdapter(
 //                dto.toDomain(getMemberInfo(dto.id)).summary()
 //            }
 //        }
-    }
-
-    private fun getMemberInfo(memberId: UUID): MemberInfo? {
-        return memberInfoJpaPort.getInfo(memberId)
     }
 
     override fun getManagementFromMember(memberId: UUID): List<Management>? {

@@ -10,7 +10,7 @@ import com.example.domain.user.Member
 import java.util.UUID
 
 interface MemberJpaPort {
-    fun signUpWithEmailMember(command: SignUpMemberWithEmailCommand)
+    fun signUpWithEmailMember(command: SignUpMemberWithEmailCommand): UUID
 
     fun save(command: SaveMemberCommand): Member
 

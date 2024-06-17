@@ -3,6 +3,7 @@ package com.example.core.exercise
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.common.util.Tx
+import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
 import com.example.core.exercise.application.port.out.ExerciseAreaJpaPort
 import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
 import com.example.core.exercise.application.port.out.ExerciseItemJpaPort
@@ -11,16 +12,23 @@ import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPor
 import com.example.core.exercise.application.service.ExerciseItemService
 import com.example.core.exercise.util.ExerciseAreaTestUtil
 import com.example.core.exercise.util.ExerciseGoalTestUtil
-import com.example.core.exercise.util.ExerciseItemTestUtil
 import com.example.core.multimedia.application.port.`in`.MultimediaUploadUseCase
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNot
+import io.kotest.matchers.shouldNotBe
+import io.mockk.Runs
+import io.mockk.called
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
-import org.springframework.test.util.ReflectionTestUtils
-import org.springframework.test.util.ReflectionTestUtils.invokeMethod
+import kotlinx.coroutines.runBlocking
 
+@Suppress("UnusedPrivateProperty")
 class ExerciseItemDescribe : DescribeSpec(
     {
         val itemAreaRelationshipJpaPort: ItemAreaRelationshipJpaPort = mockk()
@@ -28,8 +36,9 @@ class ExerciseItemDescribe : DescribeSpec(
         val exerciseAreaJpaPort: ExerciseAreaJpaPort = mockk()
         val exerciseGoalJpaPort: ExerciseGoalJpaPort = mockk()
         val multimediaUploadUseCase: MultimediaUploadUseCase = mockk()
+        val txAdvice = mockk<Tx.TxAdvice>()
+        val tx = Tx(txAdvice)
         val exerciseItemJpaPort: ExerciseItemJpaPort = mockk()
-        val tx: Tx = mockk()
         val exerciseItemService = ExerciseItemService(
             exerciseAreaJpaPort = exerciseAreaJpaPort,
             exerciseGoalJpaPort = exerciseGoalJpaPort,
@@ -39,40 +48,76 @@ class ExerciseItemDescribe : DescribeSpec(
             multimediaUploadUseCase = multimediaUploadUseCase,
         )
 
-        describe("ExerciseItem save") {
-            val saveCommand = ExerciseItemTestUtil.saveCommand
-            context("if area is null") {
-                it("throw ServiceException") {
-                    invokeMethod<ExerciseItemService>(exerciseItemService, "getExerciseGoals", null)
-                    every { exerciseAreaJpaPort.getExerciseAreas(any()) } returns null
-                    every { exerciseGoalJpaPort.getExerciseGoals(any()) } returns ExerciseGoalTestUtil.entityList
-                    val exception = shouldThrow<ServiceException> {
-                        exerciseItemService.saveExerciseItem(saveCommand)
+        describe("saveExerciseItem") {
+            val command = SaveExerciseItemCommand(
+                exerciseGoals = mutableListOf(1L),
+                exerciseAreas = mutableListOf(1L),
+                image = null,
+                video = null,
+                exerciseName = "",
+            )
+            context("when successful") {
+                // 테스트 실행 전에 Mock 동작을 설정합니다.
+                beforeEach {
+                    coEvery { exerciseGoalJpaPort.getExerciseGoals(any()) } returns listOf(ExerciseGoalTestUtil.entity)
+                    coEvery { exerciseAreaJpaPort.getExerciseAreas(any()) } returns listOf(ExerciseAreaTestUtil.entity)
+                    coEvery { multimediaUploadUseCase.uploadMultipartFiles(any()) } returns listOf("url")
+                    coEvery { exerciseItemJpaPort.saveExerciseItem(any()) } returns 1L
+                    coEvery { itemGoalRelationshipJpaPort.addRelationship(any()) } just Runs
+                    coEvery { itemAreaRelationshipJpaPort.addRelationship(any()) } just Runs
+                    coEvery { txAdvice.read(any<() -> Any>()) } answers {
+                        firstArg<() -> Any>().invoke()
                     }
-                    exception.errorCode shouldBe ErrorCode.NOT_FOUND_EXERCISE_AREA
+                    coEvery { txAdvice.write(any<() -> Any>()) } answers {
+                        firstArg<() -> Any>().invoke()
+                    }
+                }
+
+                it("should save exercise item successfully") {
+
+                    // 실행
+                    runBlocking {
+                        exerciseItemService.saveExerciseItem(command)
+                    }
+
+                    // 검증
+                    coVerify { exerciseGoalJpaPort.getExerciseGoals(listOf(1L)) }
+                    coVerify { exerciseAreaJpaPort.getExerciseAreas(listOf(1L)) }
+                    coVerify { exerciseItemJpaPort.saveExerciseItem(any()) }
+                    coVerify { itemGoalRelationshipJpaPort.addRelationship(any()) }
+                    coVerify { itemAreaRelationshipJpaPort.addRelationship(any()) }
                 }
             }
 
-            context("if goal is null") {
-                it("throw ServiceException") {
-                    every { exerciseAreaJpaPort.getExerciseAreas(any()) } returns ExerciseAreaTestUtil.entityList
-                    every { exerciseGoalJpaPort.getExerciseGoals(any()) } returns null
+            context("when goal not found") {
+                beforeEach {
+                    coEvery { exerciseGoalJpaPort.getExerciseGoals(any()) } returns null
+                    coEvery { exerciseAreaJpaPort.getExerciseAreas(any()) } shouldNotBe called
+                }
+
+                it("should throw ServiceException for missing goal and not call getExerciseAreas") {
                     val exception = shouldThrow<ServiceException> {
-                        exerciseItemService.saveExerciseItem(saveCommand)
+                        runBlocking {
+                            exerciseItemService.saveExerciseItem(command)
+                        }
                     }
+
                     exception.errorCode shouldBe ErrorCode.NOT_FOUND_EXERCISE_GOAL
                 }
             }
 
-            context("if good request") {
-                it("save success") {
-                    every { exerciseAreaJpaPort.getExerciseAreas(any()) } returns ExerciseAreaTestUtil.entityList
-                    every { exerciseGoalJpaPort.getExerciseGoals(any()) } returns ExerciseGoalTestUtil.entityList
-                    every { itemAreaRelationshipJpaPort.addRelationship(any()) } returns Unit
-                    every { itemGoalRelationshipJpaPort.addRelationship(any()) } returns Unit
-                    every { exerciseItemJpaPort.saveExerciseItem(any()) } returns ExerciseItemTestUtil.ID
+            context("when area not found") {
+                beforeEach {
+                    coEvery { exerciseAreaJpaPort.getExerciseAreas(any()) } returns null
+                    coEvery { exerciseGoalJpaPort.getExerciseGoals(any()) } returns listOf(ExerciseGoalTestUtil.entity)
+                }
 
-                    exerciseItemService.saveExerciseItem(saveCommand)
+                it("should throw ServiceException for missing area") {
+                    shouldThrow<ServiceException> {
+                        runBlocking {
+                            exerciseItemService.saveExerciseItem(command)
+                        }
+                    }.errorCode shouldBe ErrorCode.NOT_FOUND_EXERCISE_AREA
                 }
             }
         }

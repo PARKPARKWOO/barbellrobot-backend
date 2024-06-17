@@ -11,7 +11,6 @@ import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
 import com.example.core.user.member.adapter.out.persistence.entity.SocialProvider
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
 import com.example.core.user.member.application.command.SaveMemberCommand
-import com.example.core.user.member.application.command.SaveMemberInfoCommand
 import com.example.core.user.member.application.out.MemberInfoJpaPort
 import com.example.core.user.member.application.out.MemberJpaPort
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
@@ -25,7 +24,7 @@ class MemberJpaAdapter(
     private val memberRepository: MemberRepository,
     private val memberInfoJpaPort: MemberInfoJpaPort,
 ) : MemberJpaPort {
-    override fun signUpWithEmailMember(command: SignUpMemberWithEmailCommand) {
+    override fun signUpWithEmailMember(command: SignUpMemberWithEmailCommand): UUID {
         val entity = MemberEntity(
             email = command.email,
             password = command.password,
@@ -33,18 +32,7 @@ class MemberJpaAdapter(
             socialProvider = null,
             profile = null,
         )
-        val member = memberRepository.save(entity)
-        val saveMemberInfoCommand = SaveMemberInfoCommand(
-            memberId = member.id,
-            nickname = command.nickname,
-            tall = command.tall,
-            weight = command.weight,
-            skeletalMuscleMass = command.skeletalMuscleMass,
-            gender = command.gender,
-            age = command.age,
-            exerciseMonths = command.exerciseMonths,
-        )
-        memberInfoJpaPort.save(saveMemberInfoCommand)
+        return memberRepository.save(entity).id
     }
 
     override fun save(command: SaveMemberCommand): Member {

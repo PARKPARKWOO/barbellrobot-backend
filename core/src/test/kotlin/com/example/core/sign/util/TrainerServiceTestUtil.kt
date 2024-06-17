@@ -1,6 +1,8 @@
 package com.example.core.sign.util
 
 import com.example.core.sign.application.port.`in`.command.SignUpTrainerWithEmailCommand
+import com.example.core.user.trainer.adapter.out.persistence.entity.GymAddress
+import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerInfo
 import com.example.domain.user.Gender
 import com.example.domain.user.Role
 import com.example.domain.user.Trainer
@@ -24,16 +26,22 @@ object TrainerServiceTestUtil {
 
     val trainer = Trainer(
         id = ID,
-        nickname = signUpWithEmailCommand.nickname,
         email = signUpWithEmailCommand.email,
         password = signUpWithEmailCommand.password,
         role = Role.ROLE_TRAINER,
-        gender = signUpWithEmailCommand.gender,
-        gymName = signUpWithEmailCommand.gymName,
-        street = signUpWithEmailCommand.street,
-        country = signUpWithEmailCommand.country,
-        city = signUpWithEmailCommand.city,
-        exerciseYears = signUpWithEmailCommand.exerciseYears,
-        introduce = signUpWithEmailCommand.introduce,
+    )
+
+    val trainerInfo = TrainerInfo(
+        userId = trainer.id,
+        gender = Gender.FEMALE,
+        gymAddress = GymAddress(
+            street = "",
+            country = "",
+            city = "",
+        ),
+        exerciseYears = 0,
+        nickname = "",
+        gymName = "",
+        introduce = "",
     )
 }
