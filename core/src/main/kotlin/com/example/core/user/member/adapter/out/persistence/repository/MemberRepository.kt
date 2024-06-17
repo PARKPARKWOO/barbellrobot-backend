@@ -3,7 +3,6 @@ package com.example.core.user.member.adapter.out.persistence.repository
 import com.example.core.exercise.adapter.out.persistence.entity.QExerciseGoalEntity.exerciseGoalEntity
 import com.example.core.sign.application.port.`in`.query.FindUserWithSocialQuery
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
-import com.example.core.user.member.adapter.out.persistence.entity.QMemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.QMemberEntity.memberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.QMemberGoalEntity.memberGoalEntity
 import com.example.core.user.member.adapter.out.persistence.entity.QMemberInfo.memberInfo
@@ -32,14 +31,14 @@ class MemberQueryRepositoryImpl(
     override fun findMemberAndGoal(memberId: UUID): MemberAndGoalQueryDto? {
         val memberDetails = jpaQueryFactory.select(
             QMemberDetailQueryDto(
-                QMemberEntity.memberEntity.id,
-                QMemberEntity.memberEntity.email,
-                QMemberEntity.memberEntity.password,
-                QMemberEntity.memberEntity.role,
-                QMemberEntity.memberEntity.socialProvider.provider,
-                QMemberEntity.memberEntity.createdAt,
-                QMemberEntity.memberEntity.deletedAt,
-                QMemberEntity.memberEntity.profile,
+                memberEntity.id,
+                memberEntity.email,
+                memberEntity.password,
+                memberEntity.role,
+                memberEntity.socialProvider.provider,
+                memberEntity.createdAt,
+                memberEntity.deletedAt,
+                memberEntity.profile,
                 QMemberInfoQueryDto(
                     memberInfo.gender,
                     memberInfo.nickname,
@@ -50,8 +49,7 @@ class MemberQueryRepositoryImpl(
                     memberInfo.age,
                 ),
             ),
-        )
-            .from(memberEntity)
+        ).from(memberEntity)
             .leftJoin(memberInfo).on(memberEntity.id.eq(memberInfo.userId))
             .where(memberEntity.id.eq(memberId))
             .fetchOne()
@@ -81,7 +79,6 @@ class MemberQueryRepositoryImpl(
             .where(
                 memberEntity.socialProvider.socialId.eq(query.id)
                     .and(memberEntity.socialProvider.provider.eq(query.provider)),
-            )
-            .fetchOne()
+            ).fetchOne()
     }
 }

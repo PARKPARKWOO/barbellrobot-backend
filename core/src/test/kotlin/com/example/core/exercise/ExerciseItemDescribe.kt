@@ -15,15 +15,12 @@ import com.example.core.exercise.util.ExerciseGoalTestUtil
 import com.example.core.multimedia.application.port.`in`.MultimediaUploadUseCase
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNot
 import io.kotest.matchers.shouldNotBe
 import io.mockk.Runs
 import io.mockk.called
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

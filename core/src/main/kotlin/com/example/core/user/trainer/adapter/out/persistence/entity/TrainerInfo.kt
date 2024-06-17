@@ -54,9 +54,7 @@ class TrainerInfo(
         nickname = nickname,
     )
 
-    override fun toModel(): UserHealthDetail {
-        return this
-    }
+    override fun toModel(): UserHealthDetail = this
 }
 
 @Embeddable

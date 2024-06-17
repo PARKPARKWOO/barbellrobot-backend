@@ -10,9 +10,9 @@ import com.example.core.user.member.application.command.UpdateNicknameCommand
 import com.example.core.user.member.application.`in`.MemberInfoUseCase
 import com.example.core.user.member.application.out.MemberInfoJpaPort
 import com.example.core.user.member.dto.MemberDetailQueryDto
-import com.example.domain.user.MemberInfo
 import org.springframework.stereotype.Service
 import java.util.UUID
+import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo as MemberInfoEntity
 
 @Service
 class MemberInfoService(
@@ -34,9 +34,7 @@ class MemberInfoService(
         }
     }
 
-    override fun getInfo(memberId: UUID): com.example.core.user.member.adapter.out.persistence.entity.MemberInfo? {
-        return memberInfoJpaPort.getInfo(memberId)
-    }
+    override fun getInfo(memberId: UUID): MemberInfoEntity? = memberInfoJpaPort.getInfo(memberId)
 
     override fun updateNickname(command: UpdateNicknameCommand) {
         val memberDetail = memberInfoJpaPort.getInfo(command.id)
@@ -50,9 +48,7 @@ class MemberInfoService(
         }
     }
 
-    override fun save(command: SaveMemberInfoCommand) {
-        memberInfoJpaPort.save(command)
-    }
+    override fun save(command: SaveMemberInfoCommand) = memberInfoJpaPort.save(command)
 
     override fun getDetail(memberId: UUID): MemberDetailQueryDto {
         return Tx.readTx { memberInfoJpaPort.getDetail(memberId) }

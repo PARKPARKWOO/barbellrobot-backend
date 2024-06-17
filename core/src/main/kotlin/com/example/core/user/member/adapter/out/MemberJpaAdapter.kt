@@ -7,7 +7,6 @@ import com.example.core.sign.application.port.`in`.command.SignUpMemberWithEmail
 import com.example.core.sign.application.port.`in`.query.FindUserWithSocialQuery
 import com.example.core.user.application.port.command.UpdateProfileCommand
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
-import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
 import com.example.core.user.member.adapter.out.persistence.entity.SocialProvider
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
 import com.example.core.user.member.application.command.SaveMemberCommand
@@ -48,13 +47,9 @@ class MemberJpaAdapter(
         return memberRepository.save(memberEntity).toDomain()
     }
 
-    override fun getMember(id: UUID): Member {
-        return getEntity(id).toDomain()
-    }
+    override fun getMember(id: UUID): Member = getEntity(id).toDomain()
 
-    override fun getMember(query: FindUserWithSocialQuery): Member? {
-        return memberRepository.findWithSocial(query)?.toDomain()
-    }
+    override fun getMember(query: FindUserWithSocialQuery): Member? = memberRepository.findWithSocial(query)?.toDomain()
 
     override fun signInWithEmail(command: SignInWithEmailCommand): Member? {
         val member = memberRepository.findByEmailAndPassword(
@@ -64,13 +59,7 @@ class MemberJpaAdapter(
         return member?.toDomain()
     }
 
-    private fun getInfo(memberId: UUID): MemberInfo? {
-        return memberInfoJpaPort.getInfo(memberId)
-    }
-
-    override fun updateProfile(command: UpdateProfileCommand) {
-        getEntity(command.userId).uploadProfile(command.uri)
-    }
+    override fun updateProfile(command: UpdateProfileCommand) = getEntity(command.userId).uploadProfile(command.uri)
 
     override fun getMemberAndGoal(id: UUID): MemberAndGoalQueryDto? {
         return memberRepository.findMemberAndGoal(id)

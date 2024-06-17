@@ -32,8 +32,9 @@ data class MemberInfoQueryDto
         val skeletalMuscleMass: Double?,
         val age: Int?,
     ) {
-        fun isNotNull(): Boolean {
-            return gender != null && nickname != null && tall != null
-                && weight != null && age != null
+        fun isNotNull(): Boolean = gender != null
+                && nickname != null
+                && tall != null
+                && weight != null
+                && age != null
         }
-    }
