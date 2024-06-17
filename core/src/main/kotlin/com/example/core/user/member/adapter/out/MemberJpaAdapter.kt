@@ -10,7 +10,6 @@ import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.SocialProvider
 import com.example.core.user.member.adapter.out.persistence.repository.MemberRepository
 import com.example.core.user.member.application.command.SaveMemberCommand
-import com.example.core.user.member.application.out.MemberInfoJpaPort
 import com.example.core.user.member.application.out.MemberJpaPort
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
 import com.example.domain.user.Member
@@ -21,7 +20,6 @@ import java.util.UUID
 @Component
 class MemberJpaAdapter(
     private val memberRepository: MemberRepository,
-    private val memberInfoJpaPort: MemberInfoJpaPort,
 ) : MemberJpaPort {
     override fun signUpWithEmailMember(command: SignUpMemberWithEmailCommand): UUID {
         val entity = MemberEntity(
