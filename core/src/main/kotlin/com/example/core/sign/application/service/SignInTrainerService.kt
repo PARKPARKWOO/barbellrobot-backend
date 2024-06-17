@@ -24,10 +24,9 @@ class SignInTrainerService(
 ) : AbstractSignInService(redisDriver, refreshTokenExpireTime, jwtTokenService, kaKaoFeignClient),
     SignInTrainerUseCase {
     @Transactional(readOnly = true)
-    override fun findUserWithEmail(command: SignInWithEmailCommand): Map<String, Any> {
-        return trainerJpaPort.signInWithEmail(command)?.getClaims()
+    override fun findUserWithEmail(command: SignInWithEmailCommand): Map<String, Any> =
+        trainerJpaPort.signInWithEmail(command)?.getClaims()
             ?: throw ServiceException(ErrorCode.MEMBER_NOT_FOUND)
-    }
 
     override fun findUserWithSocial(query: FindUserWithSocialQuery): Map<String, Any> {
         TODO()

@@ -23,7 +23,6 @@ interface MemberInfoQueryRepository {
 class MemberInfoQueryRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : MemberInfoQueryRepository {
-
     override fun findMemberDetailQuery(memberId: UUID): MemberDetailQueryDto? =
         jpaQueryFactory
             .select(
