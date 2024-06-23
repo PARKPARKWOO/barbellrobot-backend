@@ -1,5 +1,7 @@
 package com.example.core.common.aop
 
+import com.example.common.log.Log
+import com.example.common.parser.SpringElParser
 import com.example.core.common.annotation.DistributedLock
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Component
 class DistributedLockAop(
     private val redissonClient: RedissonClient,
     private val aopForTransaction: AopForTransaction,
-) {
+) : Log {
     companion object {
         const val REDISSON_LOCK_PREFIX = "LOCK:"
     }
@@ -25,8 +27,11 @@ class DistributedLockAop(
         val method = signature.method
         val annotation = method.getAnnotation(DistributedLock::class.java)
 
-        val key: String = REDISSON_LOCK_PREFIX + annotation.key
-
+        val key: String = REDISSON_LOCK_PREFIX + SpringElParser.getDynamicValue(
+            signature.parameterNames,
+            joinPoint.args,
+            annotation.key,
+        ).toString()
         val lock = redissonClient.getLock(key)
 
         try {
@@ -35,14 +40,11 @@ class DistributedLockAop(
                 return false
             }
             return aopForTransaction.proceed(joinPoint)
-        } catch (e: InterruptedException) {
-            // Log 추가
-            throw e
         } finally {
             try {
                 lock.unlock()
             } catch (e: IllegalMonitorStateException) {
-                // logging 만 문제 X
+                log.warn("Redisson lock already unlock method = ${method.name} key = $key")
             }
         }
     }

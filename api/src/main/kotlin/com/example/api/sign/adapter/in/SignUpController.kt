@@ -40,7 +40,6 @@ class SignUpController(
         @RequestBody @Valid
         request: SignUpMemberWithEmailRequest,
     ): ApiResponse<Unit> {
-        log.info("member")
         signUpMemberUseCase.signUpWithEmail(request.toCommand())
         return ApiResponse(data = Unit)
     }
