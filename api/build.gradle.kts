@@ -30,6 +30,9 @@ dependencies {
 
     // encryption
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+
+    // rate limiter
+    implementation("com.bucket4j:bucket4j-core:8.10.1")
 }
 
 extra["springAiVersion"] = "0.8.1"

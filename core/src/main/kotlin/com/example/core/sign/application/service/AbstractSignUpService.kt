@@ -1,5 +1,6 @@
 package com.example.core.sign.application.service
 
+import com.example.core.common.annotation.DistributedLock
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.mail.application.port.out.EmailVerifyPort
@@ -7,7 +8,6 @@ import com.example.core.mail.application.port.out.command.VerifyAuthenticationSu
 import com.example.core.sign.application.port.SignUpUserWithEmailCommand
 import com.example.core.sign.application.port.`in`.SignUpUserUseCase
 import com.example.core.user.application.port.out.UserQueryPort
-import org.springframework.transaction.annotation.Transactional
 
 abstract class AbstractSignUpService(
     private val userQueryPort: UserQueryPort,
@@ -15,7 +15,7 @@ abstract class AbstractSignUpService(
 ) : SignUpUserUseCase {
     abstract override fun saveUser(command: SignUpUserWithEmailCommand)
 
-    @Transactional
+    @DistributedLock(key = "#command.email", leaseTime = 5L, waitTime = 5L)
     override fun signUpWithEmail(command: SignUpUserWithEmailCommand) {
         verifyNickname(command.nickname)
         verifyEmail(command.toAuthenticationCommand())

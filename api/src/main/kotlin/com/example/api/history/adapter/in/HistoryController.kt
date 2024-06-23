@@ -1,6 +1,7 @@
 package com.example.api.history.adapter.`in`
 
 import com.example.api.common.annotation.AuthenticationUser
+import com.example.api.common.annotation.RateLimit
 import com.example.api.common.config.SwaggerConfig
 import com.example.api.common.resolver.UserInfo
 import com.example.api.common.response.ApiResponse
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
+import java.util.concurrent.TimeUnit
 
 @RestController
 @RequestMapping("/api/v1/history")
@@ -41,6 +43,7 @@ class HistoryController(
         summary = "출석 api",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
+    @RateLimit(quota = 1, timeUnit = TimeUnit.SECONDS, refillInterval = 3, refillTokens = 1)
     fun attendance(
         @Parameter(hidden = true) @AuthenticationUser
         userInfo: UserInfo,
@@ -58,6 +61,7 @@ class HistoryController(
         description = "",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
+    @RateLimit(quota = 1, timeUnit = TimeUnit.SECONDS, refillInterval = 3, refillTokens = 1)
     fun exerciseToday(
         @RequestBody
         request: CompleteTodayExerciseRequest,
@@ -72,6 +76,7 @@ class HistoryController(
         description = "아침, 점심, 저녁 메뉴, 사진 을 추가할 수 있습니다.",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
+    @RateLimit(quota = 1, timeUnit = TimeUnit.SECONDS, refillInterval = 3, refillTokens = 1)
     suspend fun uploadDiet(
         @Parameter(hidden = true) @AuthenticationUser
         userInfo: UserInfo,

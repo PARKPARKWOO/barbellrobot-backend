@@ -1,6 +1,7 @@
 package com.example.api.member
 
 import com.example.api.common.annotation.AuthenticationUser
+import com.example.api.common.annotation.RateLimit
 import com.example.api.common.config.SwaggerConfig
 import com.example.api.common.resolver.UserInfo
 import com.example.api.common.response.ApiResponse
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+import java.util.concurrent.TimeUnit
 
 @RestController
 @RequestMapping("/api/v1/member")
@@ -63,6 +65,7 @@ class MemberController(
         summary = "user 의 목표를 추가합니다.",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
+    @RateLimit(quota = 1, timeUnit = TimeUnit.SECONDS, refillInterval = 3, refillTokens = 1)
     fun addGoal(
         @AuthenticationUser
         @Parameter(hidden = true)
@@ -173,6 +176,7 @@ class MemberController(
         description = "소셜 로그인 시 디테일 한 정보를 입력받아야함",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
+    @RateLimit(quota = 1, timeUnit = TimeUnit.SECONDS, refillInterval = 3, refillTokens = 1)
     fun createMemberInfo(
         @AuthenticationUser
         @Parameter(hidden = true)
