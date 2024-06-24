@@ -8,8 +8,11 @@ import com.example.core.exercise.adapter.out.persistence.entity.QExerciseGoalEnt
 import com.example.core.exercise.adapter.out.persistence.entity.QExerciseItemEntity.exerciseItemEntity
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemAreaRelationshipEntity
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemGoalRelationshipEntity
+import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemYoutubeInfo
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemAreaRelationshipEntity.itemAreaRelationshipEntity
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemGoalRelationshipEntity.itemGoalRelationshipEntity
+import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemYoutubeInfo
+import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemYoutubeInfo.itemYoutubeInfo
 import com.example.core.exercise.application.dto.QueryItemDto
 import com.example.core.history.adapter.out.persistence.entity.QExerciseHistoryEntity.exerciseHistoryEntity
 import com.querydsl.core.Tuple
@@ -36,6 +39,11 @@ class ExerciseItemQueryRepositoryImpl(
             .selectFrom(exerciseItemEntity)
             .where(exerciseItemEntity.id.eq(id))
             .fetchOne()
+
+        val youtubeInfo: List<ItemYoutubeInfo> = jpaQueryFactory
+            .selectFrom(itemYoutubeInfo)
+            .where(itemYoutubeInfo.item.id.eq(id))
+            .fetch()
 
         val exerciseAreas: List<ExerciseAreaEntity> = jpaQueryFactory
             .selectFrom(exerciseAreaEntity)
@@ -66,6 +74,7 @@ class ExerciseItemQueryRepositoryImpl(
                     area.toDomain()
                 },
                 count = count,
+                itemYoutubeInfo = youtubeInfo.map { it.toDomain() },
             )
         }
     }
@@ -73,6 +82,11 @@ class ExerciseItemQueryRepositoryImpl(
     override fun findItemDetailAll(): List<QueryItemDto> {
         val exerciseItems: List<ExerciseItemEntity> = jpaQueryFactory
             .selectFrom(exerciseItemEntity)
+            .fetch()
+
+        val youtubeInfo: List<ItemYoutubeInfo> = jpaQueryFactory
+            .selectFrom(itemYoutubeInfo)
+            .where(itemYoutubeInfo.item.id.`in`(exerciseItems.map { it.id }))
             .fetch()
 
         val exerciseAreas: List<ExerciseAreaEntity> = jpaQueryFactory
@@ -108,6 +122,7 @@ class ExerciseItemQueryRepositoryImpl(
             itemAreaRelationships = itemAreaRelationships,
             itemGoalRelationships = itemGoalRelationships,
             historyCountMap = historyCountMap,
+            itemYoutubeInfo = youtubeInfo,
         )
     }
 
@@ -115,6 +130,11 @@ class ExerciseItemQueryRepositoryImpl(
         val exerciseItems: List<ExerciseItemEntity> = jpaQueryFactory
             .selectFrom(exerciseItemEntity)
             .where(exerciseItemEntity.id.`in`(ids))
+            .fetch()
+
+        val youtubeInfo: List<ItemYoutubeInfo> = jpaQueryFactory
+            .selectFrom(itemYoutubeInfo)
+            .where(itemYoutubeInfo.item.id.`in`(ids))
             .fetch()
 
         val itemAreaRelationships: List<ItemAreaRelationshipEntity> = jpaQueryFactory
@@ -153,6 +173,7 @@ class ExerciseItemQueryRepositoryImpl(
             itemAreaRelationships = itemAreaRelationships,
             itemGoalRelationships = itemGoalRelationships,
             historyCountMap = historyCountMap,
+            itemYoutubeInfo = youtubeInfo,
         )
     }
 
@@ -167,7 +188,8 @@ class ExerciseItemQueryRepositoryImpl(
         exerciseAreas: List<ExerciseAreaEntity>,
         itemGoalRelationships: List<ItemGoalRelationshipEntity>,
         exerciseGoals: List<ExerciseGoalEntity>,
-        historyCountMap: Map<Long, Long>
+        historyCountMap: Map<Long, Long>,
+        itemYoutubeInfo: List<ItemYoutubeInfo>,
         ): List<QueryItemDto> = exerciseItems.map { item ->
         val areas = itemAreaRelationships
             .filter { it.exerciseItemId == item.id }
@@ -179,12 +201,14 @@ class ExerciseItemQueryRepositoryImpl(
             .mapNotNull { relationship ->
                 exerciseGoals.find { it.id == relationship.exerciseGoalId }
             }
+        val youtube = itemYoutubeInfo.filter { it.item.id == it.id }
         val count = historyCountMap[item.id]?.toInt() ?: 0
         QueryItemDto(
             item = item.toDomain(),
             goals = goals.map { it.toDomain() },
             areas = areas.map { it.toDomain() },
             count = count,
+            itemYoutubeInfo = youtube.map { it.toDomain() },
         )
     }
 }

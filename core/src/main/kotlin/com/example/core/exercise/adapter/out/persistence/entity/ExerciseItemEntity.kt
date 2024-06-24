@@ -28,14 +28,6 @@ class ExerciseItemEntity(
     @Convert(converter = StringListConverter::class)
     var imageUri: MutableList<String>,
 ) {
-    fun addVideo(uri: String) {
-        this.videoUri.add(uri)
-    }
-
-    fun addImage(uri: String) {
-        this.imageUri.add(uri)
-    }
-
     fun toDomain(): ExerciseItem {
         return ExerciseItem(
             id = id,

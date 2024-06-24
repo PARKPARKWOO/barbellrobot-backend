@@ -2,6 +2,7 @@ package com.example.api.exercise.adapter.`in`
 
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
+import com.example.api.exercise.adapter.`in`.request.AddYoutubeRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseItemDetailResponse
 import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
 import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
@@ -11,10 +12,15 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+
+/**
+ * 조회 제외 admin 으로 변경
+ */
 
 @RestController
 @RequestMapping("/api/v1")
@@ -90,12 +96,35 @@ class ExerciseItemController(
     )
     fun findItems(
         @RequestParam("itemIds", required = false)
-        itemIds: List<Long>?
+        itemIds: List<Long>?,
     ): ApiResponse<List<ExerciseItemDetailResponse>> {
         return ApiResponse(
             data = exerciseItemUseCase.findAllItemsQuery(itemIds).map {
                 ExerciseItemDetailResponse.from(it)
             },
         )
+    }
+
+    @PostMapping("/item/youtube")
+    @PublicEndPoint
+    @Operation(
+        summary = "Youtube 영상 업로드 하기",
+    )
+    fun addYoutube(
+        @RequestBody
+        request: AddYoutubeRequest,
+    ): ApiResponse<Unit> {
+        exerciseItemUseCase.addYoutubeLink(request.toCommand())
+        return ApiResponse(data = Unit)
+    }
+
+    @DeleteMapping("/item/youtube/{id}")
+    @PublicEndPoint
+    @Operation(
+        summary = "Youtube 영상 삭제",
+    )
+    fun deleteYoutube(@PathVariable id: Long): ApiResponse<Unit> {
+        exerciseItemUseCase.deleteItem(id)
+        return ApiResponse(data = Unit)
     }
 }

@@ -17,7 +17,7 @@ import jakarta.persistence.ManyToOne
 class ItemYoutubeInfo(
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    val id: Long,
+    val id: Long = 0L,
     @ManyToOne(fetch = LAZY)
     val item: ExerciseItemEntity,
     @Enumerated(STRING)

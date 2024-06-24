@@ -19,4 +19,6 @@ interface ExerciseItemUseCase {
     fun findAllItemsQuery(ids: List<Long>?): List<QueryItemDto>
 
     fun addYoutubeLink(command: AddItemYoutubeCommand)
+
+    fun deleteYoutubeLink(id: Long)
 }

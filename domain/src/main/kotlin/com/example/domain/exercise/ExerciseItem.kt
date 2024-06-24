@@ -5,5 +5,4 @@ data class ExerciseItem(
     val exerciseName: String,
     val videoUrls: List<String>,
     val imageUrls: List<String>,
-    val youtubeInfo: ItemYoutubeInfo,
 )
