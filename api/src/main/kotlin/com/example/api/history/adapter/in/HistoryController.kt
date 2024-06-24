@@ -15,7 +15,7 @@ import com.example.common.log.Log
 import com.example.core.history.application.port.`in`.GenerateHistoryUseCase
 import com.example.core.history.application.port.`in`.HistoryFacadeUseCase
 import com.example.core.history.application.port.`in`.HistoryQueryUseCase
-import com.example.core.history.application.port.query.GetHistoryMonthQuery
+import com.example.core.history.application.port.query.GetHistoryQuery
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -97,8 +97,19 @@ class HistoryController(
     fun getHistoryFromWeek(
         @Parameter(hidden = true) @AuthenticationUser
         userInfo: UserInfo,
+        @RequestParam(name = "thisWeek", required = false)
+        thisWeek: Boolean = true,
     ): ApiResponse<List<HistoryResponse>> {
-        val response = historyQueryUseCase.getHistoryFromWeek(userInfo.userId)?.map { historyDto ->
+        val date = if (thisWeek) {
+            LocalDate.now()
+        } else {
+            LocalDate.now().minusWeeks(1)
+        }
+        val query = GetHistoryQuery(
+            userId = userInfo.userId,
+            localDate = date,
+        )
+        val response = historyQueryUseCase.getHistoryFromWeek(query).map { historyDto ->
             HistoryResponse(
                 userHistoryResponse = UserHistoryResponse.from(historyDto.userHistoryResponseDto),
                 exerciseHistoryResponse = historyDto.exerciseHistoryResponseDto?.map {
@@ -122,12 +133,11 @@ class HistoryController(
         @RequestParam(name = "year", required = false)
         year: Int?,
     ): ApiResponse<List<HistoryResponse>> {
-        log.info("month")
         val currentDate = LocalDate.now()
         val queryYear = year ?: currentDate.year
         val queryMonth = month ?: currentDate.monthValue
         val localDate = LocalDate.of(queryYear, queryMonth, 1)
-        val query = GetHistoryMonthQuery(
+        val query = GetHistoryQuery(
             userId = userInfo.userId,
             localDate = localDate,
         )
