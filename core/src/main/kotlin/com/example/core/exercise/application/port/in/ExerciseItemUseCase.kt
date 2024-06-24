@@ -1,6 +1,7 @@
 package com.example.core.exercise.application.port.`in`
 
 import com.example.core.exercise.application.dto.QueryItemDto
+import com.example.core.exercise.application.port.command.AddItemYoutubeCommand
 import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
 import com.example.domain.exercise.ExerciseItem
 
@@ -16,4 +17,6 @@ interface ExerciseItemUseCase {
     fun findAll(): List<ExerciseItem>
 
     fun findAllItemsQuery(ids: List<Long>?): List<QueryItemDto>
+
+    fun addYoutubeLink(command: AddItemYoutubeCommand)
 }
