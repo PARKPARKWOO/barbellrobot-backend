@@ -21,7 +21,7 @@ interface MemberRepository : JpaRepository<MemberEntity, UUID>, MemberQueryRepos
 }
 
 interface MemberQueryRepository {
-    fun findMemberAndGoal(memberId: UUID): MemberAndGoalQueryDto?
+    fun findMemberDetailAndGoal(memberId: UUID): MemberAndGoalQueryDto?
 
     fun findWithSocial(query: FindUserWithSocialQuery): MemberEntity?
 }
@@ -30,7 +30,7 @@ interface MemberQueryRepository {
 class MemberQueryRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : MemberQueryRepository {
-    override fun findMemberAndGoal(memberId: UUID): MemberAndGoalQueryDto? {
+    override fun findMemberDetailAndGoal(memberId: UUID): MemberAndGoalQueryDto? {
         val memberDetails = jpaQueryFactory
             .select(
                 QMemberDetailQueryDto(
@@ -63,17 +63,16 @@ class MemberQueryRepositoryImpl(
             .select(exerciseGoalEntity.goal)
             .from(memberGoalEntity)
             .leftJoin(memberGoalEntity.exerciseGoalEntity, exerciseGoalEntity)
-            .where(memberGoalEntity.memberEntity.id.eq(memberId))
+            .where(
+                memberGoalEntity.memberEntity.id.eq(memberId)
+                    .and(memberGoalEntity.isDeleted.isFalse),
+            )
             .fetch()
 
         return memberDetails?.let {
             MemberAndGoalQueryDto(
-                goal = goals,
-                exerciseMonths = it.memberInfoQueryDto!!.exerciseMonths!!,
-                tall = it.memberInfoQueryDto.tall!!,
-                weight = memberDetails.memberInfoQueryDto!!.weight!!,
-                age = memberDetails.memberInfoQueryDto.age!!,
-                gender = memberDetails.memberInfoQueryDto.gender!!,
+                memberGoal = goals,
+                memberDetailQueryDto = it,
             )
         }
     }

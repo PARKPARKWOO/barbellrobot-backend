@@ -11,6 +11,7 @@ import com.example.api.member.request.CreateMemberInfoRequest
 import com.example.api.member.request.DeleteMemberGoalRequest
 import com.example.api.member.request.OfferManagementRequest
 import com.example.api.member.request.UpdateMemberInfoRequest
+import com.example.api.member.response.GetMemberMyPageResponse
 import com.example.api.member.response.ManagementFromMemberResponse
 import com.example.api.member.response.MemberDetailResponse
 import com.example.core.managemnet.application.port.`in`.ManagementUseCase
@@ -166,7 +167,21 @@ class MemberController(
         userInfo: UserInfo,
     ): ApiResponse<MemberDetailResponse> {
         val response = MemberDetailResponse.from(memberInfoUseCase.getDetail(userInfo.userId))
-        println(response.toString())
+        return ApiResponse(data = response)
+    }
+
+    @GetMapping("/me")
+    @Operation(
+        summary = "member detail, goal",
+        description = "my page 접속할때 사용",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun myPage(
+        @AuthenticationUser
+        @Parameter(hidden = true)
+        userInfo: UserInfo,
+    ): ApiResponse<GetMemberMyPageResponse> {
+        val response = GetMemberMyPageResponse.from(memberUseCase.getMemberAndGoal(userInfo.userId))
         return ApiResponse(data = response)
     }
 

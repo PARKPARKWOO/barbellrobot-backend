@@ -9,6 +9,7 @@ import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
 import com.example.core.exercise.application.port.out.ExerciseItemJpaPort
 import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPort
 import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPort
+import com.example.core.exercise.application.port.out.ItemYoutubeJpaPort
 import com.example.core.exercise.application.service.ExerciseItemService
 import com.example.core.exercise.util.ExerciseAreaTestUtil
 import com.example.core.exercise.util.ExerciseGoalTestUtil
@@ -36,6 +37,7 @@ class ExerciseItemDescribe : DescribeSpec(
         val txAdvice = mockk<Tx.TxAdvice>()
         val tx = Tx(txAdvice)
         val exerciseItemJpaPort: ExerciseItemJpaPort = mockk()
+        val itemYoutubeJpaPort: ItemYoutubeJpaPort = mockk()
         val exerciseItemService = ExerciseItemService(
             exerciseAreaJpaPort = exerciseAreaJpaPort,
             exerciseGoalJpaPort = exerciseGoalJpaPort,
@@ -43,6 +45,7 @@ class ExerciseItemDescribe : DescribeSpec(
             itemAreaRelationshipJpaPort = itemAreaRelationshipJpaPort,
             itemGoalRelationshipJpaPort = itemGoalRelationshipJpaPort,
             multimediaUploadUseCase = multimediaUploadUseCase,
+            itemYoutubeJpaPort = itemYoutubeJpaPort,
         )
 
         describe("saveExerciseItem") {

@@ -60,7 +60,7 @@ class MemberJpaAdapter(
     override fun updateProfile(command: UpdateProfileCommand) = getEntity(command.userId).uploadProfile(command.uri)
 
     override fun getMemberAndGoal(id: UUID): MemberAndGoalQueryDto? {
-        return memberRepository.findMemberAndGoal(id)
+        return memberRepository.findMemberDetailAndGoal(id)
     }
 
     private fun getEntity(id: UUID): MemberEntity {

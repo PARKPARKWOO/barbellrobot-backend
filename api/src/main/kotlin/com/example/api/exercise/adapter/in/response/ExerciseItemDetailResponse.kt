@@ -10,6 +10,7 @@ data class ExerciseItemDetailResponse(
     val exerciseAreas: List<ExerciseAreaResponse>,
     val exerciseGoals: List<ExerciseGoalResponse>,
     val count: Int,
+    val youtubeInfo: List<ItemYoutubeInfoResponse>,
 ) {
     companion object {
         @JvmStatic
@@ -27,6 +28,9 @@ data class ExerciseItemDetailResponse(
                     ExerciseGoalResponse.from(goal)
                 },
                 count = queryDto.count,
+                youtubeInfo = queryDto.itemYoutubeInfo.map {
+                    ItemYoutubeInfoResponse.fromDomain(it)
+                },
             )
         }
     }

@@ -1,6 +1,7 @@
 package com.example.api.member.response
 
 import com.example.core.user.member.dto.MemberDetailQueryDto
+import com.example.core.user.member.dto.MemberInfoQueryDto
 import com.example.domain.user.Gender
 import com.example.domain.user.Role
 
@@ -50,4 +51,16 @@ data class MemberInfoResponse(
     val gender: Gender,
     val age: Int,
     val exerciseMonths: Int,
-)
+) {
+    companion object {
+        fun from(query: MemberInfoQueryDto): MemberInfoResponse = MemberInfoResponse(
+            nickname = query.nickname!!,
+            tall = query.tall!!,
+            weight = query.weight!!,
+            skeletalMuscleMass = query.skeletalMuscleMass,
+            gender = query.gender!!,
+            age = query.age!!,
+            exerciseMonths = query.exerciseMonths!!,
+        )
+    }
+}

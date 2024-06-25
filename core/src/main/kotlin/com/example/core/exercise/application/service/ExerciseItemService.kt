@@ -8,6 +8,7 @@ import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEnti
 import com.example.core.exercise.application.dto.QueryItemDto
 import com.example.core.exercise.application.port.command.AddItemAreaRelationCommand
 import com.example.core.exercise.application.port.command.AddItemGoalRelationCommand
+import com.example.core.exercise.application.port.command.AddItemYoutubeCommand
 import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
 import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
 import com.example.core.exercise.application.port.out.ExerciseAreaJpaPort
@@ -15,6 +16,7 @@ import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
 import com.example.core.exercise.application.port.out.ExerciseItemJpaPort
 import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPort
 import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPort
+import com.example.core.exercise.application.port.out.ItemYoutubeJpaPort
 import com.example.core.multimedia.application.port.`in`.MultimediaUploadUseCase
 import com.example.domain.exercise.ExerciseItem
 import kotlinx.coroutines.async
@@ -31,6 +33,7 @@ class ExerciseItemService(
     private val itemGoalRelationshipJpaPort: ItemGoalRelationshipJpaPort,
     private val itemAreaRelationshipJpaPort: ItemAreaRelationshipJpaPort,
     private val multimediaUploadUseCase: MultimediaUploadUseCase,
+    private val itemYoutubeJpaPort: ItemYoutubeJpaPort,
 ) : ExerciseItemUseCase {
     override suspend fun saveExerciseItem(command: SaveExerciseItemCommand) {
         val (area, goal) = coroutineScope {
@@ -130,5 +133,15 @@ class ExerciseItemService(
         return ids?.let {
             exerciseItemJpaPort.findInIds(it)
         } ?: exerciseItemJpaPort.findAllItemsQuery()
+    }
+
+    @Transactional
+    override fun addYoutubeLink(command: AddItemYoutubeCommand) {
+        itemYoutubeJpaPort.add(command)
+    }
+
+    @Transactional
+    override fun deleteYoutubeLink(id: Long) {
+        itemYoutubeJpaPort.delete(id)
     }
 }
