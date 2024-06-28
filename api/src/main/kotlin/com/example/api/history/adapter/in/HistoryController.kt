@@ -63,6 +63,9 @@ class HistoryController(
     )
     @RateLimit(quota = 1, timeUnit = TimeUnit.SECONDS, refillInterval = 3, refillTokens = 1)
     fun exerciseToday(
+        @AuthenticationUser
+        @Parameter(hidden = true)
+        userInfo: UserInfo,
         @RequestBody
         request: CompleteTodayExerciseRequest,
     ): ApiResponse<Unit> {

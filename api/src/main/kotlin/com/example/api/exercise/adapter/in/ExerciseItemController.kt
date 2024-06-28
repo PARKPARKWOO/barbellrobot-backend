@@ -98,10 +98,12 @@ class ExerciseItemController(
         @RequestParam("itemIds", required = false)
         itemIds: List<Long>?,
     ): ApiResponse<List<ExerciseItemDetailResponse>> {
+        val response = exerciseItemUseCase.findAllItemsQuery(itemIds).map {
+            ExerciseItemDetailResponse.from(it)
+        }
+        println(response.toString())
         return ApiResponse(
-            data = exerciseItemUseCase.findAllItemsQuery(itemIds).map {
-                ExerciseItemDetailResponse.from(it)
-            },
+            data = response,
         )
     }
 

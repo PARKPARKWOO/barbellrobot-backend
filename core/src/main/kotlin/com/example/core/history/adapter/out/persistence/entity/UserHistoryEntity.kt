@@ -3,6 +3,7 @@ package com.example.core.history.adapter.out.persistence.entity
 import com.example.domain.history.UserHistory
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EntityListeners
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.hibernate.annotations.DynamicUpdate
@@ -12,6 +13,7 @@ import org.hibernate.type.SqlTypes
 import org.jetbrains.annotations.NotNull
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
@@ -21,6 +23,7 @@ const val USER_HISTORY_TABLE_NAME = "user_history"
 @Entity
 @Table(name = USER_HISTORY_TABLE_NAME)
 @DynamicUpdate
+@EntityListeners(AuditingEntityListener::class)
 class UserHistoryEntity(
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)

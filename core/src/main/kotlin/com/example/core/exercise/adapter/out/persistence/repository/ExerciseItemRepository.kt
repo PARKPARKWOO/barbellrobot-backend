@@ -11,7 +11,6 @@ import com.example.core.exercise.adapter.out.persistence.entity.relationship.Ite
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemYoutubeInfo
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemAreaRelationshipEntity.itemAreaRelationshipEntity
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemGoalRelationshipEntity.itemGoalRelationshipEntity
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemYoutubeInfo
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemYoutubeInfo.itemYoutubeInfo
 import com.example.core.exercise.application.dto.QueryItemDto
 import com.example.core.history.adapter.out.persistence.entity.QExerciseHistoryEntity.exerciseHistoryEntity
@@ -79,51 +78,84 @@ class ExerciseItemQueryRepositoryImpl(
         }
     }
 
+//    override fun findItemDetailAll(): List<QueryItemDto> {
+//        val exerciseItems: List<ExerciseItemEntity> = jpaQueryFactory
+//            .selectFrom(exerciseItemEntity)
+//            .fetch()
+//
+//        val youtubeInfo: List<ItemYoutubeInfo> = jpaQueryFactory
+//            .selectFrom(itemYoutubeInfo)
+//            .where(itemYoutubeInfo.item.id.`in`(exerciseItems.map { it.id }))
+//            .fetch()
+//
+//        val exerciseAreas: List<ExerciseAreaEntity> = jpaQueryFactory
+//            .selectFrom(exerciseAreaEntity)
+//            .fetch()
+//
+//        val exerciseGoals: List<ExerciseGoalEntity> = jpaQueryFactory
+//            .selectFrom(exerciseGoalEntity)
+//            .fetch()
+//
+//        val itemAreaRelationships: List<ItemAreaRelationshipEntity> = jpaQueryFactory
+//            .selectFrom(itemAreaRelationshipEntity)
+//            .fetch()
+//
+//        val itemGoalRelationships: List<ItemGoalRelationshipEntity> = jpaQueryFactory
+//            .selectFrom(itemGoalRelationshipEntity)
+//            .fetch()
+//
+//        val historyCounts: List<Tuple> = jpaQueryFactory
+//            .select(exerciseHistoryEntity.itemId, exerciseHistoryEntity.itemId.count())
+//            .from(exerciseHistoryEntity)
+//            .groupBy(exerciseHistoryEntity.itemId)
+//            .fetch()
+//
+//        val historyCountMap: Map<Long, Long> = historyCounts.associate {
+//            it[exerciseHistoryEntity.itemId]!! to it[exerciseHistoryEntity.itemId.count()]!!
+//        }
+//
+//        return getItemQueryDto(
+//            exerciseItems = exerciseItems,
+//            exerciseAreas = exerciseAreas,
+//            exerciseGoals = exerciseGoals,
+//            itemAreaRelationships = itemAreaRelationships,
+//            itemGoalRelationships = itemGoalRelationships,
+//            historyCountMap = historyCountMap,
+//            itemYoutubeInfo = youtubeInfo,
+//        )
+//    }
+
     override fun findItemDetailAll(): List<QueryItemDto> {
-        val exerciseItems: List<ExerciseItemEntity> = jpaQueryFactory
-            .selectFrom(exerciseItemEntity)
+        val result = jpaQueryFactory
+            .select(
+                exerciseItemEntity,
+                itemYoutubeInfo,
+                exerciseAreaEntity,
+                exerciseGoalEntity,
+                exerciseHistoryEntity.itemId.count(),
+            )
+            .from(exerciseItemEntity)
+            .leftJoin(itemYoutubeInfo).on(itemYoutubeInfo.item.id.eq(exerciseItemEntity.id))
+            .leftJoin(itemAreaRelationshipEntity)
+            .on(itemAreaRelationshipEntity.exerciseItemId.eq(exerciseItemEntity.id))
+            .leftJoin(exerciseAreaEntity).on(exerciseAreaEntity.id.eq(itemAreaRelationshipEntity.exerciseAreaId))
+            .leftJoin(itemGoalRelationshipEntity)
+            .on(itemGoalRelationshipEntity.exerciseItemId.eq(exerciseItemEntity.id))
+            .leftJoin(exerciseGoalEntity).on(exerciseGoalEntity.id.eq(itemGoalRelationshipEntity.exerciseGoalId))
+            .leftJoin(exerciseHistoryEntity).on(exerciseHistoryEntity.itemId.eq(exerciseItemEntity.id))
+            .groupBy(exerciseItemEntity.id, itemYoutubeInfo.id, exerciseAreaEntity.id, exerciseGoalEntity.id)
             .fetch()
 
-        val youtubeInfo: List<ItemYoutubeInfo> = jpaQueryFactory
-            .selectFrom(itemYoutubeInfo)
-            .where(itemYoutubeInfo.item.id.`in`(exerciseItems.map { it.id }))
-            .fetch()
-
-        val exerciseAreas: List<ExerciseAreaEntity> = jpaQueryFactory
-            .selectFrom(exerciseAreaEntity)
-            .fetch()
-
-        val exerciseGoals: List<ExerciseGoalEntity> = jpaQueryFactory
-            .selectFrom(exerciseGoalEntity)
-            .fetch()
-
-        val itemAreaRelationships: List<ItemAreaRelationshipEntity> = jpaQueryFactory
-            .selectFrom(itemAreaRelationshipEntity)
-            .fetch()
-
-        val itemGoalRelationships: List<ItemGoalRelationshipEntity> = jpaQueryFactory
-            .selectFrom(itemGoalRelationshipEntity)
-            .fetch()
-
-        val historyCounts: List<Tuple> = jpaQueryFactory
-            .select(exerciseHistoryEntity.itemId, exerciseHistoryEntity.itemId.count())
-            .from(exerciseHistoryEntity)
-            .groupBy(exerciseHistoryEntity.itemId)
-            .fetch()
-
-        val historyCountMap: Map<Long, Long> = historyCounts.associate {
-            it[exerciseHistoryEntity.itemId]!! to it[exerciseHistoryEntity.itemId.count()]!!
-        }
-
-        return getItemQueryDto(
-            exerciseItems = exerciseItems,
-            exerciseAreas = exerciseAreas,
-            exerciseGoals = exerciseGoals,
-            itemAreaRelationships = itemAreaRelationships,
-            itemGoalRelationships = itemGoalRelationships,
-            historyCountMap = historyCountMap,
-            itemYoutubeInfo = youtubeInfo,
-        )
+        return result.groupBy { it.get(exerciseItemEntity) }
+            .map { (item, group) ->
+                QueryItemDto(
+                    item = item!!.toDomain(),
+                    goals = group.mapNotNull { it.get(exerciseGoalEntity)?.toDomain() }.distinct(),
+                    areas = group.mapNotNull { it.get(exerciseAreaEntity)?.toDomain() }.distinct(),
+                    count = group.firstOrNull()?.get(exerciseHistoryEntity.itemId.count())?.toInt() ?: 0,
+                    itemYoutubeInfo = group.mapNotNull { it.get(itemYoutubeInfo)?.toDomain() }.distinct(),
+                )
+            }
     }
 
     override fun findInIds(ids: List<Long>): List<QueryItemDto> {
@@ -190,7 +222,7 @@ class ExerciseItemQueryRepositoryImpl(
         exerciseGoals: List<ExerciseGoalEntity>,
         historyCountMap: Map<Long, Long>,
         itemYoutubeInfo: List<ItemYoutubeInfo>,
-        ): List<QueryItemDto> = exerciseItems.map { item ->
+    ): List<QueryItemDto> = exerciseItems.map { item ->
         val areas = itemAreaRelationships
             .filter { it.exerciseItemId == item.id }
             .mapNotNull { relationship ->

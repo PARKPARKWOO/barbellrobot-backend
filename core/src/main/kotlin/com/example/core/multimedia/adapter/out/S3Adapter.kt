@@ -28,7 +28,7 @@ class S3Adapter(
                     this.contentLength = file.size
                 }
                 async {
-                    val fileName = "${UUID.randomUUID()}_${file.originalFilename}"
+                    val fileName = UUID.randomUUID().toString()
                     val putObjectRequest = PutObjectRequest(
                         bucketName,
                         fileName,
