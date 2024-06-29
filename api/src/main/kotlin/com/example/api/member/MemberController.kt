@@ -41,7 +41,7 @@ class MemberController(
     private val managementUseCase: ManagementUseCase,
     private val memberInfoUseCase: MemberInfoUseCase,
 ) {
-    @PostMapping("/profile")
+    @PostMapping(path = ["/profile"], consumes = ["multipart/form-data"])
     @Operation(
         summary = "profile 업로드",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
