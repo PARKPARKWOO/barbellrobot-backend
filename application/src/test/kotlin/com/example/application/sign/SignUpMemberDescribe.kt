@@ -5,6 +5,7 @@ import com.example.application.sign.util.MemberServiceTestUtil
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.mail.application.port.out.EmailVerifyPort
+import com.example.core.rival.port.`in`.RivalUseCase
 import com.example.core.transaction.TransactionManager
 import com.example.core.user.model.Gender
 import com.example.core.user.port.command.SaveMemberInfoCommand
@@ -25,6 +26,7 @@ class SignUpMemberDescribe : DescribeSpec(
         val emailVerifyPort: EmailVerifyPort = mockk()
         val userQueryPort: UserQueryPort = mockk()
         val memberInfoUseCase: MemberInfoUseCase = mockk()
+        val rivalUseCase: RivalUseCase = mockk()
         val txAdvice = mockk<TransactionManager>()
         val tx = Tx(txAdvice)
         val memberService = SignUpMemberService(
@@ -32,6 +34,7 @@ class SignUpMemberDescribe : DescribeSpec(
             emailVerifyPort = emailVerifyPort,
             userQueryPort = userQueryPort,
             memberInfoUseCase = memberInfoUseCase,
+            rivalUseCase = rivalUseCase,
         )
 
         describe("signUp member with email") {
@@ -47,6 +50,7 @@ class SignUpMemberDescribe : DescribeSpec(
                     every { txAdvice.writeTx(any<() -> Any>()) } answers {
                         firstArg<() -> Any>().invoke()
                     }
+                    every { rivalUseCase.createRival(any()) } returns Unit
 //                    every { txAdvice.write(any<() -> Unit>()) } answers {
 //                        firstArg<() -> Unit>().invoke()
 //                    }

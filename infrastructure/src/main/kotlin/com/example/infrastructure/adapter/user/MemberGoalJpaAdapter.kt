@@ -22,39 +22,28 @@ class MemberGoalJpaAdapter(
 ) : MemberGoalJpaPort {
     override fun addGoal(command: AddGoalCommand) {
         val member = getMember(command.memberId)
-<<<<<<< HEAD:core/src/main/kotlin/com/example/core/user/member/adapter/out/MemberGoalJpaAdapter.kt
 
-        val existingMemberGoals = memberGoalRepository.getMemberGoalByIds(
-            memberId = command.memberId,
-            goalIds = command.goalIds,
-        )
-
-        existingMemberGoals.filter { it.isDeleted }.forEach { it.revert() }
-
-        val existingGoalIds = existingMemberGoals.map { it.exerciseGoalEntity.id }
-        val newGoalIds = command.goalIds.filterNot { existingGoalIds.contains(it) }
-
-        val newGoals = exerciseGoalJpaPort.getExerciseGoals(newGoalIds)?.map { goal ->
-            MemberGoalEntity(
-                memberEntity = member,
-                exerciseGoalEntity = goal,
+        val goalEntity = exerciseGoalJpaPort.getExerciseGoals(command.goalIds)
+        if (goalEntity.isNotEmpty()) {
+            val existingMemberGoals = memberGoalRepository.getMemberGoalByIds(
+                memberId = command.memberId,
+                goalIds = command.goalIds,
             )
-        }.orEmpty()
+            existingMemberGoals.filter { it.isDeleted }.forEach { it.revert() }
 
-        // Save new goals
-        if (newGoals.isNotEmpty()) {
-            memberGoalRepository.saveAll(newGoals)
-=======
-        val entity = exerciseGoalJpaPort.getExerciseGoals(command.goalIds)
-        if (entity.isNotEmpty()) {
-            val memberGoal = entity.map { goal ->
+            val existingGoalIds = existingMemberGoals.map { it.exerciseGoalEntity.id }
+            val newGoalIds = command.goalIds.filterNot { existingGoalIds.contains(it) }
+
+            val newGoals = exerciseGoalJpaPort.getExerciseGoals(newGoalIds).map { goal ->
                 MemberGoalEntity(
                     memberEntity = member,
                     exerciseGoalEntity = ExerciseGoalEntity.from(goal),
                 )
             }
-            memberGoalRepository.saveAll(memberGoal)
->>>>>>> baec8d84 (refactor: Add infrastructure module, application module (#61)):infrastructure/src/main/kotlin/com/example/infrastructure/adapter/user/MemberGoalJpaAdapter.kt
+
+            if (newGoals.isNotEmpty()) {
+                memberGoalRepository.saveAll(newGoals)
+            }
         }
     }
 

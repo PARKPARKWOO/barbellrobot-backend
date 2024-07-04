@@ -45,6 +45,10 @@ enum class ErrorCode(
     // history
     NOT_FOUND_USER_HISTORY("오늘 history를 찾을 수 없습니다"),
 
+    // rival
+    NOT_FOUND_RIVAL_REQUEST("rival 요청을 찾을 수 없습니다."),
+    CANNOT_REQUEST_RIVAL_TO_SELF("자기 자신에게 라이벌 신청을 할 수 없습니다."),
+
     // unknown
     UN_KNOWN_EXCEPTION("알수 없는 에러가 발생 하였습니다."),
 }

@@ -4,6 +4,7 @@ import com.example.application.common.transaction.Tx
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.mail.application.port.out.EmailVerifyPort
+import com.example.core.rival.port.`in`.RivalUseCase
 import com.example.core.sign.port.`in`.SignUpMemberUseCase
 import com.example.core.sign.port.`in`.command.SignUpMemberWithEmailCommand
 import com.example.core.sign.port.`in`.command.SignUpUserWithEmailCommand
@@ -19,6 +20,7 @@ class SignUpMemberService(
     private val emailVerifyPort: EmailVerifyPort,
     private val memberJpaPort: MemberJpaPort,
     private val memberInfoUseCase: MemberInfoUseCase,
+    private val rivalUseCase: RivalUseCase,
 ) : SignUpMemberUseCase, AbstractSignUpService(userQueryPort, emailVerifyPort) {
     override fun saveUser(command: SignUpUserWithEmailCommand) {
         val memberCommand = command as? SignUpMemberWithEmailCommand
@@ -35,6 +37,7 @@ class SignUpMemberService(
                 age = command.age,
                 exerciseMonths = command.exerciseMonths,
             )
+            rivalUseCase.createRival(memberId)
             memberInfoUseCase.save(saveMemberInfoCommand)
         }
     }
