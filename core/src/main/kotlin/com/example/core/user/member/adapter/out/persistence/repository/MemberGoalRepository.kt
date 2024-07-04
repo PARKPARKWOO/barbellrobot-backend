@@ -12,6 +12,8 @@ interface MemberGoalRepository : JpaRepository<MemberGoalEntity, Long>, MemberGo
 
 interface MemberGoalQueryRepository {
     fun getMemberGoal(memberId: UUID, goalId: Long): MemberGoalEntity?
+
+    fun getMemberGoalByIds(memberId: UUID, goalIds: List<Long>): List<MemberGoalEntity>
 }
 
 @Repository
@@ -25,6 +27,15 @@ class MemberGoalQueryRepositoryImpl(
                     .and(eqGoal(goalId)),
             )
             .fetchOne()
+    }
+
+    override fun getMemberGoalByIds(memberId: UUID, goalIds: List<Long>): List<MemberGoalEntity> {
+        return jpaQueryFactory.selectFrom(memberGoalEntity)
+            .where(
+                eqMember(memberId)
+                    .and(memberGoalEntity.exerciseGoalEntity.id.`in`(goalIds)),
+            )
+            .fetch()
     }
 
     private fun eqMember(memberId: UUID): BooleanExpression = memberGoalEntity.memberEntity.id.eq(memberId)

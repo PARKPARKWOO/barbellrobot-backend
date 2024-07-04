@@ -25,5 +25,11 @@ class MemberGoalEntity(
     @ManyToOne(fetch = LAZY)
     val exerciseGoalEntity: ExerciseGoalEntity,
     @Column(name = "is_deleted")
-    val isDeleted: Boolean = false,
-)
+    var isDeleted: Boolean = false,
+) {
+    fun revert() {
+        if (this.isDeleted) {
+            this.isDeleted = false
+        }
+    }
+}

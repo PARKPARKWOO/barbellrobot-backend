@@ -9,9 +9,8 @@ data class AddDietRequest(
     val type: Diet,
     val todayHistoryId: UUID,
     val foods: List<String>?,
-    val images: List<MultipartFile>?,
 ) {
-    fun toCommand(userId: UUID): AddDietCommand {
+    fun toCommand(userId: UUID, images: List<MultipartFile>?): AddDietCommand {
         return AddDietCommand(
             userId = userId,
             foods = foods,

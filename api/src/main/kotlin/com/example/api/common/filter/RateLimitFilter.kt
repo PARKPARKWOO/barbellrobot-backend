@@ -29,6 +29,8 @@ class RateLimitFilter : OncePerRequestFilter(), Log {
         val aiQuotaBucket: ConcurrentHashMap<String, Bucket> = ConcurrentHashMap()
 
         const val AI_API = "ai"
+
+        const val TOO_MANY_REQUEST = "Too many requests"
     }
 
     override fun doFilterInternal(
@@ -55,7 +57,7 @@ class RateLimitFilter : OncePerRequestFilter(), Log {
                 val aiProbe = aiBucket.tryConsumeAndReturnRemaining(1)
                 if (!aiProbe.isConsumed) {
                     response.status = TOO_MANY_REQUESTS.value()
-                    response.writer.write("Too many requests")
+                    response.writer.write(TOO_MANY_REQUEST)
                     return
                 }
             }
@@ -65,7 +67,7 @@ class RateLimitFilter : OncePerRequestFilter(), Log {
                 filterChain.doFilter(request, response)
             } else {
                 response.status = TOO_MANY_REQUESTS.value()
-                response.writer.write("Too many requests")
+                response.writer.write(TOO_MANY_REQUEST)
             }
         } ?: return filterChain.doFilter(request, response)
     }
