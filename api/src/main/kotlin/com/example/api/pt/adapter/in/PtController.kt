@@ -36,7 +36,7 @@ class PtController(
         summary = "이번주 pt 받기",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
-    @RateLimit(quota = 15, timeUnit = TimeUnit.MINUTES, refillInterval = 1, refillTokens = 1)
+    @RateLimit(quota = 1, timeUnit = TimeUnit.MINUTES, refillInterval = 1, refillTokens = 1)
     fun generatePt(
         @AuthenticationUser
         @Parameter(hidden = true)
