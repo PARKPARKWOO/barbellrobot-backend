@@ -10,11 +10,8 @@ import com.example.core.user.member.application.command.UpdateNicknameCommand
 import com.example.core.user.member.application.`in`.MemberInfoUseCase
 import com.example.core.user.member.application.out.MemberInfoJpaPort
 import com.example.core.user.member.dto.MemberDetailQueryDto
-import org.springframework.stereotype.Service
 import java.util.UUID
-import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo as MemberInfoEntity
 
-@Service
 class MemberInfoService(
     private val memberInfoJpaPort: MemberInfoJpaPort,
     private val userQueryPort: UserQueryPort,

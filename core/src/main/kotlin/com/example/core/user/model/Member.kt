@@ -1,7 +1,7 @@
 package com.example.core.user.model
 
 import com.example.core.user.model.interfaces.User
-import com.example.domain.constants.DomainConstants
+import com.example.core.common.constants.DomainConstants
 import java.time.LocalDateTime
 import java.util.UUID
 

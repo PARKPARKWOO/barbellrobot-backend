@@ -1,6 +1,6 @@
 package com.example.infrastructure.persistence.repository.exercise
 
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemGoalRelationshipEntity
+import com.example.infrastructure.persistence.entity.exercise.ItemGoalRelationshipEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query

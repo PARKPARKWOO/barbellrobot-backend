@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 dependencies {
-    implementation(project(":common"))
 }
 
 tasks.withType<KotlinCompile> {

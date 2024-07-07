@@ -1,7 +1,6 @@
 package com.example.infrastructure.persistence.repository.exercise
 
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
-import com.example.core.exercise.adapter.out.persistence.entity.QExerciseAreaEntity.exerciseAreaEntity
+import com.example.infrastructure.persistence.entity.exercise.ExerciseAreaEntity
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

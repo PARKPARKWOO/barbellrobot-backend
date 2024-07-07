@@ -1,3 +1,13 @@
+plugins {
+    val kotlinVersion = "1.9.10"
+    kotlin("jvm") version kotlinVersion apply false
+    kotlin("plugin.spring") version kotlinVersion apply false
+    kotlin("plugin.jpa") version kotlinVersion apply false
+    kotlin("kapt") version kotlinVersion
+    id("org.springframework.boot") version "3.2.4"
+    id("io.spring.dependency-management") version "1.1.4"
+}
+
 dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")

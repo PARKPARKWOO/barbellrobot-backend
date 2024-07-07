@@ -10,17 +10,13 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
 }
 
-//allOpen {
-//    annotation("jakarta.persistence.Entity")
-//    annotation("jakarta.persistence.Embeddable")
-//    annotation("jakarta.persistence.MappedSuperclass")
-//}
-
 repositories {
     mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
     maven { url = uri("https://repo.spring.io/snapshot") }
 }
+
+apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
 
 dependencies {
     implementation(project(":common"))
@@ -79,11 +75,12 @@ dependencies {
     implementation("org.springframework:spring-mock:2.0.8")
 }
 
-extra["springAiVersion"] = "0.8.1"
+extra["springAiVersion"] = "1.0.0-SNAPSHOT"
+extra["springCloudVersion"] = "2023.0.0"
 
 dependencyManagement {
     imports {
-//        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
         mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
     }
 }
@@ -98,6 +95,8 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.register("prepareKotlinBuildScriptModel") {}
 
 tasks.bootJar {
     enabled = false

@@ -26,16 +26,16 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
 
     // multi-part-file mock
-    implementation("org.springframework:spring-mock:2.0.8")
+//    implementation("org.springframework:spring-mock:2.0.8")
 }
 
-extra["springAiVersion"] = "0.8.1"
-extra["springCloudVersion"] = "2023.0.0"
+//extra["springAiVersion"] = "1.0.0-SNAPSHOT"
+//extra["springCloudVersion"] = "2023.0.0"
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
+//        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+//        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
     }
 }
 
@@ -45,6 +45,8 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "17"
     }
 }
+
+tasks.register("prepareKotlinBuildScriptModel") {}
 
 tasks.withType<Test> {
     useJUnitPlatform()

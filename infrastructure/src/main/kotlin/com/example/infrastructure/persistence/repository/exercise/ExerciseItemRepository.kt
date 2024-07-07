@@ -1,19 +1,7 @@
 package com.example.infrastructure.persistence.repository.exercise
 
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseItemEntity
-import com.example.core.exercise.adapter.out.persistence.entity.QExerciseAreaEntity.exerciseAreaEntity
-import com.example.core.exercise.adapter.out.persistence.entity.QExerciseGoalEntity.exerciseGoalEntity
-import com.example.core.exercise.adapter.out.persistence.entity.QExerciseItemEntity.exerciseItemEntity
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemAreaRelationshipEntity
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemGoalRelationshipEntity
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemYoutubeInfo
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemAreaRelationshipEntity.itemAreaRelationshipEntity
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemGoalRelationshipEntity.itemGoalRelationshipEntity
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.QItemYoutubeInfo.itemYoutubeInfo
 import com.example.core.exercise.application.dto.QueryItemDto
-import com.example.core.history.adapter.out.persistence.entity.QExerciseHistoryEntity.exerciseHistoryEntity
+import com.example.infrastructure.persistence.entity.exercise.ExerciseItemEntity
 import com.querydsl.core.Tuple
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
