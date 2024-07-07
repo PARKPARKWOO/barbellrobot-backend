@@ -1,13 +1,12 @@
 repositories {
     mavenCentral()
-    maven { url = uri("https://repo.spring.io/milestone") }
-    maven { url = uri("https://repo.spring.io/snapshot") }
+//    maven { url = uri("https://repo.spring.io/milestone") }
+//    maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
 dependencies {
     implementation(project(":core"))
     implementation(project(":common"))
-    implementation(project(":domain"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
@@ -35,11 +34,11 @@ dependencies {
     implementation("com.bucket4j:bucket4j-core:8.10.1")
 }
 
-extra["springAiVersion"] = "0.8.1"
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
-    }
-}
+//extra["springAiVersion"] = "0.8.1"
+//
+//dependencyManagement {
+//    imports {
+//        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+//        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
+//    }
+//}

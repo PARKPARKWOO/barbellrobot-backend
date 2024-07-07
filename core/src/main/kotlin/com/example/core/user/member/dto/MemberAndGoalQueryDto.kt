@@ -1,7 +1,5 @@
 package com.example.core.user.member.dto
 
-import com.example.domain.user.Gender
-import com.example.domain.user.Role
 import com.querydsl.core.annotations.QueryProjection
 
 data class MemberAndGoalQueryDto

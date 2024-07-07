@@ -18,7 +18,7 @@ import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPor
 import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPort
 import com.example.core.exercise.application.port.out.ItemYoutubeJpaPort
 import com.example.core.multimedia.application.port.`in`.MultimediaUploadUseCase
-import com.example.domain.exercise.ExerciseItem
+import com.example.core.exercise.model.ExerciseItem
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope

@@ -1,6 +1,6 @@
 package com.example.core.user.member.application.command
 
-import com.example.domain.user.Gender
+import com.example.core.user.model.Gender
 import java.util.UUID
 
 data class SaveMemberInfoCommand(

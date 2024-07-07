@@ -9,7 +9,7 @@ import com.example.core.managemnet.application.port.command.RejectCommand
 import com.example.core.managemnet.application.port.`in`.ManagementUseCase
 import com.example.core.managemnet.application.port.out.ManagementJpaPort
 import com.example.core.user.member.dto.MemberSummaryDto
-import com.example.domain.management.Management
+import com.example.core.managemnet.model.Management
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID

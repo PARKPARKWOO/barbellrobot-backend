@@ -1,6 +1,6 @@
 package com.example.core.user.trainer.application.port.command
 
-import com.example.domain.user.Gender
+import com.example.core.user.model.Gender
 
 data class SignUpTrainerCommand(
     val email: String,

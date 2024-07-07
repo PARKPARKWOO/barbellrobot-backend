@@ -2,7 +2,7 @@ package com.example.core.exercise.application.port.out
 
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
 import com.example.core.exercise.application.port.command.SaveExerciseGoalCommand
-import com.example.domain.exercise.ExerciseGoal
+import com.example.core.exercise.model.ExerciseGoal
 
 interface ExerciseGoalJpaPort {
     fun saveExerciseGoal(command: SaveExerciseGoalCommand)

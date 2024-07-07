@@ -12,7 +12,7 @@ import com.example.core.history.application.port.out.command.AddDietImageCommand
 import com.example.core.history.application.port.out.command.AttendanceTodayCommand
 import com.example.core.history.application.port.out.query.FindUserHistoryQuery
 import com.example.core.history.dto.HistoryResponseDto
-import com.example.domain.history.UserHistory
+import com.example.core.history.model.UserHistory
 import org.springframework.stereotype.Component
 import java.util.UUID
 

@@ -4,7 +4,7 @@ import com.example.core.exercise.application.port.`in`.ExerciseGoalUseCase
 import com.example.core.exercise.application.port.command.SaveExerciseGoalCommand
 import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
 import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPort
-import com.example.domain.exercise.ExerciseGoal
+import com.example.core.exercise.model.ExerciseGoal
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

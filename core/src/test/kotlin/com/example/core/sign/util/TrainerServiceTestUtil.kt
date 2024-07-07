@@ -3,9 +3,9 @@ package com.example.core.sign.util
 import com.example.core.sign.application.port.`in`.command.SignUpTrainerWithEmailCommand
 import com.example.core.user.trainer.adapter.out.persistence.entity.GymAddress
 import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerInfo
-import com.example.domain.user.Gender
-import com.example.domain.user.Role
-import com.example.domain.user.Trainer
+import com.example.core.user.model.Gender
+import com.example.core.user.model.Role
+import com.example.core.user.model.Trainer
 import java.util.UUID
 
 object TrainerServiceTestUtil {

@@ -4,7 +4,6 @@ import com.example.core.user.member.application.command.SaveMemberInfoCommand
 import com.example.core.user.member.application.command.UpdateMemberInfoCommand
 import com.example.core.user.member.application.command.UpdateNicknameCommand
 import com.example.core.user.member.dto.MemberDetailQueryDto
-import com.example.domain.user.MemberInfo
 import java.util.UUID
 
 interface MemberInfoUseCase {

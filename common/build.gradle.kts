@@ -16,7 +16,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
 }
 
-tasks.bootJar {
-    enabled = false
-    mainClass = "com.example.api.ApiApplication"
-}
+//tasks.bootJar {
+//    enabled = false
+//    mainClass = "com.example.api.ApiApplication"
+//}

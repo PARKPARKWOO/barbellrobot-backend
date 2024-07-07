@@ -5,7 +5,7 @@ import com.example.core.managemnet.application.port.command.CancelCommand
 import com.example.core.managemnet.application.port.command.OfferCommand
 import com.example.core.managemnet.application.port.command.RejectCommand
 import com.example.core.user.member.dto.MemberSummaryDto
-import com.example.domain.management.Management
+import com.example.core.managemnet.model.Management
 import java.util.UUID
 
 interface ManagementUseCase {

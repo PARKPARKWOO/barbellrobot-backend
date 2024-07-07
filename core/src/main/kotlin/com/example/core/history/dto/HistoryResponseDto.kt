@@ -1,6 +1,6 @@
 package com.example.core.history.dto
 
-import com.example.domain.history.Diet
+import com.example.core.history.model.Diet
 import com.querydsl.core.annotations.QueryProjection
 import java.time.LocalDate
 import java.util.UUID

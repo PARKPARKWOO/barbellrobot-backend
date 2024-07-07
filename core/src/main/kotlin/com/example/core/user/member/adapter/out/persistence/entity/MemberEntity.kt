@@ -1,10 +1,10 @@
 package com.example.core.user.member.adapter.out.persistence.entity
 
 import com.example.core.common.persistence.BaseEntity
-import com.example.core.user.UserEntity
-import com.example.domain.user.Member
-import com.example.domain.user.Provider
-import com.example.domain.user.Role
+import com.example.core.user.model.interfaces.UserEntity
+import com.example.core.user.model.Member
+import com.example.core.user.model.Provider
+import com.example.core.user.model.Role
 import jakarta.persistence.AttributeOverride
 import jakarta.persistence.AttributeOverrides
 import jakarta.persistence.Column
@@ -15,7 +15,7 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.SQLDelete
-import com.example.domain.user.SocialProvider as SocialProviderModel
+import com.example.core.user.model.SocialProvider as SocialProviderModel
 
 const val MEMBER_TABLE_NAME = "member"
 

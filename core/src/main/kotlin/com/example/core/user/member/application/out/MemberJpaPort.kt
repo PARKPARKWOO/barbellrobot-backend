@@ -6,7 +6,7 @@ import com.example.core.sign.application.port.`in`.query.FindUserWithSocialQuery
 import com.example.core.user.application.port.command.UpdateProfileCommand
 import com.example.core.user.member.application.command.SaveMemberCommand
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
-import com.example.domain.user.Member
+import com.example.core.user.model.Member
 import java.util.UUID
 
 interface MemberJpaPort {

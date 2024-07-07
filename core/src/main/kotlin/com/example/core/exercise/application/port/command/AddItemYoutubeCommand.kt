@@ -1,6 +1,6 @@
 package com.example.core.exercise.application.port.command
 
-import com.example.domain.exercise.VideoType
+import com.example.core.exercise.model.VideoType
 
 data class AddItemYoutubeCommand(
     val channel: String,

@@ -1,6 +1,6 @@
 package com.example.core.pt.application.command
 
-import com.example.domain.pt.PtConsulting
+import com.example.core.pt.model.PtConsulting
 import java.util.UUID
 
 data class SavePtCommand(

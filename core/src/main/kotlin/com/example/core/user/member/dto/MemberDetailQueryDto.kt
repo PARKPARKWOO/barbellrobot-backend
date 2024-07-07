@@ -1,8 +1,8 @@
 package com.example.core.user.member.dto
 
-import com.example.domain.user.Gender
-import com.example.domain.user.Provider
-import com.example.domain.user.Role
+import com.example.core.user.model.Gender
+import com.example.core.user.model.Provider
+import com.example.core.user.model.Role
 import com.querydsl.core.annotations.QueryProjection
 import java.time.LocalDateTime
 import java.util.UUID

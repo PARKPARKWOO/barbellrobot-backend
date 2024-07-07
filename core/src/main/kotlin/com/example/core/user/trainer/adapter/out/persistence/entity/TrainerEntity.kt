@@ -1,9 +1,9 @@
 package com.example.core.user.trainer.adapter.out.persistence.entity
 
 import com.example.core.common.persistence.BaseEntity
-import com.example.core.user.UserEntity
-import com.example.domain.user.Role
-import com.example.domain.user.Trainer
+import com.example.core.user.model.interfaces.UserEntity
+import com.example.core.user.model.Role
+import com.example.core.user.model.Trainer
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table

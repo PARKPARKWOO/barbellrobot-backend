@@ -1,6 +1,6 @@
 package com.example.core.history.adapter.out.persistence.entity
 
-import com.example.domain.history.UserHistory
+import com.example.core.history.model.UserHistory
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners

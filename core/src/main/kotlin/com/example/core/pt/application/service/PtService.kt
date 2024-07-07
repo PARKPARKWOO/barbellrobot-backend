@@ -10,7 +10,7 @@ import com.example.core.pt.application.command.SavePtCommand
 import com.example.core.pt.application.port.`in`.GeneratePtUseCase
 import com.example.core.pt.application.port.out.PtJpaPort
 import com.example.core.user.member.application.`in`.MemberUseCase
-import com.example.domain.pt.AiPt
+import com.example.core.pt.model.AiPt
 import com.google.gson.Gson
 import org.springframework.stereotype.Service
 import java.util.*

@@ -8,8 +8,8 @@ import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerEntit
 import com.example.core.user.trainer.adapter.out.persistence.repository.TrainerRepository
 import com.example.core.user.trainer.application.port.command.SignUpTrainerCommand
 import com.example.core.user.trainer.application.port.out.TrainerJpaPort
-import com.example.domain.user.Role
-import com.example.domain.user.Trainer
+import com.example.core.user.model.Role
+import com.example.core.user.model.Trainer
 import org.springframework.stereotype.Component
 import java.util.UUID
 

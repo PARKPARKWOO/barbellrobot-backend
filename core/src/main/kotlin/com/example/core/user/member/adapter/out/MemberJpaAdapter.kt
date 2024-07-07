@@ -12,8 +12,8 @@ import com.example.core.user.member.adapter.out.persistence.repository.MemberRep
 import com.example.core.user.member.application.command.SaveMemberCommand
 import com.example.core.user.member.application.out.MemberJpaPort
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
-import com.example.domain.user.Member
-import com.example.domain.user.Role
+import com.example.core.user.model.Member
+import com.example.core.user.model.Role
 import org.springframework.stereotype.Component
 import java.util.UUID
 

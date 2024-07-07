@@ -3,8 +3,8 @@ package com.example.core.sign.util
 import com.example.core.sign.application.port.`in`.command.SignUpMemberWithEmailCommand
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo
-import com.example.domain.user.Gender
-import com.example.domain.user.Role
+import com.example.core.user.model.Gender
+import com.example.core.user.model.Role
 import java.util.UUID
 
 object MemberServiceTestUtil {

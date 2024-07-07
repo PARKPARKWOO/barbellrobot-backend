@@ -1,7 +1,7 @@
 package com.example.core.user.application.port.out
 
-import com.example.core.user.UserEntity
-import com.example.core.user.UserHealthDetail
+import com.example.core.user.model.interfaces.UserEntity
+import com.example.core.user.model.interfaces.UserHealthDetail
 import java.util.UUID
 
 interface UserQueryPort {

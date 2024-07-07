@@ -3,7 +3,7 @@ package com.example.core.user.member.application.out
 import com.example.core.user.member.application.command.SaveMemberInfoCommand
 import com.example.core.user.member.application.command.UpdateNicknameCommand
 import com.example.core.user.member.dto.MemberDetailQueryDto
-import com.example.domain.user.MemberInfo
+import com.example.core.user.model.MemberInfo
 import java.util.UUID
 
 interface MemberInfoJpaPort {

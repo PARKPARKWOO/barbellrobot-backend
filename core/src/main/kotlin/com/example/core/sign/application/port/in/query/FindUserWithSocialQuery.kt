@@ -1,6 +1,6 @@
 package com.example.core.sign.application.port.`in`.query
 
-import com.example.domain.user.Provider
+import com.example.core.user.model.Provider
 
 data class FindUserWithSocialQuery(
     // social id

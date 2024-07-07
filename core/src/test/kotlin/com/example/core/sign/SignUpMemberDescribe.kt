@@ -10,8 +10,7 @@ import com.example.core.user.application.port.out.UserQueryPort
 import com.example.core.user.member.application.command.SaveMemberInfoCommand
 import com.example.core.user.member.application.`in`.MemberInfoUseCase
 import com.example.core.user.member.application.out.MemberJpaPort
-import com.example.domain.user.Gender
-import com.google.common.base.Verify.verify
+import com.example.core.user.model.Gender
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

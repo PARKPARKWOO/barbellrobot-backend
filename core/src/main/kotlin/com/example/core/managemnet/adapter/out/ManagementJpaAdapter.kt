@@ -7,8 +7,8 @@ import com.example.core.managemnet.adapter.out.persistence.repository.Management
 import com.example.core.managemnet.application.port.command.OfferCommand
 import com.example.core.managemnet.application.port.out.ManagementJpaPort
 import com.example.core.user.member.dto.MemberSummaryDto
-import com.example.domain.management.Management
-import com.example.domain.management.ManagementStatus
+import com.example.core.managemnet.model.Management
+import com.example.core.managemnet.model.ManagementStatus
 import org.springframework.stereotype.Component
 import java.util.UUID
 

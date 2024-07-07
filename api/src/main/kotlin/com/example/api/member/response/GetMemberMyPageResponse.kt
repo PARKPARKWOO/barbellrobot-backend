@@ -1,7 +1,7 @@
 package com.example.api.member.response
 
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
-import com.example.domain.user.Role
+import com.example.core.user.model.Role
 
 data class GetMemberMyPageResponse(
     val profile: String?,

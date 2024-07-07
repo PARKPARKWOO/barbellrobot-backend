@@ -5,7 +5,7 @@ import com.example.common.jwt.JwtTokenService
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.domain.constants.DomainConstants
-import com.example.domain.user.Role
+import com.example.core.user.model.Role
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpMethod

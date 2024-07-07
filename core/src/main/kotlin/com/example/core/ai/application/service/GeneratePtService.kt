@@ -1,13 +1,13 @@
 package com.example.core.ai.application.service
 
 import com.example.core.ai.application.dto.ExerciseList
-import com.example.domain.pt.PtConsulting
+import com.example.core.pt.model.PtConsulting
 import com.fasterxml.jackson.annotation.JsonClassDescription
 import com.google.common.base.Function
 import java.util.UUID
 
-typealias DayModel = com.example.domain.pt.Day
-typealias ExerciseModel = com.example.domain.pt.Exercise
+typealias DayModel = com.example.core.pt.model.Day
+typealias ExerciseModel = com.example.core.pt.model.Exercise
 
 class GeneratePtService : Function<GeneratePtService.GeneratePtRequestDto, GeneratePtService.GeneratePtResponseDto> {
     @JsonClassDescription("Get a list of exercises.")

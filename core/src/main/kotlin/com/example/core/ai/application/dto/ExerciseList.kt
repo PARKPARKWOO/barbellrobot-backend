@@ -1,6 +1,6 @@
 package com.example.core.ai.application.dto
 
-import com.example.domain.exercise.ExerciseItem
+import com.example.core.exercise.model.ExerciseItem
 import com.fasterxml.jackson.annotation.JsonPropertyDescription
 
 data class ExerciseList(

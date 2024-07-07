@@ -2,7 +2,7 @@ package com.example.core.exercise.application.port.out
 
 import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
 import com.example.core.exercise.application.port.command.SaveExerciseAreaCommand
-import com.example.domain.exercise.ExerciseArea
+import com.example.core.exercise.model.ExerciseArea
 
 interface ExerciseAreaJpaPort {
     fun saveExerciseArea(command: SaveExerciseAreaCommand)

@@ -3,7 +3,7 @@ package com.example.core.exercise.application.port.`in`
 import com.example.core.exercise.application.dto.QueryItemDto
 import com.example.core.exercise.application.port.command.AddItemYoutubeCommand
 import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
-import com.example.domain.exercise.ExerciseItem
+import com.example.core.exercise.model.ExerciseItem
 
 interface ExerciseItemUseCase {
     suspend fun saveExerciseItem(command: SaveExerciseItemCommand)

@@ -10,7 +10,7 @@ import com.example.core.sign.application.port.`in`.command.SignInWithEmailComman
 import com.example.core.sign.application.port.`in`.command.SignInWithKakaoCommand
 import com.example.core.sign.application.port.`in`.query.FindUserWithSocialQuery
 import com.example.domain.constants.DomainConstants
-import com.example.domain.user.Provider
+import com.example.core.user.model.Provider
 import org.springframework.beans.factory.annotation.Value
 
 abstract class AbstractSignInService(

@@ -1,6 +1,6 @@
 package com.example.core.sign.application.port.`in`.command
 
-import com.example.domain.user.Gender
+import com.example.core.user.model.Gender
 import java.util.UUID
 
 data class SignUpMemberWithKakaoCommand(

@@ -2,6 +2,7 @@ package com.example.core.pt.adapter.out.persistence.entity
 
 import com.example.common.mapper.convert
 import com.example.core.common.persistence.BaseEntity
+import com.example.core.pt.model.AiPt
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -13,7 +14,7 @@ import org.hibernate.type.SqlTypes
 
 const val AI_PT_TABLE_NAME = "ai_pt"
 
-typealias AiPtModel = com.example.domain.pt.AiPt
+typealias AiPtModel = AiPt
 
 @Entity
 @Table(name = AI_PT_TABLE_NAME)

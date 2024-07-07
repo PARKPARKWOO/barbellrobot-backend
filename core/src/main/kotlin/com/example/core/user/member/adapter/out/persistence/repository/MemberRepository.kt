@@ -9,7 +9,7 @@ import com.example.core.user.member.adapter.out.persistence.entity.QMemberInfo.m
 import com.example.core.user.member.dto.MemberAndGoalQueryDto
 import com.example.core.user.member.dto.QMemberDetailQueryDto
 import com.example.core.user.member.dto.QMemberInfoQueryDto
-import com.example.domain.user.Provider
+import com.example.core.user.model.Provider
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository

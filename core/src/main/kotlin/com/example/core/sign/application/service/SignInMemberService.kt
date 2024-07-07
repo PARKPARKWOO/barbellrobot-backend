@@ -10,7 +10,7 @@ import com.example.core.sign.application.port.`in`.command.SignInWithEmailComman
 import com.example.core.sign.application.port.`in`.query.FindUserWithSocialQuery
 import com.example.core.user.member.application.command.SaveMemberCommand
 import com.example.core.user.member.application.out.MemberJpaPort
-import com.example.domain.user.SocialProvider
+import com.example.core.user.model.SocialProvider
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

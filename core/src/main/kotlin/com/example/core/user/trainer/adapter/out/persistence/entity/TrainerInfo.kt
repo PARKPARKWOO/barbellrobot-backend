@@ -1,8 +1,8 @@
 package com.example.core.user.trainer.adapter.out.persistence.entity
 
-import com.example.core.user.UserHealthDetail
-import com.example.domain.user.Gender
-import com.example.domain.user.TrainerInfo
+import com.example.core.user.model.interfaces.UserHealthDetail
+import com.example.core.user.model.Gender
+import com.example.core.user.model.TrainerInfo
 import jakarta.persistence.AttributeOverride
 import jakarta.persistence.AttributeOverrides
 import jakarta.persistence.Column

@@ -1,9 +1,9 @@
 package com.example.core.exercise.application.dto
 
-import com.example.domain.exercise.ExerciseArea
-import com.example.domain.exercise.ExerciseGoal
-import com.example.domain.exercise.ExerciseItem
-import com.example.domain.exercise.ItemYoutubeInfo
+import com.example.core.exercise.model.ExerciseArea
+import com.example.core.exercise.model.ExerciseGoal
+import com.example.core.exercise.model.ExerciseItem
+import com.example.core.exercise.model.ItemYoutubeInfo
 import com.querydsl.core.annotations.QueryProjection
 
 data class QueryItemDto

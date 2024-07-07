@@ -1,7 +1,7 @@
 package com.example.core.exercise.application.port.`in`
 
 import com.example.core.exercise.application.port.command.SaveExerciseAreaCommand
-import com.example.domain.exercise.ExerciseArea
+import com.example.core.exercise.model.ExerciseArea
 
 interface ExerciseAreaUseCase {
     fun saveExerciseArea(command: SaveExerciseAreaCommand)

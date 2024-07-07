@@ -4,7 +4,7 @@ import com.example.core.managemnet.adapter.out.persistence.entity.ManagementEnti
 import com.example.core.managemnet.adapter.out.persistence.entity.QManagementEntity.managementEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.QMemberEntity.memberEntity
-import com.example.domain.management.ManagementStatus
+import com.example.core.managemnet.model.ManagementStatus
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

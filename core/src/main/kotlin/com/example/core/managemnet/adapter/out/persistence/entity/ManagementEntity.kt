@@ -1,7 +1,7 @@
 package com.example.core.managemnet.adapter.out.persistence.entity
 
-import com.example.domain.management.Management
-import com.example.domain.management.ManagementStatus
+import com.example.core.managemnet.model.Management
+import com.example.core.managemnet.model.ManagementStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType

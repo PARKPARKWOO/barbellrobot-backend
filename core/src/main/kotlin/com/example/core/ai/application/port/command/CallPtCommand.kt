@@ -1,7 +1,7 @@
 package com.example.core.ai.application.port.command
 
-import com.example.domain.exercise.ExerciseItem
-import com.example.domain.user.Gender
+import com.example.core.exercise.model.ExerciseItem
+import com.example.core.user.model.Gender
 
 data class CallPtCommand(
     val goal: List<String>,

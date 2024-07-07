@@ -1,6 +1,6 @@
 package com.example.core.user.member.application.command
 
-import com.example.domain.user.SocialProvider
+import com.example.core.user.model.SocialProvider
 
 data class SaveMemberCommand(
     val email: String?,

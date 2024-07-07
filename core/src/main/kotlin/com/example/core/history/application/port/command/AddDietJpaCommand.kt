@@ -2,7 +2,7 @@ package com.example.core.history.application.port.command
 
 import com.example.core.history.application.port.out.command.AddDietFoodCommand
 import com.example.core.history.application.port.out.command.AddDietImageCommand
-import com.example.domain.history.Diet
+import com.example.core.history.model.Diet
 import java.util.UUID
 
 data class AddDietJpaCommand(

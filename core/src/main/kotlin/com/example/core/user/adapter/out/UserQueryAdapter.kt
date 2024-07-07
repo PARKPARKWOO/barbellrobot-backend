@@ -1,7 +1,7 @@
 package com.example.core.user.adapter.out
 
-import com.example.core.user.UserEntity
-import com.example.core.user.UserHealthDetail
+import com.example.core.user.model.interfaces.UserEntity
+import com.example.core.user.model.interfaces.UserHealthDetail
 import com.example.core.user.application.port.out.UserQueryPort
 import com.example.core.user.member.adapter.out.persistence.entity.QMemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.QMemberInfo.memberInfo

@@ -1,6 +1,6 @@
 package com.example.api.exercise.adapter.`in`.response
 
-import com.example.domain.exercise.ExerciseGoal
+import com.example.core.exercise.model.ExerciseGoal
 
 data class ExerciseGoalResponse(
     val id: Long,
