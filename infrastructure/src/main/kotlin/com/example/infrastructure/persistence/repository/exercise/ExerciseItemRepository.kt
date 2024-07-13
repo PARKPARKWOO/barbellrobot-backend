@@ -1,6 +1,6 @@
 package com.example.infrastructure.persistence.repository.exercise
 
-import com.example.core.exercise.application.dto.QueryItemDto
+import com.example.core.exercise.dto.QueryItemDto
 import com.example.infrastructure.persistence.entity.exercise.ExerciseItemEntity
 import com.querydsl.core.Tuple
 import com.querydsl.jpa.impl.JPAQueryFactory

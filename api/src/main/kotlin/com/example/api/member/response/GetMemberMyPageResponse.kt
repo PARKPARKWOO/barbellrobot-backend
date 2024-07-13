@@ -1,6 +1,6 @@
 package com.example.api.member.response
 
-import com.example.core.user.member.dto.MemberAndGoalQueryDto
+import com.example.core.user.dto.MemberAndGoalQueryDto
 import com.example.core.user.model.Role
 
 data class GetMemberMyPageResponse(

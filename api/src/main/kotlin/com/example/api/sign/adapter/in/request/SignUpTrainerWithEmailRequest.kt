@@ -1,7 +1,7 @@
 package com.example.api.sign.adapter.`in`.request
 
-import com.example.core.sign.application.port.SignUpUserWithEmailCommand
-import com.example.core.sign.application.port.`in`.command.SignUpTrainerWithEmailCommand
+import com.example.core.sign.port.`in`.command.SignUpUserWithEmailCommand
+import com.example.core.sign.port.`in`.command.SignUpTrainerWithEmailCommand
 import com.example.core.user.model.Gender
 import java.util.UUID
 

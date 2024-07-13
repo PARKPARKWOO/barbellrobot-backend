@@ -1,6 +1,6 @@
 package com.example.api.pt.adapter.`in`.request
 
-import com.example.core.pt.application.command.GeneratePtCommand
+import com.example.core.pt.command.GeneratePtCommand
 import java.util.UUID
 
 data class GeneratePtRequest(

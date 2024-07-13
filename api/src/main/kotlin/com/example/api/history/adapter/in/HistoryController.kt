@@ -12,10 +12,10 @@ import com.example.api.history.adapter.`in`.response.ExerciseHistoryResponse
 import com.example.api.history.adapter.`in`.response.HistoryResponse
 import com.example.api.history.adapter.`in`.response.UserHistoryResponse
 import com.example.common.log.Log
-import com.example.core.history.application.port.`in`.GenerateHistoryUseCase
-import com.example.core.history.application.port.`in`.HistoryFacadeUseCase
-import com.example.core.history.application.port.`in`.HistoryQueryUseCase
-import com.example.core.history.application.port.query.GetHistoryQuery
+import com.example.core.history.port.`in`.GenerateHistoryUseCase
+import com.example.core.history.port.`in`.HistoryFacadeUseCase
+import com.example.core.history.port.`in`.HistoryQueryUseCase
+import com.example.core.history.port.query.GetHistoryQuery
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement

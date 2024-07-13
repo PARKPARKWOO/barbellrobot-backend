@@ -5,8 +5,8 @@ import com.example.core.common.error.ServiceException
 import com.example.core.mail.application.port.out.EmailVerifyPort
 import com.example.core.sign.application.service.SignUpTrainerService
 import com.example.core.sign.util.TrainerServiceTestUtil
-import com.example.core.user.application.port.out.UserQueryPort
-import com.example.core.user.trainer.application.port.out.TrainerJpaPort
+import com.example.core.user.port.out.UserQueryPort
+import com.example.core.user.port.out.TrainerJpaPort
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

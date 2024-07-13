@@ -1,6 +1,7 @@
 package com.example.infrastructure.adapter.oauth
 
-import com.example.common.constants.Constants
+import com.example.application.common.constants.Constants
+import com.example.core.sign.dto.KaKaoTokenInfo
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.http.MediaType
@@ -33,7 +34,7 @@ interface KaKaoFeignClient {
         accessToken: String,
         @RequestHeader(name = "Content-type")
         type: String = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-    ): KakaoTokenInfo
+    ): KakaoTokenResponse
 
     @GetMapping(path = ["/v2/user/me"], consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE])
     fun getKakaoUserInfo(
@@ -57,11 +58,17 @@ data class SignInKakaoResponse(
     val refreshTokenExpiresIn: Int,
 )
 
-data class KakaoTokenInfo(
+data class KakaoTokenResponse(
     @JsonProperty("id")
     val id: Long,
     @JsonProperty("expires_in")
     val expiresIn: Int,
     @JsonProperty("app_id")
     val appId: Int,
-)
+) {
+    fun toModel(): KaKaoTokenInfo = KaKaoTokenInfo(
+        id = id,
+        expiresIn = expiresIn,
+        appId = appId,
+    )
+}

@@ -8,9 +8,9 @@ import com.example.api.trainer.request.ApprovalRequest
 import com.example.api.trainer.request.RejectRequest
 import com.example.api.trainer.response.ManagementMemberResponse
 import com.example.api.trainer.response.MemberSummaryResponse
-import com.example.core.managemnet.application.port.`in`.ManagementUseCase
-import com.example.core.user.application.port.command.UploadProfileCommand
-import com.example.core.user.trainer.application.port.`in`.TrainerUseCase
+import com.example.core.managemnet.port.`in`.ManagementUseCase
+import com.example.core.user.port.command.UploadProfileCommand
+import com.example.core.user.port.`in`.TrainerUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -28,7 +28,7 @@ class TrainerController(
     private val managementUseCase: ManagementUseCase,
     private val trainerUseCase: TrainerUseCase,
 
-) {
+    ) {
     // 페이지 네이션 필요한지?
     // Trainer 만 사용 가능하도록
     @GetMapping("/management")

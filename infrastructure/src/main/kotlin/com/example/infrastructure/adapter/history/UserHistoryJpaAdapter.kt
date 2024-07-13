@@ -6,11 +6,11 @@ import com.example.core.history.adapter.out.persistence.entity.UserHistoryEntity
 import com.example.core.history.adapter.out.persistence.repository.DietFoodRepository
 import com.example.core.history.adapter.out.persistence.repository.DietImageRepository
 import com.example.core.history.adapter.out.persistence.repository.UserHistoryRepository
-import com.example.core.history.application.port.out.UserHistoryJpaPort
-import com.example.core.history.application.port.out.command.AddDietFoodCommand
-import com.example.core.history.application.port.out.command.AddDietImageCommand
-import com.example.core.history.application.port.out.command.AttendanceTodayCommand
-import com.example.core.history.application.port.out.query.FindUserHistoryQuery
+import com.example.core.history.port.out.UserHistoryJpaPort
+import com.example.core.history.port.out.command.AddDietFoodCommand
+import com.example.core.history.port.out.command.AddDietImageCommand
+import com.example.core.history.port.out.command.AttendanceTodayCommand
+import com.example.core.history.port.out.query.FindUserHistoryQuery
 import com.example.core.history.dto.HistoryResponseDto
 import com.example.core.history.model.UserHistory
 import org.springframework.stereotype.Component

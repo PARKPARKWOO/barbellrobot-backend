@@ -1,9 +1,9 @@
 package com.example.infrastructure.persistence.entity.pt
 
-import com.example.common.mapper.convert
-import com.example.core.common.persistence.BaseEntity
+import com.example.application.common.mapper.convert
 import com.example.core.pt.model.AiPt
-import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
+import com.example.infrastructure.common.persistence.BaseEntity
+import com.example.infrastructure.persistence.entity.member.MemberEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType.LAZY

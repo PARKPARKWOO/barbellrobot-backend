@@ -1,8 +1,8 @@
 package com.example.infrastructure.persistence.entity.member
 
-import com.example.core.user.model.interfaces.UserHealthDetail
 import com.example.core.user.model.Gender
 import com.example.core.user.model.MemberInfo
+import com.example.core.user.model.interfaces.UserHealthDetail
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType.STRING

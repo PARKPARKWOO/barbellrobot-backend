@@ -3,7 +3,7 @@ package com.example.api.common.interceptor
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.common.constants.Constants.AUTHORIZATION_HEADER
 import com.example.common.constants.Constants.BEARER_PREFIX
-import com.example.common.exception.NoBearerTokenException
+import com.example.core.sign.exception.NoBearerTokenException
 import com.example.common.jwt.JwtTokenService
 import com.example.domain.constants.DomainConstants
 import jakarta.servlet.http.HttpServletRequest

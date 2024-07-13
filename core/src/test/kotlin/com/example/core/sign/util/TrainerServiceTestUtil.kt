@@ -1,6 +1,6 @@
 package com.example.core.sign.util
 
-import com.example.core.sign.application.port.`in`.command.SignUpTrainerWithEmailCommand
+import com.example.core.sign.port.`in`.command.SignUpTrainerWithEmailCommand
 import com.example.core.user.trainer.adapter.out.persistence.entity.GymAddress
 import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerInfo
 import com.example.core.user.model.Gender

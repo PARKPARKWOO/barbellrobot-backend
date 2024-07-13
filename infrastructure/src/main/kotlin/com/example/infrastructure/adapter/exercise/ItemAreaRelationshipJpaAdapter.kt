@@ -2,8 +2,8 @@ package com.example.infrastructure.adapter.exercise
 
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemAreaRelationshipEntity
 import com.example.core.exercise.adapter.out.persistence.repository.ItemAreaRelationshipRepository
-import com.example.core.exercise.application.port.command.AddItemAreaRelationCommand
-import com.example.core.exercise.application.port.out.ItemAreaRelationshipJpaPort
+import com.example.core.exercise.port.command.AddItemAreaRelationCommand
+import com.example.core.exercise.port.out.ItemAreaRelationshipJpaPort
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,6 +1,6 @@
 package com.example.api.member.request
 
-import com.example.core.user.member.application.command.AddGoalCommand
+import com.example.core.user.port.command.AddGoalCommand
 import java.util.UUID
 
 data class AddGoalRequest(

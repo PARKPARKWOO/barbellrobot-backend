@@ -2,14 +2,14 @@ package com.example.infrastructure.adapter.user
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.exercise.application.port.out.ExerciseGoalJpaPort
+import com.example.core.exercise.port.out.ExerciseGoalJpaPort
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.core.user.member.adapter.out.persistence.entity.MemberGoalEntity
 import com.example.infrastructure.persistence.repository.member.MemberGoalRepository
 import com.example.infrastructure.persistence.repository.member.MemberRepository
-import com.example.core.user.member.application.command.AddGoalCommand
-import com.example.core.user.member.application.command.DeleteMemberGoalCommand
-import com.example.core.user.member.application.out.MemberGoalJpaPort
+import com.example.core.user.port.command.AddGoalCommand
+import com.example.core.user.port.command.DeleteMemberGoalCommand
+import com.example.core.user.port.out.MemberGoalJpaPort
 import org.springframework.stereotype.Component
 import java.util.UUID
 

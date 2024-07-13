@@ -1,7 +1,7 @@
 package com.example.infrastructure.persistence.repository.member
 
-import com.example.core.sign.application.port.`in`.query.FindUserWithSocialQuery
-import com.example.core.user.member.dto.MemberAndGoalQueryDto
+import com.example.core.sign.port.`in`.query.FindUserWithSocialQuery
+import com.example.core.user.dto.MemberAndGoalQueryDto
 import com.example.core.user.model.Provider
 import com.example.infrastructure.persistence.entity.member.MemberEntity
 import com.querydsl.core.types.dsl.BooleanExpression

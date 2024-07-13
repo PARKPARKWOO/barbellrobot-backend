@@ -1,15 +1,15 @@
 package com.example.infrastructure.adapter.user
 
 import com.example.infrastructure.persistence.repository.member.MemberInfoRepository
-import com.example.core.user.member.application.command.SaveMemberInfoCommand
-import com.example.core.user.member.application.command.UpdateNicknameCommand
-import com.example.core.user.member.application.out.MemberInfoJpaPort
-import com.example.core.user.member.dto.MemberDetailQueryDto
+import com.example.core.user.port.command.SaveMemberInfoCommand
+import com.example.core.user.port.command.UpdateNicknameCommand
+import com.example.core.user.port.out.MemberInfoJpaPort
+import com.example.core.user.dto.MemberDetailQueryDto
 import com.example.core.user.model.MemberInfo
 import org.springframework.stereotype.Component
 import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
-import com.example.core.user.member.adapter.out.persistence.entity.MemberInfo as MemberInfoEntity
+import com.example.infrastructure.persistence.entity.member.MemberInfo as MemberInfoEntity
 
 @Component
 class MemberInfoJpaAdapter(
@@ -19,7 +19,7 @@ class MemberInfoJpaAdapter(
         getEntity(memberInfo.memberId)?.update(memberInfo)
     }
 
-    override fun getInfo(memberId: UUID): MemberInfoEntity? = getEntity(memberId)
+    override fun getInfo(memberId: UUID): MemberInfo? = getEntity(memberId)?.toDomain()
 
     override fun updateNickname(command: UpdateNicknameCommand) {
         getEntity(command.id)?.updateNickname(command.nickname)

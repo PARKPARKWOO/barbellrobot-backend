@@ -6,10 +6,10 @@ import com.example.core.common.util.Tx
 import com.example.core.mail.application.port.out.EmailVerifyPort
 import com.example.core.sign.application.service.SignUpMemberService
 import com.example.core.sign.util.MemberServiceTestUtil
-import com.example.core.user.application.port.out.UserQueryPort
-import com.example.core.user.member.application.command.SaveMemberInfoCommand
-import com.example.core.user.member.application.`in`.MemberInfoUseCase
-import com.example.core.user.member.application.out.MemberJpaPort
+import com.example.core.user.port.out.UserQueryPort
+import com.example.core.user.port.command.SaveMemberInfoCommand
+import com.example.core.user.port.`in`.MemberInfoUseCase
+import com.example.core.user.port.out.MemberJpaPort
 import com.example.core.user.model.Gender
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec

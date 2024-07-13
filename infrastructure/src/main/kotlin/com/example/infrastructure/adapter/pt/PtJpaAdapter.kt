@@ -1,14 +1,14 @@
 package com.example.infrastructure.adapter.pt
 
-import com.example.common.date.DateTimeConvert
-import com.example.common.mapper.serializeToMap
+import com.example.application.common.util.DateTimeConvert
+import com.example.application.common.mapper.serializeToMap
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.pt.adapter.out.persistence.entity.AiPtEntity
 import com.example.core.pt.adapter.out.persistence.entity.AiPtModel
 import com.example.infrastructure.persistence.repository.pt.AiPtRepository
-import com.example.core.pt.application.command.SavePtCommand
-import com.example.core.pt.application.port.out.PtJpaPort
+import com.example.core.pt.command.SavePtCommand
+import com.example.core.pt.port.out.PtJpaPort
 import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
 import com.example.infrastructure.persistence.repository.member.MemberRepository
 import org.springframework.stereotype.Component

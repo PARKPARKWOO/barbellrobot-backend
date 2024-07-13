@@ -1,6 +1,6 @@
 package com.example.infrastructure.persistence.entity.exercise
 
-import com.example.core.common.util.StringListConverter
+import com.example.infrastructure.common.util.StringListConverter
 import com.example.core.exercise.model.ExerciseItem
 import jakarta.persistence.Column
 import jakarta.persistence.Convert

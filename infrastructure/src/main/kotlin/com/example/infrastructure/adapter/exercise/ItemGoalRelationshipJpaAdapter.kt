@@ -1,9 +1,10 @@
 package com.example.infrastructure.adapter.exercise
 
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemGoalRelationshipEntity
-import com.example.core.exercise.adapter.out.persistence.repository.ItemGoalRelationshipRepository
-import com.example.core.exercise.application.port.command.AddItemGoalRelationCommand
-import com.example.core.exercise.application.port.out.ItemGoalRelationshipJpaPort
+
+import com.example.core.exercise.port.command.AddItemGoalRelationCommand
+import com.example.core.exercise.port.out.ItemGoalRelationshipJpaPort
+import com.example.infrastructure.persistence.entity.exercise.ItemGoalRelationshipEntity
+import com.example.infrastructure.persistence.repository.exercise.ItemGoalRelationshipRepository
 import org.springframework.stereotype.Component
 
 @Component

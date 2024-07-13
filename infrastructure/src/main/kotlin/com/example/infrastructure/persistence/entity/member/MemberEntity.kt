@@ -1,6 +1,6 @@
 package com.example.infrastructure.persistence.entity.member
 
-import com.example.core.common.persistence.BaseEntity
+import com.example.infrastructure.common.persistence.BaseEntity
 import com.example.core.user.model.interfaces.UserEntity
 import com.example.core.user.model.Member
 import com.example.core.user.model.Provider

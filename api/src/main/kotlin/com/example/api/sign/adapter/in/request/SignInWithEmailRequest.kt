@@ -1,6 +1,6 @@
 package com.example.api.sign.adapter.`in`.request
 
-import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
+import com.example.core.sign.port.`in`.command.SignInWithEmailCommand
 import jakarta.validation.constraints.NotBlank
 
 data class SignInWithEmailRequest(

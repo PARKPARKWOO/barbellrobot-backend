@@ -1,6 +1,6 @@
 package com.example.infrastructure.persistence.entity.trainer
 
-import com.example.core.common.persistence.BaseEntity
+import com.example.infrastructure.common.persistence.BaseEntity
 import com.example.core.user.model.interfaces.UserEntity
 import com.example.core.user.model.Role
 import com.example.core.user.model.Trainer

@@ -4,8 +4,8 @@ import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.infrastructure.persistence.entity.ExerciseAreaEntity
 import com.example.core.exercise.adapter.out.persistence.repository.ExerciseAreaRepository
-import com.example.core.exercise.application.port.command.SaveExerciseAreaCommand
-import com.example.core.exercise.application.port.out.ExerciseAreaJpaPort
+import com.example.core.exercise.port.command.SaveExerciseAreaCommand
+import com.example.core.exercise.port.out.ExerciseAreaJpaPort
 import com.example.core.exercise.model.ExerciseArea
 import org.springframework.stereotype.Component
 

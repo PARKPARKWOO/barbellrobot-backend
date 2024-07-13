@@ -1,6 +1,6 @@
 package com.example.api.member.request
 
-import com.example.core.user.member.application.command.UpdateMemberInfoCommand
+import com.example.core.user.port.command.UpdateMemberInfoCommand
 import com.example.core.user.model.Gender
 import java.util.UUID
 

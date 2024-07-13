@@ -4,9 +4,9 @@ import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.managemnet.adapter.out.persistence.entity.ManagementEntity
 import com.example.core.managemnet.adapter.out.persistence.repository.ManagementRepository
-import com.example.core.managemnet.application.port.command.OfferCommand
-import com.example.core.managemnet.application.port.out.ManagementJpaPort
-import com.example.core.user.member.dto.MemberSummaryDto
+import com.example.core.managemnet.port.command.OfferCommand
+import com.example.core.managemnet.port.out.ManagementJpaPort
+import com.example.core.user.dto.MemberSummaryDto
 import com.example.core.managemnet.model.Management
 import com.example.core.managemnet.model.ManagementStatus
 import org.springframework.stereotype.Component

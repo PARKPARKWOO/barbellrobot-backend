@@ -6,8 +6,8 @@ import com.example.core.exercise.adapter.out.persistence.entity.ExerciseItemEnti
 import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemYoutubeInfo
 import com.example.core.exercise.adapter.out.persistence.repository.ExerciseItemRepository
 import com.example.core.exercise.adapter.out.persistence.repository.ItemYoutubeInfoRepository
-import com.example.core.exercise.application.port.command.AddItemYoutubeCommand
-import com.example.core.exercise.application.port.out.ItemYoutubeJpaPort
+import com.example.core.exercise.port.command.AddItemYoutubeCommand
+import com.example.core.exercise.port.out.ItemYoutubeJpaPort
 import org.springframework.stereotype.Component
 import kotlin.jvm.optionals.getOrNull
 

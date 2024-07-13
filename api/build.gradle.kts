@@ -1,3 +1,13 @@
+plugins {
+    val kotlinVersion = "1.9.10"
+    kotlin("jvm") version kotlinVersion apply false
+    kotlin("plugin.spring") version kotlinVersion apply false
+    kotlin("kapt") version kotlinVersion apply false
+    id("org.springframework.boot") version "3.2.4"
+    id("io.spring.dependency-management") version "1.1.4"
+    id("org.jetbrains.kotlin.plugin.allopen") version kotlinVersion
+}
+
 repositories {
     mavenCentral()
 //    maven { url = uri("https://repo.spring.io/milestone") }
@@ -6,7 +16,7 @@ repositories {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":common"))
+    implementation(project(":application"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")

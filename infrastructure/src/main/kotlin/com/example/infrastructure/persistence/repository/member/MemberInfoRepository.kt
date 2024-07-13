@@ -1,6 +1,6 @@
 package com.example.infrastructure.persistence.repository.member
 
-import com.example.core.user.member.dto.MemberDetailQueryDto
+import com.example.core.user.dto.MemberDetailQueryDto
 import com.example.infrastructure.persistence.entity.member.MemberInfo
 import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory

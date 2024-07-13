@@ -3,7 +3,6 @@ package com.example.core.common.util
 import com.example.core.ai.application.dto.ExerciseList
 import com.example.core.exercise.model.ExerciseItem
 import com.example.core.user.model.Gender
-import com.google.gson.Gson
 
 object PromptUtil {
     fun ptPromptTemplate(

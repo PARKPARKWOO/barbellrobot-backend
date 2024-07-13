@@ -2,12 +2,12 @@ package com.example.infrastructure.adapter.trainer
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.sign.application.port.`in`.command.SignInWithEmailCommand
-import com.example.core.user.application.port.command.UpdateProfileCommand
+import com.example.core.sign.port.`in`.command.SignInWithEmailCommand
+import com.example.core.user.port.command.UpdateProfileCommand
 import com.example.core.user.trainer.adapter.out.persistence.entity.TrainerEntity
 import com.example.infrastructure.persistence.repository.trainer.TrainerRepository
-import com.example.core.user.trainer.application.port.command.SignUpTrainerCommand
-import com.example.core.user.trainer.application.port.out.TrainerJpaPort
+import com.example.core.user.port.command.SignUpTrainerCommand
+import com.example.core.user.port.out.TrainerJpaPort
 import com.example.core.user.model.Role
 import com.example.core.user.model.Trainer
 import org.springframework.stereotype.Component
