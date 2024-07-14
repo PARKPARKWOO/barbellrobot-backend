@@ -42,6 +42,8 @@ dependencies {
     implementation("org.aspectj:aspectjweaver")
     // multi-part-file mock
 //    implementation("org.springframework:spring-mock:2.0.8")
+    // gson
+    implementation("com.google.code.gson:gson:2.11.0")
 }
 
 //extra["springAiVersion"] = "1.0.0-SNAPSHOT"

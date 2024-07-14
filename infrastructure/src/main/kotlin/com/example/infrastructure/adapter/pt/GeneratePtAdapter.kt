@@ -1,15 +1,16 @@
 package com.example.infrastructure.adapter.pt
 
-import com.example.core.ai.application.dto.ExerciseList
+import com.example.application.ai.GeminiGenerateContent
+import com.example.core.ai.dto.GeminiConvertible
 import com.example.core.pt.model.PtConsulting
 import com.fasterxml.jackson.annotation.JsonClassDescription
-import com.google.common.base.Function
 import java.util.UUID
 
 typealias DayModel = com.example.core.pt.model.Day
 typealias ExerciseModel = com.example.core.pt.model.Exercise
 
-class GeneratePtAdapter : Function<GeneratePtAdapter.GeneratePtRequestDto, GeneratePtAdapter.GeneratePtResponseDto> {
+class GeneratePtAdapter :
+    GeminiGenerateContent<GeneratePtAdapter.GeneratePtRequestDto, GeneratePtAdapter.GeneratePtResponseDto, PtConsulting>() {
     @JsonClassDescription("Get a list of exercises.")
     data class GeneratePtRequestDto(
         val exerciseList: List<ExerciseList>? = null,
@@ -20,8 +21,8 @@ class GeneratePtAdapter : Function<GeneratePtAdapter.GeneratePtRequestDto, Gener
         val day: List<Day> = emptyList(),
         val warn: String = "",
         val tip: String = "",
-    ) {
-        fun toDomain(memberId: UUID): PtConsulting = PtConsulting(
+    ) : GeminiConvertible<PtConsulting> {
+        override fun toDomain(memberId: UUID): PtConsulting = PtConsulting(
             memberId = memberId,
             greetingMessage = greetingMessage,
             day = day.map { it.toDomain() },
@@ -30,7 +31,31 @@ class GeneratePtAdapter : Function<GeneratePtAdapter.GeneratePtRequestDto, Gener
         )
     }
 
-    override fun apply(input: GeneratePtRequestDto?): GeneratePtResponseDto {
+//    override fun apply(input: GeneratePtRequestDto?): GeneratePtResponseDto {
+//        return GeneratePtResponseDto(
+//            greetingMessage = "",
+//            day = listOf(
+//                Day(
+//                    target = "",
+//                    exercise = listOf(
+//                        Exercise(
+//                            exerciseId = 0L,
+//                            set = 0,
+//                            weight = "",
+//                            count = 0,
+//                            "",
+//                        ),
+//                    ),
+//                ),
+//            ),
+//        )
+//    }
+
+    companion object {
+        const val FUNCTION_NAME = "GeneratePtService"
+    }
+
+    override fun apply(t: GeneratePtRequestDto): GeneratePtResponseDto {
         return GeneratePtResponseDto(
             greetingMessage = "",
             day = listOf(
@@ -48,10 +73,6 @@ class GeneratePtAdapter : Function<GeneratePtAdapter.GeneratePtRequestDto, Gener
                 ),
             ),
         )
-    }
-
-    companion object {
-        const val FUNCTION_NAME = "GeneratePtService"
     }
 }
 

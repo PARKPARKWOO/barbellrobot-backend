@@ -1,17 +1,18 @@
-package com.example.core.ai.application.service
+package com.example.infrastructure.adapter.gemini
 
-import com.example.core.ai.application.port.command.CallPtCommand
-import com.example.core.ai.application.port.`in`.GeminiUseCase
-import com.example.core.common.util.PromptUtil
+import com.example.core.ai.port.command.CallPtCommand
+import com.example.core.ai.port.`in`.GeminiUseCase
+import com.example.infrastructure.adapter.pt.GeneratePtAdapter
+import com.example.infrastructure.common.util.PromptUtil
 import org.springframework.ai.chat.messages.UserMessage
 import org.springframework.ai.chat.prompt.Prompt
-import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient
+import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatOptions
 import org.springframework.stereotype.Service
 
 @Service
-class GeminiService(
-    private val chatClient: VertexAiGeminiChatClient,
+class GeminiAdapter(
+    private val chatClient: VertexAiGeminiChatModel,
 ) : GeminiUseCase {
     override fun callPt(command: CallPtCommand): String {
         val userMessage = UserMessage(
@@ -31,7 +32,7 @@ class GeminiService(
             Prompt(
                 listOf(userMessage),
                 VertexAiGeminiChatOptions.builder()
-                    .withFunction(GeneratePtService.FUNCTION_NAME)
+                    .withFunction(GeneratePtAdapter.FUNCTION_NAME)
                     .build(),
             ),
         )

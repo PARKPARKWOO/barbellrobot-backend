@@ -20,7 +20,7 @@ import java.util.TimeZone
 @EntityScan(
     basePackages = ["com.example.infrastructure.persistence.entity.*"],
 )
-class ApiApplication {
+open class ApiApplication {
     @PostConstruct
     fun init() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"))

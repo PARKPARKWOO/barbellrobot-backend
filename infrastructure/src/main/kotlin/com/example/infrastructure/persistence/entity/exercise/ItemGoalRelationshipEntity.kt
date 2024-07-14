@@ -1,5 +1,6 @@
 package com.example.infrastructure.persistence.entity.exercise
 
+import com.example.core.exercise.model.relationship.ItemGoalRelationship
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -19,4 +20,10 @@ class ItemGoalRelationshipEntity(
     var exerciseItemId: Long,
     @Column(name = EXERCISE_GOAL_ID)
     var exerciseGoalId: Long,
-)
+) {
+    fun toModel(): ItemGoalRelationship = ItemGoalRelationship(
+        id = id,
+        exerciseItemId = exerciseItemId,
+        exerciseGoalId = exerciseGoalId,
+    )
+}

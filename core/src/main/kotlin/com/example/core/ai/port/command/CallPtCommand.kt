@@ -1,4 +1,4 @@
-package com.example.core.ai.application.port.command
+package com.example.core.ai.port.command
 
 import com.example.core.exercise.model.ExerciseItem
 import com.example.core.user.model.Gender

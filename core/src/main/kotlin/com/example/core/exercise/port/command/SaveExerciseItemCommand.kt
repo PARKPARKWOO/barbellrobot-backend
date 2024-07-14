@@ -1,19 +1,19 @@
 package com.example.core.exercise.port.command
 
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
-import org.springframework.web.multipart.MultipartFile
+import com.example.core.exercise.model.ExerciseArea
+import com.example.core.exercise.model.ExerciseGoal
+import com.example.core.multimedia.dto.MultimediaDto
 
 data class SaveExerciseItemCommand(
     val exerciseName: String,
-    val video: List<MultipartFile>?,
-    val image: List<MultipartFile>?,
+    val video: List<MultimediaDto>?,
+    val image: List<MultimediaDto>?,
     var exerciseAreas: MutableList<Long>,
     var exerciseGoals: MutableList<Long>,
 ) {
     fun toOutCommand(
-        exerciseAreas: MutableList<ExerciseAreaEntity>,
-        exerciseGoals: MutableList<ExerciseGoalEntity>,
+        exerciseAreas: MutableList<ExerciseArea>,
+        exerciseGoals: MutableList<ExerciseGoal>,
         video: MutableList<String>,
         image: MutableList<String>,
     ): SaveExerciseItemOutCommand {

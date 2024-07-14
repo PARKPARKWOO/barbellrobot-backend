@@ -1,4 +1,4 @@
-package com.example.core.ai.application.dto
+package com.example.infrastructure.adapter.pt
 
 import com.example.core.exercise.model.ExerciseItem
 import com.fasterxml.jackson.annotation.JsonPropertyDescription

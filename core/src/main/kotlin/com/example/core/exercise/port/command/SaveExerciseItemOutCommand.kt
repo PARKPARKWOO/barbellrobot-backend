@@ -1,12 +1,12 @@
 package com.example.core.exercise.port.command
 
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
+import com.example.core.exercise.model.ExerciseArea
+import com.example.core.exercise.model.ExerciseGoal
 
 data class SaveExerciseItemOutCommand(
     val exerciseName: String,
     val videoUri: List<String>,
     val imageUri: List<String>,
-    var exerciseAreas: MutableList<ExerciseAreaEntity>,
-    var exerciseGoals: MutableList<ExerciseGoalEntity>,
+    var exerciseAreas: MutableList<ExerciseArea>,
+    var exerciseGoals: MutableList<ExerciseGoal>,
 )

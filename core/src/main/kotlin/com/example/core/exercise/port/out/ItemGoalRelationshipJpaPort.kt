@@ -1,12 +1,12 @@
 package com.example.core.exercise.port.out
 
-import com.example.core.exercise.adapter.out.persistence.entity.relationship.ItemGoalRelationshipEntity
+import com.example.core.exercise.model.relationship.ItemGoalRelationship
 import com.example.core.exercise.port.command.AddItemGoalRelationCommand
 
 interface ItemGoalRelationshipJpaPort {
     fun addRelationship(command: AddItemGoalRelationCommand)
 
-    fun findByItemId(itemId: Long): List<ItemGoalRelationshipEntity>?
+    fun findByItemId(itemId: Long): List<ItemGoalRelationship>?
 
     fun deleteByGoalId(goalId: Long)
 
