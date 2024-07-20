@@ -1,6 +1,6 @@
 package com.example.api.member.request
 
-import com.example.core.managemnet.application.port.command.OfferCommand
+import com.example.core.managemnet.port.command.OfferCommand
 import java.time.LocalDate
 import java.util.UUID
 

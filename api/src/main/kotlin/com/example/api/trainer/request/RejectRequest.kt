@@ -1,6 +1,6 @@
 package com.example.api.trainer.request
 
-import com.example.core.managemnet.application.port.command.RejectCommand
+import com.example.core.managemnet.port.command.RejectCommand
 import java.util.UUID
 
 data class RejectRequest(

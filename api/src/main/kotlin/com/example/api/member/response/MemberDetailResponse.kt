@@ -1,9 +1,9 @@
 package com.example.api.member.response
 
-import com.example.core.user.member.dto.MemberDetailQueryDto
-import com.example.core.user.member.dto.MemberInfoQueryDto
-import com.example.domain.user.Gender
-import com.example.domain.user.Role
+import com.example.core.user.dto.MemberDetailQueryDto
+import com.example.core.user.dto.MemberInfoQueryDto
+import com.example.core.user.model.Gender
+import com.example.core.user.model.Role
 
 data class MemberDetailResponse(
     val profile: String?,

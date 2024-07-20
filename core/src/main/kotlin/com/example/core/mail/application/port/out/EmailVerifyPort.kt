@@ -1,7 +1,7 @@
 package com.example.core.mail.application.port.out
 
-import com.example.core.mail.application.port.out.command.VerifyAuthenticationSuccessCommand
-import com.example.core.sign.application.port.`in`.command.VerifyEmailCommand
+import com.example.core.mail.application.port.command.VerifyAuthenticationSuccessCommand
+import com.example.core.sign.port.`in`.command.VerifyEmailCommand
 import java.util.UUID
 
 interface EmailVerifyPort {

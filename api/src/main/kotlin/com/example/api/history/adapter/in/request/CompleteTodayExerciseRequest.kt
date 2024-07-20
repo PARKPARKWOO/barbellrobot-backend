@@ -1,7 +1,7 @@
 package com.example.api.history.adapter.`in`.request
 
-import com.example.core.history.application.port.command.CompleteExerciseItem
-import com.example.core.history.application.port.command.ExerciseTodayCommand
+import com.example.core.history.port.command.CompleteExerciseItem
+import com.example.core.history.port.command.ExerciseTodayCommand
 import java.util.UUID
 
 data class CompleteTodayExerciseRequest(

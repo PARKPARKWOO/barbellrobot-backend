@@ -6,10 +6,10 @@ import com.example.api.sign.adapter.`in`.request.ReissueTokenRequest
 import com.example.api.sign.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.sign.adapter.`in`.request.SignInWithKakaoRequest
 import com.example.api.sign.adapter.`in`.response.JwtResponse
-import com.example.common.log.Log
-import com.example.core.jwt.application.port.`in`.JwtReissueUseCase
-import com.example.core.sign.application.port.`in`.SignInMemberUseCase
-import com.example.core.sign.application.port.`in`.SignInTrainerUseCase
+import com.example.application.common.log.Log
+import com.example.core.sign.port.`in`.JwtReissueUseCase
+import com.example.core.sign.port.`in`.SignInMemberUseCase
+import com.example.core.sign.port.`in`.SignInTrainerUseCase
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping

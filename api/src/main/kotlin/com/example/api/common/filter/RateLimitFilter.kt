@@ -4,7 +4,7 @@ import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.annotation.RateLimit
 import com.example.api.common.config.RateLimiter
 import com.example.api.common.interceptor.getBearerTokenFromHeader
-import com.example.common.log.Log
+import com.example.application.common.log.Log
 import io.github.bucket4j.BandwidthBuilder
 import io.github.bucket4j.Bucket
 import jakarta.servlet.FilterChain

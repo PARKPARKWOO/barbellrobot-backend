@@ -2,7 +2,7 @@ package com.example.api.history.adapter.`in`.response
 
 import com.example.core.history.dto.ExerciseHistoryResponseDto
 import com.example.core.history.dto.UserHistoryResponseDto
-import com.example.domain.history.Diet
+import com.example.core.history.model.Diet
 import java.time.LocalDate
 import java.util.UUID
 

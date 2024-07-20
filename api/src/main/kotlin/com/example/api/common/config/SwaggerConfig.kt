@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class SwaggerConfig {
+open class SwaggerConfig {
     @Bean
-    fun openAPI(): OpenAPI = OpenAPI()
+    open fun openAPI(): OpenAPI = OpenAPI()
         .components(
             Components().addSecuritySchemes(
                 AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME,

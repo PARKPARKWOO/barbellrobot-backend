@@ -4,7 +4,7 @@ import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
 import com.example.api.exercise.adapter.`in`.request.CreateExerciseGoalRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseGoalResponse
-import com.example.core.exercise.application.port.`in`.ExerciseGoalUseCase
+import com.example.core.exercise.port.`in`.ExerciseGoalUseCase
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

@@ -1,6 +1,6 @@
 package com.example.api.trainer.response
 
-import com.example.core.user.member.dto.MemberSummaryDto
+import com.example.core.user.dto.MemberSummaryDto
 
 data class ManagementMemberResponse(
     val memberSummaryList: List<MemberSummaryResponse>,

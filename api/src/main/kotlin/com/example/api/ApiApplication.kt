@@ -10,17 +10,18 @@ import java.util.TimeZone
 @SpringBootApplication(
     scanBasePackages = [
         "com.example.core.*",
-        "com.example.common.*",
+        "com.example.infrastructure.*",
+        "com.example.application.*",
         "com.example.api.*",
     ],
 )
 @EnableJpaRepositories(
-    basePackages = ["com.example.core.*"],
+    basePackages = ["com.example.infrastructure.persistence.repository.*"],
 )
 @EntityScan(
-    basePackages = ["com.example.core.*"],
+    basePackages = ["com.example.infrastructure.persistence.entity.*"],
 )
-class ApiApplication {
+open class ApiApplication {
     @PostConstruct
     fun init() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"))

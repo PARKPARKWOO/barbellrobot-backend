@@ -9,11 +9,10 @@ import com.example.api.sign.adapter.`in`.request.VerifyAuthenticationNumberReque
 import com.example.api.sign.adapter.`in`.request.toCommand
 import com.example.api.sign.adapter.`in`.response.SuccessAuthenticationResponse
 import com.example.api.sign.adapter.`in`.response.VerifyNicknameResponse
-import com.example.common.log.Log
-import com.example.core.sign.application.port.`in`.EmailVerifyUseCase
-import com.example.core.sign.application.port.`in`.SignUpMemberUseCase
-import com.example.core.sign.application.port.`in`.SignUpTrainerUseCase
-import com.example.core.sign.application.port.`in`.VerifyNicknameUseCase
+import com.example.core.sign.port.`in`.EmailVerifyUseCase
+import com.example.core.sign.port.`in`.SignUpMemberUseCase
+import com.example.core.sign.port.`in`.SignUpTrainerUseCase
+import com.example.core.sign.port.`in`.VerifyNicknameUseCase
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
@@ -30,7 +29,7 @@ class SignUpController(
     private val signUpTrainerUseCase: SignUpTrainerUseCase,
     private val emailVerifyUseCase: EmailVerifyUseCase,
     private val verifyNicknameUseCase: VerifyNicknameUseCase,
-) : Log {
+) {
     @PostMapping("/email/member")
     @Operation(
         summary = "일반 회원 회원가입",
@@ -53,7 +52,6 @@ class SignUpController(
         @RequestBody @Valid
         request: SignUpTrainerWithEmailRequest,
     ): ApiResponse<Unit> {
-        log.info("Trainer")
         signUpTrainerUseCase.signUpWithEmail(request.toCommand())
         return ApiResponse(data = Unit)
     }
@@ -96,7 +94,6 @@ class SignUpController(
         @PathVariable("nickname")
         nickname: String,
     ): ApiResponse<VerifyNicknameResponse> {
-        log.info("nickname")
         val response = VerifyNicknameResponse(canNickname = verifyNicknameUseCase.verifyNickname(nickname))
         return ApiResponse(data = response)
     }

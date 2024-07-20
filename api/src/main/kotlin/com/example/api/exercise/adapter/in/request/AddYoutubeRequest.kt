@@ -1,7 +1,7 @@
 package com.example.api.exercise.adapter.`in`.request
 
-import com.example.core.exercise.application.port.command.AddItemYoutubeCommand
-import com.example.domain.exercise.VideoType
+import com.example.core.exercise.port.command.AddItemYoutubeCommand
+import com.example.core.exercise.model.VideoType
 
 data class AddYoutubeRequest(
     val itemId: Long,

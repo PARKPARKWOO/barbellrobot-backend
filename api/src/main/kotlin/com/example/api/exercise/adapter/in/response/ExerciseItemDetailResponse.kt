@@ -1,6 +1,6 @@
 package com.example.api.exercise.adapter.`in`.response
 
-import com.example.core.exercise.application.dto.QueryItemDto
+import com.example.core.exercise.dto.QueryItemDto
 
 data class ExerciseItemDetailResponse(
     val id: Long,

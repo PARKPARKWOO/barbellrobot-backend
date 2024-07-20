@@ -1,7 +1,8 @@
 package com.example.api.history.adapter.`in`.request
 
-import com.example.core.history.application.port.command.AddDietCommand
-import com.example.domain.history.Diet
+import com.example.api.common.MultipartFileConverter.toDto
+import com.example.core.history.port.command.AddDietCommand
+import com.example.core.history.model.Diet
 import org.springframework.web.multipart.MultipartFile
 import java.util.UUID
 
@@ -14,7 +15,7 @@ data class AddDietRequest(
         return AddDietCommand(
             userId = userId,
             foods = foods,
-            images = images,
+            images = images?.map { it.toDto() },
             todayHistoryId = todayHistoryId,
             type = type,
         )

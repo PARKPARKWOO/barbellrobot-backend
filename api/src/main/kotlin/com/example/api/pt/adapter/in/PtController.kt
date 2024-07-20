@@ -8,7 +8,7 @@ import com.example.api.common.response.ApiResponse
 import com.example.api.pt.adapter.`in`.request.GeneratePtRequest
 import com.example.api.pt.adapter.`in`.response.GeneratePtResponse
 import com.example.api.pt.adapter.`in`.response.HasPtResponse
-import com.example.core.pt.application.port.`in`.GeneratePtUseCase
+import com.example.core.pt.port.`in`.GeneratePtUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement

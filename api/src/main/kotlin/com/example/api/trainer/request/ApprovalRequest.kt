@@ -1,6 +1,6 @@
 package com.example.api.trainer.request
 
-import com.example.core.managemnet.application.port.command.ApprovalCommand
+import com.example.core.managemnet.port.command.ApprovalCommand
 import java.util.UUID
 
 data class ApprovalRequest(

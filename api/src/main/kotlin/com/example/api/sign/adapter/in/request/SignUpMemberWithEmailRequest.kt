@@ -1,8 +1,8 @@
 package com.example.api.sign.adapter.`in`.request
 
-import com.example.core.sign.application.port.SignUpUserWithEmailCommand
-import com.example.core.sign.application.port.`in`.command.SignUpMemberWithEmailCommand
-import com.example.domain.user.Gender
+import com.example.core.sign.port.`in`.command.SignUpUserWithEmailCommand
+import com.example.core.sign.port.`in`.command.SignUpMemberWithEmailCommand
+import com.example.core.user.model.Gender
 import org.jetbrains.annotations.NotNull
 import java.util.UUID
 
