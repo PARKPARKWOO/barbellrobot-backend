@@ -28,7 +28,7 @@ class TrainerController(
     private val managementUseCase: ManagementUseCase,
     private val trainerUseCase: TrainerUseCase,
 
-    ) {
+) {
     // 페이지 네이션 필요한지?
     // Trainer 만 사용 가능하도록
     @GetMapping("/management")
@@ -91,7 +91,9 @@ class TrainerController(
     ): ApiResponse<Unit> {
         val command = UploadProfileCommand(
             id = userInfo.userId,
-            file = multipartFile,
+            contentLength = multipartFile.size,
+            contentType = multipartFile.contentType!!,
+            inputStream = multipartFile.inputStream,
         )
         trainerUseCase.uploadProfile(command)
         return ApiResponse(data = Unit)

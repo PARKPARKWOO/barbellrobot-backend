@@ -6,7 +6,7 @@ import com.example.api.sign.adapter.`in`.request.ReissueTokenRequest
 import com.example.api.sign.adapter.`in`.request.SignInWithEmailRequest
 import com.example.api.sign.adapter.`in`.request.SignInWithKakaoRequest
 import com.example.api.sign.adapter.`in`.response.JwtResponse
-import com.example.common.log.Log
+import com.example.application.common.log.Log
 import com.example.core.sign.port.`in`.JwtReissueUseCase
 import com.example.core.sign.port.`in`.SignInMemberUseCase
 import com.example.core.sign.port.`in`.SignInTrainerUseCase

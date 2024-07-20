@@ -1,9 +1,9 @@
 package com.example.infrastructure.adapter.history
 
-import com.example.core.history.adapter.out.persistence.entity.ExerciseHistoryEntity
-import com.example.core.history.adapter.out.persistence.repository.ExerciseHistoryRepository
 import com.example.core.history.port.out.ExerciseHistoryJpaPort
 import com.example.core.history.port.out.command.SaveExerciseHistoryCommand
+import com.example.infrastructure.persistence.entity.history.ExerciseHistoryEntity
+import com.example.infrastructure.persistence.repository.history.ExerciseHistoryRepository
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 

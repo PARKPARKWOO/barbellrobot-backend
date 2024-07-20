@@ -2,11 +2,11 @@ package com.example.infrastructure.adapter.exercise
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.infrastructure.persistence.entity.ExerciseAreaEntity
-import com.example.core.exercise.adapter.out.persistence.repository.ExerciseAreaRepository
+import com.example.core.exercise.model.ExerciseArea
 import com.example.core.exercise.port.command.SaveExerciseAreaCommand
 import com.example.core.exercise.port.out.ExerciseAreaJpaPort
-import com.example.core.exercise.model.ExerciseArea
+import com.example.infrastructure.persistence.entity.exercise.ExerciseAreaEntity
+import com.example.infrastructure.persistence.repository.exercise.ExerciseAreaRepository
 import org.springframework.stereotype.Component
 
 @Component
@@ -24,8 +24,8 @@ class ExerciseAreaJpaAdapter(
         return getEntity(id).toDomain()
     }
 
-    override fun getExerciseAreas(ids: List<Long>): List<ExerciseAreaEntity>? {
-        return exerciseAreaRepository.queryIdsIn(ids)
+    override fun getExerciseAreas(ids: List<Long>): List<ExerciseArea> {
+        return exerciseAreaRepository.queryIdsIn(ids)?.map { it.toDomain() } ?: emptyList()
     }
 
     override fun delete(id: Long) {
@@ -33,7 +33,7 @@ class ExerciseAreaJpaAdapter(
         exerciseAreaRepository.delete(entity)
     }
 
-    override fun getAll(): List<ExerciseArea>? {
+    override fun getAll(): List<ExerciseArea> {
         return exerciseAreaRepository.findAll().map { area ->
             area.toDomain()
         }

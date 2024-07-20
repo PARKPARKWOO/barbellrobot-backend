@@ -1,6 +1,8 @@
 package com.example.infrastructure.persistence.repository.pt
 
+import com.example.infrastructure.persistence.entity.member.QMemberEntity.memberEntity
 import com.example.infrastructure.persistence.entity.pt.AiPtEntity
+import com.example.infrastructure.persistence.entity.pt.QAiPtEntity.aiPtEntity
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository

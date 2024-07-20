@@ -55,7 +55,9 @@ class MemberController(
     ): ApiResponse<Unit> {
         val command = UploadProfileCommand(
             id = userInfo.userId,
-            file = multipartFile,
+            contentType = multipartFile.contentType!!,
+            contentLength = multipartFile.size,
+            inputStream = multipartFile.inputStream,
         )
         memberUseCase.uploadProfile(command)
         return ApiResponse(data = Unit)

@@ -2,11 +2,11 @@ package com.example.infrastructure.adapter.exercise
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
-import com.example.core.exercise.adapter.out.persistence.repository.ExerciseGoalRepository
+import com.example.core.exercise.model.ExerciseGoal
 import com.example.core.exercise.port.command.SaveExerciseGoalCommand
 import com.example.core.exercise.port.out.ExerciseGoalJpaPort
-import com.example.core.exercise.model.ExerciseGoal
+import com.example.infrastructure.persistence.entity.exercise.ExerciseGoalEntity
+import com.example.infrastructure.persistence.repository.exercise.ExerciseGoalRepository
 import org.springframework.stereotype.Component
 
 @Component
@@ -20,16 +20,16 @@ class ExerciseGoalJpaAdapter(
         exerciseGoalRepository.save(entity)
     }
 
-    override fun getExerciseGoal(id: Long): ExerciseGoalEntity {
-        return getEntity(id)
+    override fun getExerciseGoal(id: Long): ExerciseGoal? {
+        return getEntity(id).toDomain()
     }
 
-    override fun getExerciseGoals(ids: List<Long>): List<ExerciseGoalEntity>? {
-        return exerciseGoalRepository.queryIdsIn(ids)
+    override fun getExerciseGoals(ids: List<Long>): List<ExerciseGoal> {
+        return exerciseGoalRepository.queryIdsIn(ids)?.map { it.toDomain() } ?: emptyList()
     }
 
-    override fun delete(entity: ExerciseGoalEntity) {
-        exerciseGoalRepository.delete(entity)
+    override fun delete(id: Long) {
+        exerciseGoalRepository.deleteById(id)
     }
 
     override fun getAll(): List<ExerciseGoal>? {

@@ -1,8 +1,8 @@
 package com.example.application.user
 
+import com.example.application.common.transaction.Tx
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.common.util.Tx
 import com.example.core.user.port.out.UserQueryPort
 import com.example.core.user.port.command.SaveMemberInfoCommand
 import com.example.core.user.port.command.UpdateMemberInfoCommand
@@ -10,16 +10,18 @@ import com.example.core.user.port.command.UpdateNicknameCommand
 import com.example.core.user.port.`in`.MemberInfoUseCase
 import com.example.core.user.port.out.MemberInfoJpaPort
 import com.example.core.user.dto.MemberDetailQueryDto
+import com.example.core.user.model.MemberInfo
+import org.springframework.stereotype.Service
 import java.util.UUID
 
+@Service
 class MemberInfoService(
     private val memberInfoJpaPort: MemberInfoJpaPort,
     private val userQueryPort: UserQueryPort,
 ) : MemberInfoUseCase {
     override fun update(command: UpdateMemberInfoCommand) {
         getInfo(command.id)?.let {
-            val domain = it.toDomain()
-            domain.updateInfo(
+            it.updateInfo(
                 exerciseMonths = command.exerciseMonths,
                 tall = command.tall,
                 weight = command.weight,
@@ -27,11 +29,11 @@ class MemberInfoService(
                 age = command.age,
                 gender = command.gender,
             )
-            memberInfoJpaPort.update(domain)
+            memberInfoJpaPort.update(it)
         }
     }
 
-    override fun getInfo(memberId: UUID): MemberInfoEntity? = memberInfoJpaPort.getInfo(memberId)
+    override fun getInfo(memberId: UUID): MemberInfo? = memberInfoJpaPort.getInfo(memberId)
 
     override fun updateNickname(command: UpdateNicknameCommand) {
         val memberDetail = memberInfoJpaPort.getInfo(command.id)

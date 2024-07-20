@@ -1,7 +1,8 @@
 package com.example.core.user.model
 
-import com.example.core.user.model.interfaces.User
 import com.example.core.common.constants.AuthConstants
+import com.example.core.user.model.interfaces.User
+import com.example.core.user.model.interfaces.UserHealthDetail
 import java.util.UUID
 
 data class Trainer(
@@ -19,6 +20,7 @@ data class Trainer(
 }
 
 data class TrainerInfo(
+    override val userId: UUID,
     val nickname: String,
     val gender: Gender,
     val gymName: String,
@@ -27,4 +29,6 @@ data class TrainerInfo(
     val country: String,
     val exerciseYears: Int,
     val introduce: String?,
-)
+) : UserHealthDetail {
+    override fun toModel(): UserHealthDetail = this
+}

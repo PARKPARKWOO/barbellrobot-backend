@@ -1,6 +1,6 @@
 package com.example.infrastructure.common.aop
 
-import com.example.common.log.Log
+import com.example.application.common.log.Log
 import com.example.application.common.util.SpringElParser
 import com.example.core.common.annotation.DistributedLock
 import org.aspectj.lang.ProceedingJoinPoint

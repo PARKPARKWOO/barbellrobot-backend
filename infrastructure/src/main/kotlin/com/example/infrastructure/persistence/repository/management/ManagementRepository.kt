@@ -2,6 +2,9 @@ package com.example.infrastructure.persistence.repository.management
 
 import com.example.core.managemnet.model.ManagementStatus
 import com.example.infrastructure.persistence.entity.management.ManagementEntity
+import com.example.infrastructure.persistence.entity.management.QManagementEntity.managementEntity
+import com.example.infrastructure.persistence.entity.member.MemberEntity
+import com.example.infrastructure.persistence.entity.member.QMemberEntity.memberEntity
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

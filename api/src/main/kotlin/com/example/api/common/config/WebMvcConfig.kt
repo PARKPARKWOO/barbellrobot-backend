@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 @EnableWebMvc
-class WebMvcConfig(
+open class WebMvcConfig(
     private val jwtTokenInterceptor: JwtTokenInterceptor,
     private val authenticationResolver: AuthenticationResolver,
     private val trainerInterceptor: TrainerInterceptor,

@@ -16,7 +16,7 @@ class MemberInfoJpaAdapter(
     private val memberInfoRepository: MemberInfoRepository,
 ) : MemberInfoJpaPort {
     override fun update(memberInfo: MemberInfo) {
-        getEntity(memberInfo.memberId)?.update(memberInfo)
+        getEntity(memberInfo.userId)?.update(memberInfo)
     }
 
     override fun getInfo(memberId: UUID): MemberInfo? = getEntity(memberId)?.toDomain()

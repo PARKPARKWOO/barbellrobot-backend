@@ -2,12 +2,12 @@ package com.example.infrastructure.adapter.exercise
 
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseItemEntity
-import com.example.core.exercise.adapter.out.persistence.repository.ExerciseItemRepository
 import com.example.core.exercise.dto.QueryItemDto
+import com.example.core.exercise.model.ExerciseItem
 import com.example.core.exercise.port.command.SaveExerciseItemOutCommand
 import com.example.core.exercise.port.out.ExerciseItemJpaPort
-import com.example.core.exercise.model.ExerciseItem
+import com.example.infrastructure.persistence.entity.exercise.ExerciseItemEntity
+import com.example.infrastructure.persistence.repository.exercise.ExerciseItemRepository
 import org.springframework.stereotype.Component
 
 @Component

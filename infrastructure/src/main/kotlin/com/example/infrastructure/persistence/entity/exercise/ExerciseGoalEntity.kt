@@ -20,6 +20,13 @@ class ExerciseGoalEntity(
     @Column(name = "goal")
     var goal: String,
 ) {
+    companion object {
+        fun from(domain: ExerciseGoal): ExerciseGoalEntity = ExerciseGoalEntity(
+            id = domain.id,
+            goal = domain.goal,
+        )
+    }
+
     fun toDomain(): ExerciseGoal {
         return ExerciseGoal(
             id = this.id,

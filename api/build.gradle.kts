@@ -10,13 +10,14 @@ plugins {
 
 repositories {
     mavenCentral()
-//    maven { url = uri("https://repo.spring.io/milestone") }
-//    maven { url = uri("https://repo.spring.io/snapshot") }
+    maven { url = uri("https://repo.spring.io/milestone") }
+    maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
 dependencies {
     implementation(project(":core"))
     implementation(project(":application"))
+    implementation(project(":infrastructure"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
@@ -42,13 +43,17 @@ dependencies {
 
     // rate limiter
     implementation("com.bucket4j:bucket4j-core:8.10.1")
+
+    // gemini auto-config
+//    implementation("org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter")
 }
 
-//extra["springAiVersion"] = "0.8.1"
-//
-//dependencyManagement {
-//    imports {
-//        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-//        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
-//    }
-//}
+extra["springAiVersion"] = "1.0.0-SNAPSHOT"
+extra["springCloudVersion"] = "2023.0.0"
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
+    }
+}

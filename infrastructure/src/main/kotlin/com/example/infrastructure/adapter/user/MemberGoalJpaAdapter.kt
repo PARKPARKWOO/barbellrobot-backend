@@ -3,13 +3,14 @@ package com.example.infrastructure.adapter.user
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.exercise.port.out.ExerciseGoalJpaPort
-import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
-import com.example.core.user.member.adapter.out.persistence.entity.MemberGoalEntity
-import com.example.infrastructure.persistence.repository.member.MemberGoalRepository
-import com.example.infrastructure.persistence.repository.member.MemberRepository
 import com.example.core.user.port.command.AddGoalCommand
 import com.example.core.user.port.command.DeleteMemberGoalCommand
 import com.example.core.user.port.out.MemberGoalJpaPort
+import com.example.infrastructure.persistence.entity.exercise.ExerciseGoalEntity
+import com.example.infrastructure.persistence.entity.member.MemberEntity
+import com.example.infrastructure.persistence.entity.member.MemberGoalEntity
+import com.example.infrastructure.persistence.repository.member.MemberGoalRepository
+import com.example.infrastructure.persistence.repository.member.MemberRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -21,14 +22,15 @@ class MemberGoalJpaAdapter(
 ) : MemberGoalJpaPort {
     override fun addGoal(command: AddGoalCommand) {
         val member = getMember(command.memberId)
-        val entity = exerciseGoalJpaPort.getExerciseGoals(command.goalIds)?.map { goal ->
-            MemberGoalEntity(
-                memberEntity = member,
-                exerciseGoalEntity = goal,
-            )
-        }
-        entity?.let {
-            memberGoalRepository.saveAll(it)
+        val entity = exerciseGoalJpaPort.getExerciseGoals(command.goalIds)
+        if (entity.isNotEmpty()) {
+            val memberGoal = entity.map { goal ->
+                MemberGoalEntity(
+                    memberEntity = member,
+                    exerciseGoalEntity = ExerciseGoalEntity.from(goal),
+                )
+            }
+            memberGoalRepository.saveAll(memberGoal)
         }
     }
 

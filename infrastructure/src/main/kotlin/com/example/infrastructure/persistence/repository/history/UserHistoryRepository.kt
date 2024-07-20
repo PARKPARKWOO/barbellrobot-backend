@@ -1,8 +1,18 @@
 package com.example.infrastructure.persistence.repository.history
 
+import com.example.core.history.dto.DietFoodQueryDto
+import com.example.core.history.dto.DietImageQueryDto
+import com.example.core.history.dto.ExerciseHistoryResponseDto
 import com.example.core.history.dto.HistoryResponseDto
 import com.example.core.history.dto.UserHistoryResponseDto
+import com.example.infrastructure.persistence.entity.history.QDietFoodEntity.dietFoodEntity
+import com.example.infrastructure.persistence.entity.history.QDietImageEntity.dietImageEntity
+import com.example.infrastructure.persistence.entity.history.QExerciseHistoryEntity.exerciseHistoryEntity
+import com.example.infrastructure.persistence.entity.history.QUserHistoryEntity.userHistoryEntity
+import com.example.infrastructure.persistence.entity.history.QUserHistoryImageEntity.userHistoryImageEntity
+import com.example.infrastructure.persistence.entity.history.QUserHistoryVideoEntity.userHistoryVideoEntity
 import com.example.infrastructure.persistence.entity.history.UserHistoryEntity
+import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
@@ -34,29 +44,51 @@ class UserHistoryQueryRepositoryImpl(
             )
             .fetch()
 
-// Fetch diet foods
-        val dietFoods = jpaQueryFactory.select(
-            QDietFoodQueryDto(
-                userHistoryEntity.id,
-                dietFoodEntity.food,
-                dietFoodEntity.type,
-            ),
-        ).from(dietFoodEntity)
+        val dietFoods = jpaQueryFactory
+            .select(
+                Projections.constructor(
+                    DietFoodQueryDto::class.java,
+                    userHistoryEntity.id,
+                    dietFoodEntity.food,
+                    dietFoodEntity.type,
+                ),
+            )
+            .from(dietFoodEntity)
             .leftJoin(userHistoryEntity).on(userHistoryEntity.id.eq(dietFoodEntity.historyId))
             .where(userHistoryEntity.userId.eq(userId))
             .fetch()
+
 // Fetch diet images
-        val dietImages = jpaQueryFactory.select(
-            QDietImageQueryDto(
-                userHistoryEntity.id,
-                dietImageEntity.image,
-                dietImageEntity.type,
-            ),
-        ).from(dietImageEntity)
+        val dietImages = jpaQueryFactory
+            .select(
+                Projections.constructor(
+                    DietImageQueryDto::class.java,
+                    userHistoryEntity.id,
+                    dietImageEntity.image,
+                    dietImageEntity.type,
+                ),
+            )
+            .from(dietImageEntity)
             .leftJoin(userHistoryEntity).on(userHistoryEntity.id.eq(dietImageEntity.historyId))
             .where(userHistoryEntity.userId.eq(userId))
             .fetch()
-// Fetch user history images
+
+// Fetch exercise histories
+        val exerciseHistories = jpaQueryFactory
+            .select(
+                Projections.constructor(
+                    ExerciseHistoryResponseDto::class.java,
+                    exerciseHistoryEntity.id,
+                    exerciseHistoryEntity.itemId,
+                    exerciseHistoryEntity.weight,
+                    exerciseHistoryEntity.exerciseSet,
+                    exerciseHistoryEntity.userHistoryId,
+                    exerciseHistoryEntity.createdAt,
+                ),
+            )
+            .from(exerciseHistoryEntity)
+            .where(exerciseHistoryEntity.userHistoryId.`in`(userHistories.map { it.id }))
+            .fetch()
         val userHistoryImages = jpaQueryFactory.select(userHistoryImageEntity)
             .from(userHistoryImageEntity)
             .where(userHistoryImageEntity.userHistoryEntity.id.`in`(userHistories.map { it.id }))
@@ -67,20 +99,7 @@ class UserHistoryQueryRepositoryImpl(
         ).from(userHistoryVideoEntity)
             .where(userHistoryVideoEntity.userHistoryEntity.id.`in`(userHistories.map { it.id }))
             .fetch()
-// Fetch exercise histories
-        val exerciseHistories = jpaQueryFactory.select(
-            QExerciseHistoryResponseDto(
-                exerciseHistoryEntity.id,
-                exerciseHistoryEntity.itemId,
-                exerciseHistoryEntity.weight,
-                exerciseHistoryEntity.exerciseSet,
-                exerciseHistoryEntity.userHistoryId,
-                exerciseHistoryEntity.createdAt,
-            ),
-        ).from(exerciseHistoryEntity)
-            .where(exerciseHistoryEntity.userHistoryId.`in`(userHistories.map { it.id }))
-            .fetch()
-// Group data by userHistoryId
+
         val dietFoodMap = dietFoods.groupBy { it.historyId }
         val dietImageMap = dietImages.groupBy { it.historyId }
         val userHistoryImageMap = userHistoryImages.groupBy { it.userHistoryEntity.id }

@@ -1,11 +1,12 @@
 package com.example.application.exercise.service
 
+import com.example.application.common.transaction.Tx
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.common.util.Tx
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseAreaEntity
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
 import com.example.core.exercise.dto.QueryItemDto
+import com.example.core.exercise.model.ExerciseArea
+import com.example.core.exercise.model.ExerciseGoal
+import com.example.core.exercise.model.ExerciseItem
 import com.example.core.exercise.port.command.AddItemAreaRelationCommand
 import com.example.core.exercise.port.command.AddItemGoalRelationCommand
 import com.example.core.exercise.port.command.AddItemYoutubeCommand
@@ -18,7 +19,6 @@ import com.example.core.exercise.port.out.ItemAreaRelationshipJpaPort
 import com.example.core.exercise.port.out.ItemGoalRelationshipJpaPort
 import com.example.core.exercise.port.out.ItemYoutubeJpaPort
 import com.example.core.multimedia.port.`in`.MultimediaUploadUseCase
-import com.example.core.exercise.model.ExerciseItem
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -36,36 +36,38 @@ class ExerciseItemService(
     private val itemYoutubeJpaPort: ItemYoutubeJpaPort,
 ) : ExerciseItemUseCase {
     override suspend fun saveExerciseItem(command: SaveExerciseItemCommand) {
-        val (area, goal) = coroutineScope {
+        coroutineScope {
             val goalJob = async {
-                getExerciseGoals(command.exerciseGoals)
-                    ?: throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_GOAL)
+                val goal = getExerciseGoals(command.exerciseGoals)
+                if (goal.isEmpty()) throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_GOAL)
+                goal
             }
 
             val areaJob = async {
-                getExerciseAreas(command.exerciseAreas)
-                    ?: throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_AREA)
+                val areas = getExerciseAreas(command.exerciseAreas)
+                if (areas.isEmpty()) throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_AREA)
+                areas
             }
-            awaitAll(areaJob, goalJob)
-        }
-        val imageUrls = command.image?.let {
-            multimediaUploadUseCase.uploadMultipartFiles(it)
-        } ?: emptyList()
+            val imageUrls = command.image?.let {
+                multimediaUploadUseCase.uploadMultipartFiles(it)
+            } ?: emptyList()
 
-        val videoUrls = command.video?.let {
-            multimediaUploadUseCase.uploadMultipartFiles(it)
-        } ?: emptyList()
-        val goals = goal.map { it as ExerciseGoalEntity }
-        val areas = area.map { it as ExerciseAreaEntity }
-        val itemId = exerciseItemJpaPort.saveExerciseItem(
-            command.toOutCommand(
-                exerciseGoals = goals.toMutableList(),
-                exerciseAreas = areas.toMutableList(),
-                video = videoUrls.toMutableList(),
-                image = imageUrls.toMutableList(),
-            ),
-        )
-        saveItemRelationship(itemId, goals.map { it.id }, areas.map { it.id })
+            val videoUrls = command.video?.let {
+                multimediaUploadUseCase.uploadMultipartFiles(it)
+            } ?: emptyList()
+
+            val goals = goalJob.await()
+            val areas = areaJob.await()
+            val itemId = exerciseItemJpaPort.saveExerciseItem(
+                command.toOutCommand(
+                    exerciseGoals = goals.toMutableList(),
+                    exerciseAreas = areas.toMutableList(),
+                    video = videoUrls.toMutableList(),
+                    image = imageUrls.toMutableList(),
+                ),
+            )
+            saveItemRelationship(itemId, goals.map { it.id }, areas.map { it.id })
+        }
     }
 
     private suspend fun saveItemRelationship(
@@ -90,11 +92,11 @@ class ExerciseItemService(
         awaitAll(itemAreaJob, itemGoalJob)
     }
 
-    private fun getExerciseGoals(ids: List<Long>) = Tx.readTx {
+    private fun getExerciseGoals(ids: List<Long>): List<ExerciseGoal> = Tx.readTx {
         exerciseGoalJpaPort.getExerciseGoals(ids)
     }
 
-    private fun getExerciseAreas(ids: List<Long>) = Tx.readTx {
+    private fun getExerciseAreas(ids: List<Long>): List<ExerciseArea> = Tx.readTx {
         exerciseAreaJpaPort.getExerciseAreas(ids)
     }
 

@@ -1,7 +1,8 @@
 package com.example.core.user.model
 
-import com.example.core.user.model.interfaces.User
 import com.example.core.common.constants.AuthConstants
+import com.example.core.user.model.interfaces.User
+import com.example.core.user.model.interfaces.UserHealthDetail
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -24,7 +25,7 @@ data class Member(
 }
 
 data class MemberInfo(
-    val memberId: UUID,
+    override val userId: UUID,
     var gender: Gender,
     var nickname: String,
     var exerciseMonths: Int,
@@ -33,7 +34,7 @@ data class MemberInfo(
     // 골격근량
     var skeletalMuscleMass: Double?,
     var age: Int,
-) {
+) : UserHealthDetail {
     fun updateInfo(
         exerciseMonths: Int,
         tall: Double,
@@ -49,4 +50,6 @@ data class MemberInfo(
         this.gender = gender
         this.age = age
     }
+
+    override fun toModel(): UserHealthDetail = this
 }

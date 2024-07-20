@@ -1,6 +1,6 @@
 package com.example.infrastructure.persistence.entity.history
 
-import com.example.core.exercise.adapter.out.persistence.entity.EXERCISE_ITEM_ID
+import com.example.infrastructure.persistence.entity.exercise.EXERCISE_ITEM_ID
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

@@ -11,7 +11,7 @@ import com.example.api.history.adapter.`in`.response.AttendanceResponse
 import com.example.api.history.adapter.`in`.response.ExerciseHistoryResponse
 import com.example.api.history.adapter.`in`.response.HistoryResponse
 import com.example.api.history.adapter.`in`.response.UserHistoryResponse
-import com.example.common.log.Log
+import com.example.application.common.log.Log
 import com.example.core.history.port.`in`.GenerateHistoryUseCase
 import com.example.core.history.port.`in`.HistoryFacadeUseCase
 import com.example.core.history.port.`in`.HistoryQueryUseCase
@@ -144,7 +144,7 @@ class HistoryController(
             userId = userInfo.userId,
             localDate = localDate,
         )
-        val response = historyQueryUseCase.getHistoryFromMonth(query)?.map { historyDto ->
+        val response = historyQueryUseCase.getHistoryFromMonth(query).map { historyDto ->
             HistoryResponse(
                 userHistoryResponse = UserHistoryResponse.from(historyDto.userHistoryResponseDto),
                 exerciseHistoryResponse = historyDto.exerciseHistoryResponseDto?.map {

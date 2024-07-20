@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType.IDENTITY
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
 
+typealias ItemYoutubeModel = com.example.core.exercise.model.ItemYoutubeInfo
+
 @Entity
 class ItemYoutubeInfo(
     @Id
@@ -27,7 +29,7 @@ class ItemYoutubeInfo(
     @Column(name = "youtube_url")
     val youtubeUrl: String,
 ) {
-    fun toDomain(): ItemYoutubeInfo = ItemYoutubeInfo(
+    fun toDomain(): ItemYoutubeModel = ItemYoutubeModel(
         id = id,
         title = title,
         channel = channel,

@@ -1,8 +1,8 @@
 package com.example.infrastructure.persistence.entity.trainer
 
-import com.example.core.user.model.interfaces.UserHealthDetail
 import com.example.core.user.model.Gender
 import com.example.core.user.model.TrainerInfo
+import com.example.core.user.model.interfaces.UserHealthDetail
 import jakarta.persistence.AttributeOverride
 import jakarta.persistence.AttributeOverrides
 import jakarta.persistence.Column
@@ -44,6 +44,7 @@ class TrainerInfo(
     var introduce: String?,
 ) : UserHealthDetail {
     fun toDomain(): TrainerInfo = TrainerInfo(
+        userId = userId,
         gymName = gymName,
         street = gymAddress.street,
         city = gymAddress.city,

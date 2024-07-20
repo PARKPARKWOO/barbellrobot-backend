@@ -1,7 +1,10 @@
 package com.example.infrastructure.persistence.repository.member
 
 import com.example.core.user.dto.MemberDetailQueryDto
+import com.example.core.user.dto.MemberInfoQueryDto
 import com.example.infrastructure.persistence.entity.member.MemberInfo
+import com.example.infrastructure.persistence.entity.member.QMemberEntity.memberEntity
+import com.example.infrastructure.persistence.entity.member.QMemberInfo.memberInfo
 import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository
@@ -33,7 +36,8 @@ class MemberInfoQueryRepositoryImpl(
                     memberEntity.createdAt,
                     memberEntity.deletedAt,
                     memberEntity.profile,
-                    QMemberInfoQueryDto(
+                    Projections.constructor(
+                        MemberInfoQueryDto::class.java,
                         memberInfo.gender,
                         memberInfo.nickname,
                         memberInfo.exerciseMonths,

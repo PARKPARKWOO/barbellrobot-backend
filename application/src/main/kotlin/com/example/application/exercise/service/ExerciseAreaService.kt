@@ -1,5 +1,7 @@
 package com.example.application.exercise.service
 
+import com.example.core.common.error.ErrorCode
+import com.example.core.common.error.ServiceException
 import com.example.core.exercise.model.ExerciseArea
 import com.example.core.exercise.port.command.SaveExerciseAreaCommand
 import com.example.core.exercise.port.`in`.ExerciseAreaUseCase
@@ -26,11 +28,11 @@ class ExerciseAreaService(
 
     @Transactional(readOnly = true)
     override fun getExerciseArea(id: Long): ExerciseArea {
-        return exerciseAreaJpaPort.getExerciseArea(id)
+        return exerciseAreaJpaPort.getExerciseArea(id) ?: throw ServiceException(ErrorCode.NOT_FOUND_EXERCISE_AREA)
     }
 
     @Transactional(readOnly = true)
     override fun getAllExerciseArea(): List<ExerciseArea> {
-        return exerciseAreaJpaPort.getAll() ?: emptyList()
+        return exerciseAreaJpaPort.getAll()
     }
 }

@@ -1,16 +1,15 @@
 package com.example.application.sign
 
-import com.example.common.jwt.JwtTokenService
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.common.redis.RedisDriver
-import com.example.core.oauth.application.out.KaKaoFeignClient
+import com.example.core.nosql.KeyValueStore
 import com.example.core.sign.port.`in`.SignInMemberUseCase
 import com.example.core.sign.port.`in`.command.SignInWithEmailCommand
 import com.example.core.sign.port.`in`.query.FindUserWithSocialQuery
+import com.example.core.sign.port.out.KaKaoSignInPort
+import com.example.core.user.model.SocialProvider
 import com.example.core.user.port.command.SaveMemberCommand
 import com.example.core.user.port.out.MemberJpaPort
-import com.example.core.user.model.SocialProvider
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,11 +18,11 @@ import org.springframework.transaction.annotation.Transactional
 class SignInMemberService(
     private val memberJpaPort: MemberJpaPort,
     private val jwtTokenService: JwtTokenService,
-    private val redisDriver: RedisDriver,
+    private val keyValueStore: KeyValueStore,
     @Value("\${jwt.refresh-token.expire-millis}")
     private val refreshTokenExpireTime: Long,
-    private val kaKaoFeignClient: KaKaoFeignClient,
-) : AbstractSignInService(redisDriver, refreshTokenExpireTime, jwtTokenService, kaKaoFeignClient),
+    private val kaKaoSignInPort: KaKaoSignInPort,
+) : AbstractSignInService(keyValueStore, refreshTokenExpireTime, jwtTokenService, kaKaoSignInPort),
     SignInMemberUseCase {
     @Transactional(readOnly = true)
     override fun findUserWithEmail(command: SignInWithEmailCommand): Map<String, Any> =

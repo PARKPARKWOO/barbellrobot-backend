@@ -2,6 +2,7 @@ package com.example.infrastructure.common.config
 
 import com.example.infrastructure.adapter.pt.GeneratePtAdapter
 import com.google.cloud.vertexai.VertexAI
+import org.springframework.ai.autoconfigure.vertexai.embedding.VertexAiEmbeddingAutoConfiguration
 import org.springframework.ai.model.function.FunctionCallback
 import org.springframework.ai.model.function.FunctionCallbackWrapper
 import org.springframework.ai.model.function.FunctionCallbackWrapper.Builder.SchemaType.OPEN_API_SCHEMA
@@ -29,7 +30,7 @@ class GeminiConfig(
         return VertexAiGeminiChatModel(
             vertexAi,
             VertexAiGeminiChatOptions.builder()
-                .withModel(GEMINI_MODEL)
+                .withModel(VertexAiGeminiChatModel.ChatModel.GEMINI_1_5_FLASH)
                 .withTemperature(GEMINI_TEMPERATURE)
                 .build(),
         )
@@ -47,7 +48,6 @@ class GeminiConfig(
     }
 
     companion object {
-        const val GEMINI_MODEL = "gemini-1.5-flash-preview-0514"
         const val GEMINI_TEMPERATURE = 0.4F
     }
 }

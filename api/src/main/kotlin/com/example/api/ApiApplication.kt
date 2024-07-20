@@ -11,6 +11,7 @@ import java.util.TimeZone
     scanBasePackages = [
         "com.example.core.*",
         "com.example.infrastructure.*",
+        "com.example.application.*",
         "com.example.api.*",
     ],
 )

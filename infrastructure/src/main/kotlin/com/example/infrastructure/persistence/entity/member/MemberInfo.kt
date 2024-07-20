@@ -38,7 +38,7 @@ class MemberInfo(
     var exerciseMonths: Int,
 ) : UserHealthDetail {
     fun toDomain(): MemberInfo = MemberInfo(
-        memberId = userId,
+        userId = userId,
         gender = gender,
         exerciseMonths = exerciseMonths,
         tall = tall,

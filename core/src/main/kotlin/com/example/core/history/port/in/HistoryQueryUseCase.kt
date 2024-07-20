@@ -1,7 +1,7 @@
 package com.example.core.history.port.`in`
 
-import com.example.core.history.port.query.GetHistoryQuery
 import com.example.core.history.dto.HistoryResponseDto
+import com.example.core.history.port.query.GetHistoryQuery
 import java.util.UUID
 
 interface HistoryQueryUseCase {

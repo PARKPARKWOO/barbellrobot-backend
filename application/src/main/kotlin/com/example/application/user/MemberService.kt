@@ -4,7 +4,6 @@ import com.example.core.common.error.ErrorCode.MEMBER_NOT_FOUND
 import com.example.core.common.error.ServiceException
 import com.example.core.multimedia.port.`in`.MultimediaUploadUseCase
 import com.example.core.user.port.command.UpdateProfileCommand
-import com.example.core.user.application.service.AbstractUserService
 import com.example.core.user.port.command.UpdateMemberInfoCommand
 import com.example.core.user.port.`in`.MemberInfoUseCase
 import com.example.core.user.port.`in`.MemberUseCase

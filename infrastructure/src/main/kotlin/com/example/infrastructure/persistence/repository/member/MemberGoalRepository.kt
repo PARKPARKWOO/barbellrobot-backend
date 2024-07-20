@@ -1,6 +1,7 @@
 package com.example.infrastructure.persistence.repository.member
 
 import com.example.infrastructure.persistence.entity.member.MemberGoalEntity
+import com.example.infrastructure.persistence.entity.member.QMemberGoalEntity.memberGoalEntity
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository

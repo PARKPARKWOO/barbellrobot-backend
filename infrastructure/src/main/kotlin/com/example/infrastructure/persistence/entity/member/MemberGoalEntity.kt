@@ -1,6 +1,6 @@
 package com.example.infrastructure.persistence.entity.member
 
-import com.example.core.exercise.adapter.out.persistence.entity.ExerciseGoalEntity
+import com.example.infrastructure.persistence.entity.exercise.ExerciseGoalEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType.LAZY

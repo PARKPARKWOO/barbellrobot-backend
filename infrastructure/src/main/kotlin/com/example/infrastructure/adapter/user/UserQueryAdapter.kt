@@ -3,6 +3,10 @@ package com.example.infrastructure.adapter.user
 import com.example.core.user.model.interfaces.UserEntity
 import com.example.core.user.model.interfaces.UserHealthDetail
 import com.example.core.user.port.out.UserQueryPort
+import com.example.infrastructure.persistence.entity.member.QMemberEntity
+import com.example.infrastructure.persistence.entity.member.QMemberInfo.memberInfo
+import com.example.infrastructure.persistence.entity.trainer.QTrainerEntity
+import com.example.infrastructure.persistence.entity.trainer.QTrainerInfo.trainerInfo
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Component
 import java.util.UUID

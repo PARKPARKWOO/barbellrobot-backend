@@ -6,7 +6,7 @@ import com.example.core.exercise.port.command.AddItemGoalRelationCommand
 interface ItemGoalRelationshipJpaPort {
     fun addRelationship(command: AddItemGoalRelationCommand)
 
-    fun findByItemId(itemId: Long): List<ItemGoalRelationship>?
+//    fun findByItemId(itemId: Long): List<ItemGoalRelationship>?
 
     fun deleteByGoalId(goalId: Long)
 

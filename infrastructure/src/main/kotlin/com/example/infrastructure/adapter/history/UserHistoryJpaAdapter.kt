@@ -1,18 +1,18 @@
 package com.example.infrastructure.adapter.history
 
-import com.example.core.history.adapter.out.persistence.entity.DietFoodEntity
-import com.example.core.history.adapter.out.persistence.entity.DietImageEntity
-import com.example.core.history.adapter.out.persistence.entity.UserHistoryEntity
-import com.example.core.history.adapter.out.persistence.repository.DietFoodRepository
-import com.example.core.history.adapter.out.persistence.repository.DietImageRepository
-import com.example.core.history.adapter.out.persistence.repository.UserHistoryRepository
+import com.example.core.history.dto.HistoryResponseDto
+import com.example.core.history.model.UserHistory
 import com.example.core.history.port.out.UserHistoryJpaPort
 import com.example.core.history.port.out.command.AddDietFoodCommand
 import com.example.core.history.port.out.command.AddDietImageCommand
 import com.example.core.history.port.out.command.AttendanceTodayCommand
 import com.example.core.history.port.out.query.FindUserHistoryQuery
-import com.example.core.history.dto.HistoryResponseDto
-import com.example.core.history.model.UserHistory
+import com.example.infrastructure.persistence.entity.history.DietFoodEntity
+import com.example.infrastructure.persistence.entity.history.DietImageEntity
+import com.example.infrastructure.persistence.entity.history.UserHistoryEntity
+import com.example.infrastructure.persistence.repository.history.DietFoodRepository
+import com.example.infrastructure.persistence.repository.history.DietImageRepository
+import com.example.infrastructure.persistence.repository.history.UserHistoryRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 

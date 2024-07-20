@@ -5,15 +5,15 @@ import com.example.core.common.error.ServiceException
 import com.example.core.sign.port.`in`.command.SignInWithEmailCommand
 import com.example.core.sign.port.`in`.command.SignUpMemberWithEmailCommand
 import com.example.core.sign.port.`in`.query.FindUserWithSocialQuery
-import com.example.core.user.port.command.UpdateProfileCommand
-import com.example.core.user.member.adapter.out.persistence.entity.MemberEntity
-import com.example.infrastructure.persistence.entity.member.SocialProvider
-import com.example.infrastructure.persistence.repository.member.MemberRepository
-import com.example.core.user.port.command.SaveMemberCommand
-import com.example.core.user.port.out.MemberJpaPort
 import com.example.core.user.dto.MemberAndGoalQueryDto
 import com.example.core.user.model.Member
 import com.example.core.user.model.Role
+import com.example.core.user.port.command.SaveMemberCommand
+import com.example.core.user.port.command.UpdateProfileCommand
+import com.example.core.user.port.out.MemberJpaPort
+import com.example.infrastructure.persistence.entity.member.MemberEntity
+import com.example.infrastructure.persistence.entity.member.SocialProvider
+import com.example.infrastructure.persistence.repository.member.MemberRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 

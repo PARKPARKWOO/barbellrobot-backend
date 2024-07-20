@@ -1,11 +1,11 @@
 package com.example.api.common.interceptor
 
 import com.example.api.common.annotation.PublicEndPoint
-import com.example.common.constants.Constants.AUTHORIZATION_HEADER
-import com.example.common.constants.Constants.BEARER_PREFIX
+import com.example.application.common.constants.Constants.AUTHORIZATION_HEADER
+import com.example.application.common.constants.Constants.BEARER_PREFIX
+import com.example.application.sign.JwtTokenService
+import com.example.core.common.constants.AuthConstants
 import com.example.core.sign.exception.NoBearerTokenException
-import com.example.common.jwt.JwtTokenService
-import com.example.domain.constants.DomainConstants
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpMethod
@@ -28,8 +28,8 @@ class JwtTokenInterceptor(
         }
         val token = request.getBearerTokenFromHeader()
         val claim = jwtTokenService.parseAccessToken(token)
-        request.setAttribute(DomainConstants.USER_ID, claim[DomainConstants.USER_ID])
-        request.setAttribute(DomainConstants.USER_ROLE, claim[DomainConstants.USER_ROLE])
+        request.setAttribute(AuthConstants.USER_ID, claim[AuthConstants.USER_ID])
+        request.setAttribute(AuthConstants.USER_ROLE, claim[AuthConstants.USER_ROLE])
         return true
     }
 }

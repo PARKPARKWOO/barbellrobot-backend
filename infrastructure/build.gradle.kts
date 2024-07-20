@@ -68,8 +68,9 @@ dependencies {
     // mail
     implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
 
-    // gemini
+    // ai-model
     implementation("org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter")
+//    implementation("io.springboot.ai:spring-ai-vertex-ai-gemini:1.0.0")
 
     // multi-part-file mock
     implementation("org.springframework:spring-mock:2.0.8")

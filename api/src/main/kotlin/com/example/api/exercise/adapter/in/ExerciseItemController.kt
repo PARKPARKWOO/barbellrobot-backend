@@ -1,5 +1,6 @@
 package com.example.api.exercise.adapter.`in`
 
+import com.example.api.common.MultipartFileConverter.toDto
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
 import com.example.api.exercise.adapter.`in`.request.AddYoutubeRequest
@@ -52,8 +53,8 @@ class ExerciseItemController(
     ): ApiResponse<Unit> {
         val command = SaveExerciseItemCommand(
             exerciseName = exerciseName,
-            video = video,
-            image = image,
+            video = video?.map { it.toDto() },
+            image = image?.map { it.toDto() },
             exerciseAreas = exerciseAreas,
             exerciseGoals = exerciseGoals,
         )

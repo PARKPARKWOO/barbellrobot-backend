@@ -1,7 +1,19 @@
 package com.example.infrastructure.persistence.repository.exercise
 
 import com.example.core.exercise.dto.QueryItemDto
+import com.example.infrastructure.persistence.entity.exercise.ExerciseAreaEntity
+import com.example.infrastructure.persistence.entity.exercise.ExerciseGoalEntity
 import com.example.infrastructure.persistence.entity.exercise.ExerciseItemEntity
+import com.example.infrastructure.persistence.entity.exercise.ItemAreaRelationshipEntity
+import com.example.infrastructure.persistence.entity.exercise.ItemGoalRelationshipEntity
+import com.example.infrastructure.persistence.entity.exercise.ItemYoutubeInfo
+import com.example.infrastructure.persistence.entity.exercise.QExerciseAreaEntity.exerciseAreaEntity
+import com.example.infrastructure.persistence.entity.exercise.QExerciseGoalEntity.exerciseGoalEntity
+import com.example.infrastructure.persistence.entity.exercise.QExerciseItemEntity.exerciseItemEntity
+import com.example.infrastructure.persistence.entity.exercise.QItemAreaRelationshipEntity.itemAreaRelationshipEntity
+import com.example.infrastructure.persistence.entity.exercise.QItemGoalRelationshipEntity.itemGoalRelationshipEntity
+import com.example.infrastructure.persistence.entity.exercise.QItemYoutubeInfo.itemYoutubeInfo
+import com.example.infrastructure.persistence.entity.history.QExerciseHistoryEntity.exerciseHistoryEntity
 import com.querydsl.core.Tuple
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.JpaRepository

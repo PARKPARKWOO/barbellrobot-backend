@@ -1,6 +1,5 @@
 package com.example.infrastructure.adapter.exercise
 
-
 import com.example.core.exercise.port.command.AddItemGoalRelationCommand
 import com.example.core.exercise.port.out.ItemGoalRelationshipJpaPort
 import com.example.infrastructure.persistence.entity.exercise.ItemGoalRelationshipEntity
@@ -23,9 +22,9 @@ class ItemGoalRelationshipJpaAdapter(
         itemGoalRelationshipRepository.saveAll(list)
     }
 
-    override fun findByItemId(itemId: Long): List<ItemGoalRelationshipEntity>? {
-        return itemGoalRelationshipRepository.findByExerciseItemId(itemId)
-    }
+//    override fun findByItemId(itemId: Long): List<ItemGoalRelationship>? {
+//        return itemGoalRelationshipRepository.findByExerciseItemId(itemId)
+//    }
 
     override fun deleteByGoalId(goalId: Long) {
         itemGoalRelationshipRepository.deleteGoalId(goalId)
