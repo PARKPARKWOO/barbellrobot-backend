@@ -8,9 +8,9 @@ import com.example.api.trainer.request.ApprovalRequest
 import com.example.api.trainer.request.RejectRequest
 import com.example.api.trainer.response.ManagementMemberResponse
 import com.example.api.trainer.response.MemberSummaryResponse
-import com.example.core.managemnet.application.port.`in`.ManagementUseCase
-import com.example.core.user.application.port.command.UploadProfileCommand
-import com.example.core.user.trainer.application.port.`in`.TrainerUseCase
+import com.example.core.managemnet.port.`in`.ManagementUseCase
+import com.example.core.user.port.command.UploadProfileCommand
+import com.example.core.user.port.`in`.TrainerUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -91,7 +91,9 @@ class TrainerController(
     ): ApiResponse<Unit> {
         val command = UploadProfileCommand(
             id = userInfo.userId,
-            file = multipartFile,
+            contentLength = multipartFile.size,
+            contentType = multipartFile.contentType!!,
+            inputStream = multipartFile.inputStream,
         )
         trainerUseCase.uploadProfile(command)
         return ApiResponse(data = Unit)

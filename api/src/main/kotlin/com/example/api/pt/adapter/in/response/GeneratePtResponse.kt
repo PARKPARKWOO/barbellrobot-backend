@@ -1,8 +1,8 @@
 package com.example.api.pt.adapter.`in`.response
 
-import com.example.domain.pt.Day
-import com.example.domain.pt.Exercise
-import com.example.domain.pt.PtConsulting
+import com.example.core.pt.model.Day
+import com.example.core.pt.model.Exercise
+import com.example.core.pt.model.PtConsulting
 
 data class GeneratePtResponse(
     val greetingMessage: String,

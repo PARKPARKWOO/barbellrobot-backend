@@ -1,7 +1,7 @@
 package com.example.api.exercise.adapter.`in`.response
 
-import com.example.domain.exercise.ItemYoutubeInfo
-import com.example.domain.exercise.VideoType
+import com.example.core.exercise.model.ItemYoutubeInfo
+import com.example.core.exercise.model.VideoType
 
 data class ItemYoutubeInfoResponse(
     val id: Long,

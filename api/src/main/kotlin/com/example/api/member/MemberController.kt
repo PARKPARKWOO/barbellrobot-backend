@@ -14,11 +14,11 @@ import com.example.api.member.request.UpdateMemberInfoRequest
 import com.example.api.member.response.GetMemberMyPageResponse
 import com.example.api.member.response.ManagementFromMemberResponse
 import com.example.api.member.response.MemberDetailResponse
-import com.example.core.managemnet.application.port.`in`.ManagementUseCase
-import com.example.core.user.application.port.command.UploadProfileCommand
-import com.example.core.user.member.application.`in`.MemberGoalUseCase
-import com.example.core.user.member.application.`in`.MemberInfoUseCase
-import com.example.core.user.member.application.`in`.MemberUseCase
+import com.example.core.managemnet.port.`in`.ManagementUseCase
+import com.example.core.user.port.command.UploadProfileCommand
+import com.example.core.user.port.`in`.MemberGoalUseCase
+import com.example.core.user.port.`in`.MemberInfoUseCase
+import com.example.core.user.port.`in`.MemberUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -55,7 +55,9 @@ class MemberController(
     ): ApiResponse<Unit> {
         val command = UploadProfileCommand(
             id = userInfo.userId,
-            file = multipartFile,
+            contentType = multipartFile.contentType!!,
+            contentLength = multipartFile.size,
+            inputStream = multipartFile.inputStream,
         )
         memberUseCase.uploadProfile(command)
         return ApiResponse(data = Unit)

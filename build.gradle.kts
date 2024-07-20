@@ -2,12 +2,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     val kotlinVersion = "1.9.10"
-    id("org.springframework.boot") version "3.2.1"
-    id("io.spring.dependency-management") version "1.1.4"
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.spring") version kotlinVersion
-    kotlin("plugin.jpa") version kotlinVersion
+    kotlin("jvm") version kotlinVersion apply false
     id("io.gitlab.arturbosch.detekt") version "1.23.3"
+    kotlin("kapt") version kotlinVersion apply false
+    java
 }
 
 allprojects {
@@ -31,25 +29,20 @@ allprojects {
 subprojects {
     group = "com.example"
     version = "0.0.1-SNAPSHOT"
-    extra["springCloudVersion"] = "2023.0.0"
+
     apply(plugin = "java")
     apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = "org.jetbrains.kotlin.kapt")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-    apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
     apply(plugin = "io.gitlab.arturbosch.detekt")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_17
     }
-    dependencies {
 
-//        implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
-    tasks.register("prepareKotlinBuildScriptModel") {}
 }
+
 val ktlint: Configuration by configurations.creating
 
 dependencies {
@@ -65,7 +58,6 @@ val ktlintCheck by tasks.registering(JavaExec::class) {
     description = "Check Kotlin code style"
     classpath = ktlint
     mainClass.set("com.pinterest.ktlint.Main")
-    // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
     args(
         "**/src/**/*.kt",
         "**.kts",
@@ -79,7 +71,6 @@ tasks.register<JavaExec>("ktlintFormat") {
     classpath = ktlint
     mainClass.set("com.pinterest.ktlint.Main")
     jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
-    // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
     args(
         "-F",
         "**/src/**/*.kt",
@@ -87,14 +78,3 @@ tasks.register<JavaExec>("ktlintFormat") {
         "!**/build/**",
     )
 }
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-tasks.bootJar {
-    enabled = false
-    mainClass = "com.example.api.ApiApplication"
-}
-
-tasks.jar { enabled = false }

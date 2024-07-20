@@ -1,11 +1,12 @@
 package com.example.api.exercise.adapter.`in`
 
+import com.example.api.common.MultipartFileConverter.toDto
 import com.example.api.common.annotation.PublicEndPoint
 import com.example.api.common.response.ApiResponse
 import com.example.api.exercise.adapter.`in`.request.AddYoutubeRequest
 import com.example.api.exercise.adapter.`in`.response.ExerciseItemDetailResponse
-import com.example.core.exercise.application.port.command.SaveExerciseItemCommand
-import com.example.core.exercise.application.port.`in`.ExerciseItemUseCase
+import com.example.core.exercise.port.command.SaveExerciseItemCommand
+import com.example.core.exercise.port.`in`.ExerciseItemUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -52,8 +53,8 @@ class ExerciseItemController(
     ): ApiResponse<Unit> {
         val command = SaveExerciseItemCommand(
             exerciseName = exerciseName,
-            video = video,
-            image = image,
+            video = video?.map { it.toDto() },
+            image = image?.map { it.toDto() },
             exerciseAreas = exerciseAreas,
             exerciseGoals = exerciseGoals,
         )

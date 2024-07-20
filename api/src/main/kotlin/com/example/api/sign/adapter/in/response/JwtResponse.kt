@@ -1,6 +1,6 @@
 package com.example.api.sign.adapter.`in`.response
 
-import com.example.common.jwt.JwtResponseDto
+import com.example.core.sign.dto.JwtResponseDto
 
 data class JwtResponse(
     val accessToken: String,

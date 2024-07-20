@@ -1,6 +1,6 @@
 package com.example.api.member.request
 
-import com.example.core.user.member.application.command.DeleteMemberGoalCommand
+import com.example.core.user.port.command.DeleteMemberGoalCommand
 import java.util.UUID
 
 data class DeleteMemberGoalRequest(

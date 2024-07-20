@@ -1,7 +1,7 @@
 package com.example.api.member.response
 
-import com.example.domain.management.Management
-import com.example.domain.management.ManagementStatus
+import com.example.core.managemnet.model.Management
+import com.example.core.managemnet.model.ManagementStatus
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID

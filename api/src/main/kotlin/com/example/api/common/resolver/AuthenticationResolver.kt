@@ -1,10 +1,10 @@
 package com.example.api.common.resolver
 
 import com.example.api.common.annotation.AuthenticationUser
+import com.example.core.common.constants.AuthConstants
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.domain.constants.DomainConstants
-import com.example.domain.user.Role
+import com.example.core.user.model.Role
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
@@ -27,9 +27,9 @@ class AuthenticationResolver : HandlerMethodArgumentResolver {
         binderFactory: WebDataBinderFactory?,
     ): Any? {
         webRequest.getNativeRequest(HttpServletRequest::class.java)?.let {
-            val userId = UUID.fromString(it.getAttribute(DomainConstants.USER_ID).toString())
+            val userId = UUID.fromString(it.getAttribute(AuthConstants.USER_ID).toString())
                 ?: throw ServiceException(ErrorCode.AUTHENTICATION_RESOLVER_ERROR)
-            val role: Role = Role.valueOf(it.getAttribute(DomainConstants.USER_ROLE).toString()) as? Role
+            val role: Role = Role.valueOf(it.getAttribute(AuthConstants.USER_ROLE).toString()) as? Role
                 ?: throw ServiceException(ErrorCode.AUTHENTICATION_RESOLVER_ERROR)
             return UserInfo(
                 userId = userId,

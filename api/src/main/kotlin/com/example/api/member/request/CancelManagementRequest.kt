@@ -1,6 +1,6 @@
 package com.example.api.member.request
 
-import com.example.core.managemnet.application.port.command.CancelCommand
+import com.example.core.managemnet.port.command.CancelCommand
 import java.util.UUID
 
 data class CancelManagementRequest(
