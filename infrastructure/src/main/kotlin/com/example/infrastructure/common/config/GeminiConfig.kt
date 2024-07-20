@@ -2,7 +2,6 @@ package com.example.infrastructure.common.config
 
 import com.example.infrastructure.adapter.pt.GeneratePtAdapter
 import com.google.cloud.vertexai.VertexAI
-import org.springframework.ai.autoconfigure.vertexai.embedding.VertexAiEmbeddingAutoConfiguration
 import org.springframework.ai.model.function.FunctionCallback
 import org.springframework.ai.model.function.FunctionCallbackWrapper
 import org.springframework.ai.model.function.FunctionCallbackWrapper.Builder.SchemaType.OPEN_API_SCHEMA
