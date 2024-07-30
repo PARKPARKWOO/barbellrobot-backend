@@ -40,7 +40,6 @@ class MemberGoalJpaAdapter(
                     exerciseGoalEntity = ExerciseGoalEntity.from(goal),
                 )
             }
-
             if (newGoals.isNotEmpty()) {
                 memberGoalRepository.saveAll(newGoals)
             }

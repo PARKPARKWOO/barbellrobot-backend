@@ -30,7 +30,6 @@ class GeminiAdapter(
                 exerciseItemList = command.exerciseItemList,
             ),
         )
-
         val result = chatClient.call(
             Prompt(
                 listOf(userMessage),

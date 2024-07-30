@@ -70,8 +70,6 @@ dependencies {
 
     // ai-model
     implementation("org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter")
-//    implementation("io.springboot.ai:spring-ai-vertex-ai-gemini")
-
 
     // multi-part-file mock
     implementation("org.springframework:spring-mock:2.0.8")

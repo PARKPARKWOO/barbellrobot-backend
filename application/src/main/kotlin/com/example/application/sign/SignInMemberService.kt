@@ -3,7 +3,6 @@ package com.example.application.sign
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.nosql.KeyValueStore
-import com.example.core.rival.port.`in`.RivalUseCase
 import com.example.core.sign.port.`in`.SignInMemberUseCase
 import com.example.core.sign.port.`in`.command.SignInWithEmailCommand
 import com.example.core.sign.port.`in`.query.FindUserWithSocialQuery

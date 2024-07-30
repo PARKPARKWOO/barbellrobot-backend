@@ -9,6 +9,6 @@ interface MemberUseCase : UserUseCase {
     fun update(command: UpdateMemberInfoCommand)
 
     fun getMemberAndGoal(id: UUID): MemberAndGoalQueryDto
-
+  
     fun getMemberByNickname(nickname: String): MemberSummaryDto?
 }
