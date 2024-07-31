@@ -45,8 +45,8 @@ spring:
 aws:
   s3:
     bucket-name: ${AWS_S3_BUCKET_NAME}
-    access-key: ${AWS_S3_ACCESS_KEY:accessKey}
-    secret-key: ${AWS_S3_SECRET_KEY:secretKey}
+    access-key: ${AWS_S3_ACCESS_KEY}
+    secret-key: ${AWS_S3_SECRET_KEY}
 
 jwt:
   access-token:

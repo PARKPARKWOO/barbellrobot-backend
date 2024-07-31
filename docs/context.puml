@@ -1,28 +1,26 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container_Ext(usr1, "User WebBrowser", "Web", "user1")
-Container_Ext(usr2, "User WebBrowser", "Web", "user2")
+Container_Ext(usr1, "Client", "App", "user1")
+Container_Ext(gemini, "Gemini", "LLM", "")
 
+ContainerDb(db, "Relational DB", "MySQL", "post persistence")
+ContainerDb(redis, "VectorDB", "Redis", "RedisVectorStore")
 
-ContainerDb(db, "Database", "NoSQL", "post persistence")
-ContainerDb(redis, "Redis", "Redis", "Session Storge for Session Clustering")
-
-Container_Boundary(server, "Notion Application Server") {
-    Component(app1, "Socket Server", "WebSocket Server", "Session Management")
-    Component(app2, "Socket Server", "WebSocket Server", "Session Management")
-    Component(ch, "Channel Gateway", "Health Check")
-    Component(post, "Post Server", "Post Server")
+Container_Boundary(server, "PocketFit Server") {
+    Component(app1, "API Module", "API Server", "")
+    Component(app2, "Spring AI Module", "Vertex AI Gemini", "LLM Model Handling and Embedding VectorDatabase")
+    Component(ch, "Bucket4j filter", "RateLimiter")
+    Component(pt, "Pt", "UseCase")
 }
 
-Rel(usr1, app1, "WebSocket")
-Rel(app1, usr1, "WebSocket")
-Rel(usr2, app2, "WebSocket")
-Rel(app2, usr2, "WebSocket")
-Rel(app1, redis, "Save Session and Pub/Sub")
-Rel(app2, redis, "Save Session and Pub/Sub")
-Rel(ch, app1, "health check")
-Rel(ch, app2, "health check")
-Rel(server, db, "update post and notification post")
+Rel(app1, app2, "Request Prompt       (user query)")
+Rel(app2, redis, "retrieve")
+Rel(usr1, app1, "pt request")
+Rel(ch, app1, "user request interceptor")
+Rel(ch, usr1, "Too Many Request (429)")
+Rel(app2, gemini, "Generate Chat Response")
+Rel(app2, pt, "Chat Response")
+Rel(pt, db, "insert pt entity")
 
 @enduml

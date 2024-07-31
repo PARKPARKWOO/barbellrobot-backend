@@ -68,7 +68,6 @@ class MemberController(
         summary = "user 의 목표를 추가합니다.",
         security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
     )
-    @RateLimit(quota = 1, timeUnit = TimeUnit.SECONDS, refillInterval = 3, refillTokens = 1)
     fun addGoal(
         @AuthenticationUser
         @Parameter(hidden = true)

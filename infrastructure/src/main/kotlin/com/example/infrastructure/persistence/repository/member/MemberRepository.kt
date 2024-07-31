@@ -4,6 +4,7 @@ import com.example.core.sign.port.`in`.query.FindUserWithSocialQuery
 import com.example.core.user.dto.MemberAndGoalQueryDto
 import com.example.core.user.dto.MemberDetailQueryDto
 import com.example.core.user.dto.MemberInfoQueryDto
+import com.example.core.user.dto.MemberSummaryDto
 import com.example.core.user.model.Provider
 import com.example.infrastructure.persistence.entity.exercise.QExerciseGoalEntity.exerciseGoalEntity
 import com.example.infrastructure.persistence.entity.member.MemberEntity
@@ -25,6 +26,8 @@ interface MemberQueryRepository {
     fun findMemberDetailAndGoal(memberId: UUID): MemberAndGoalQueryDto?
 
     fun findWithSocial(query: FindUserWithSocialQuery): MemberEntity?
+
+    fun getMemberSummaryDto(nickname: String): MemberSummaryDto?
 }
 
 @Repository
@@ -87,6 +90,22 @@ class MemberQueryRepositoryImpl(
                 eqSocialId(query.id)
                     .and(eqSocialProvider(query.provider)),
             ).fetchOne()
+    }
+
+    override fun getMemberSummaryDto(nickname: String): MemberSummaryDto? {
+        return jpaQueryFactory
+            .select(
+                Projections.constructor(
+                    MemberSummaryDto::class.java,
+                    memberEntity.id,
+                    memberInfo.nickname,
+                    memberEntity.profile,
+                ),
+            )
+            .from(memberEntity)
+            .leftJoin(memberInfo).on(memberInfo.userId.eq(memberEntity.id))
+            .where(memberInfo.nickname.eq(nickname))
+            .fetchOne()
     }
 
     private fun eqSocialId(id: String): BooleanExpression =

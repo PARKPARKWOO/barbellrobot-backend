@@ -6,6 +6,7 @@ import com.example.core.sign.port.`in`.command.SignInWithEmailCommand
 import com.example.core.sign.port.`in`.command.SignUpMemberWithEmailCommand
 import com.example.core.sign.port.`in`.query.FindUserWithSocialQuery
 import com.example.core.user.dto.MemberAndGoalQueryDto
+import com.example.core.user.dto.MemberSummaryDto
 import com.example.core.user.model.Member
 import com.example.core.user.model.Role
 import com.example.core.user.port.command.SaveMemberCommand
@@ -61,6 +62,10 @@ class MemberJpaAdapter(
 
     override fun getMemberAndGoal(id: UUID): MemberAndGoalQueryDto? {
         return memberRepository.findMemberDetailAndGoal(id)
+    }
+
+    override fun getMemberSummary(nickname: String): MemberSummaryDto? {
+        return memberRepository.getMemberSummaryDto(nickname)
     }
 
     private fun getEntity(id: UUID): MemberEntity {

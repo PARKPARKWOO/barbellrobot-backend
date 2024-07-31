@@ -13,6 +13,7 @@ class MemberGoalService(
 ) : MemberGoalUseCase {
     @Transactional
     override fun addGoal(command: AddGoalCommand) {
+        // 리팩토링 필요
         memberGoalJpaPort.addGoal(command)
     }
 

@@ -1,11 +1,11 @@
 package com.example.infrastructure.adapter.user
 
-import com.example.infrastructure.persistence.repository.member.MemberInfoRepository
+import com.example.core.user.dto.MemberDetailQueryDto
+import com.example.core.user.model.MemberInfo
 import com.example.core.user.port.command.SaveMemberInfoCommand
 import com.example.core.user.port.command.UpdateNicknameCommand
 import com.example.core.user.port.out.MemberInfoJpaPort
-import com.example.core.user.dto.MemberDetailQueryDto
-import com.example.core.user.model.MemberInfo
+import com.example.infrastructure.persistence.repository.member.MemberInfoRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 import kotlin.jvm.optionals.getOrNull

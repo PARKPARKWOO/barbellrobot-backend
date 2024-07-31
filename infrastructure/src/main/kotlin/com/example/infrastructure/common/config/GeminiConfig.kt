@@ -36,14 +36,12 @@ class GeminiConfig(
     }
 
     @Bean
-    fun generatePtService(): FunctionCallback {
-        val callback = FunctionCallbackWrapper.builder(GeneratePtAdapter())
+    fun ptFunctionCallback(): FunctionCallback {
+        return FunctionCallbackWrapper.builder(GeneratePtAdapter())
             .withName(GeneratePtAdapter.FUNCTION_NAME)
             .withDescription("Generate pt for user")
             .withSchemaType(OPEN_API_SCHEMA)
             .build()
-        chatClient().functionCallbackRegister[GeneratePtAdapter.FUNCTION_NAME] = callback
-        return callback
     }
 
     companion object {

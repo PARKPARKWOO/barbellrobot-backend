@@ -56,3 +56,7 @@ Status Code 200 으로 통일
     - message: Exception 의 디테일한 내용
 - Server 응답 실패시 Status Code 5XX
 
+## 시스템 개요
+
+### AI Request FLOW Diagram
+![01.context diagram](./docs/ai.png)

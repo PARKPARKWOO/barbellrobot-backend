@@ -22,15 +22,27 @@ class MemberGoalJpaAdapter(
 ) : MemberGoalJpaPort {
     override fun addGoal(command: AddGoalCommand) {
         val member = getMember(command.memberId)
-        val entity = exerciseGoalJpaPort.getExerciseGoals(command.goalIds)
-        if (entity.isNotEmpty()) {
-            val memberGoal = entity.map { goal ->
+
+        val goalEntity = exerciseGoalJpaPort.getExerciseGoals(command.goalIds)
+        if (goalEntity.isNotEmpty()) {
+            val existingMemberGoals = memberGoalRepository.getMemberGoalByIds(
+                memberId = command.memberId,
+                goalIds = command.goalIds,
+            )
+            existingMemberGoals.filter { it.isDeleted }.forEach { it.revert() }
+
+            val existingGoalIds = existingMemberGoals.map { it.exerciseGoalEntity.id }
+            val newGoalIds = command.goalIds.filterNot { existingGoalIds.contains(it) }
+
+            val newGoals = exerciseGoalJpaPort.getExerciseGoals(newGoalIds).map { goal ->
                 MemberGoalEntity(
                     memberEntity = member,
                     exerciseGoalEntity = ExerciseGoalEntity.from(goal),
                 )
             }
-            memberGoalRepository.saveAll(memberGoal)
+            if (newGoals.isNotEmpty()) {
+                memberGoalRepository.saveAll(newGoals)
+            }
         }
     }
 

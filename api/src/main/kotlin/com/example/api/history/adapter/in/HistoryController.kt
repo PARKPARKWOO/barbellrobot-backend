@@ -20,13 +20,13 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 
@@ -73,7 +73,7 @@ class HistoryController(
         return ApiResponse(data = Unit)
     }
 
-    @PatchMapping("/diet")
+    @PostMapping(path = ["/diet"], consumes = ["multipart/form-data", "application/json"])
     @Operation(
         summary = "오늘 식단을 추가합니다.",
         description = "아침, 점심, 저녁 메뉴, 사진 을 추가할 수 있습니다.",
@@ -83,10 +83,15 @@ class HistoryController(
     suspend fun uploadDiet(
         @Parameter(hidden = true) @AuthenticationUser
         userInfo: UserInfo,
-        @ModelAttribute
-        request: AddDietRequest,
+        @RequestPart("request") request: AddDietRequest,
+        @RequestPart("images", required = false) images: List<MultipartFile>?,
     ): ApiResponse<Unit> {
-        historyFacadeUseCase.addDietToday(request.toCommand(userInfo.userId))
+        historyFacadeUseCase.addDietToday(
+            request.toCommand(
+                userId = userInfo.userId,
+                images = images,
+            ),
+        )
         return ApiResponse(data = Unit)
     }
     // 같은 Month 조회 API

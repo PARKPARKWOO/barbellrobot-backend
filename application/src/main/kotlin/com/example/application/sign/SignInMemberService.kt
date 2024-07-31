@@ -3,6 +3,7 @@ package com.example.application.sign
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.nosql.KeyValueStore
+import com.example.core.rival.port.`in`.RivalUseCase
 import com.example.core.sign.port.`in`.SignInMemberUseCase
 import com.example.core.sign.port.`in`.command.SignInWithEmailCommand
 import com.example.core.sign.port.`in`.query.FindUserWithSocialQuery
@@ -22,6 +23,7 @@ class SignInMemberService(
     @Value("\${jwt.refresh-token.expire-millis}")
     private val refreshTokenExpireTime: Long,
     private val kaKaoSignInPort: KaKaoSignInPort,
+    private val rivalUseCase: RivalUseCase,
 ) : AbstractSignInService(keyValueStore, refreshTokenExpireTime, jwtTokenService, kaKaoSignInPort),
     SignInMemberUseCase {
     @Transactional(readOnly = true)
@@ -39,6 +41,8 @@ class SignInMemberService(
                     provider = query.provider,
                 ),
             )
-            memberJpaPort.save(saveMemberCommand)
+            val member = memberJpaPort.save(saveMemberCommand)
+            rivalUseCase.createRival(member.id)
+            member
         }.getClaims()
 }

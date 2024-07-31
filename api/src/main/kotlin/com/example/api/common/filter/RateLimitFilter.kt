@@ -18,6 +18,7 @@ import org.springframework.web.servlet.HandlerMapping
 import org.springframework.web.servlet.support.RequestContextUtils
 import java.time.Duration
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.TimeUnit
 
 @Component
 class RateLimitFilter : OncePerRequestFilter(), Log {
@@ -25,10 +26,26 @@ class RateLimitFilter : OncePerRequestFilter(), Log {
         // interval
         val userQuotaBucket: ConcurrentHashMap<String, Bucket> = ConcurrentHashMap()
 
+        /**
+         * 1회 요청당 약 2000~3000 Token 사용 (운동 입력 안했을때)
+         * gemini flash 기준 분당 15 요청, 100만 토큰 허용
+         * draft 하게 계산 했을때 token quota 를 초과하진 않음
+         * 추후 Batch 로 토큰 계산 및 quota 설정 필요
+         */
         // greedy
         val aiQuotaBucket: ConcurrentHashMap<String, Bucket> = ConcurrentHashMap()
 
         const val AI_API = "ai"
+
+        const val TOO_MANY_REQUEST = "Too many requests"
+
+        const val AI_QUOTA = 15L
+
+        const val AI_REFILL_TOKEN = 1L
+
+        const val AI_REFILL_INTERVAL = 1L
+
+        val AI_REFILL_UNIT = TimeUnit.MINUTES
     }
 
     override fun doFilterInternal(
@@ -51,11 +68,11 @@ class RateLimitFilter : OncePerRequestFilter(), Log {
             val rateLimiter = getRateLimiter(annotation, key)
             val userBucket = userQuotaBucket.computeIfAbsent(key) { getIntervalBucket(rateLimiter) }
             if (path.contains(AI_API)) {
-                val aiBucket = aiQuotaBucket.computeIfAbsent(path) { getGreedyBucket(rateLimiter) }
+                val aiBucket = aiQuotaBucket.computeIfAbsent(path) { getGreedyBucket() }
                 val aiProbe = aiBucket.tryConsumeAndReturnRemaining(1)
                 if (!aiProbe.isConsumed) {
                     response.status = TOO_MANY_REQUESTS.value()
-                    response.writer.write("Too many requests")
+                    response.writer.write(TOO_MANY_REQUEST)
                     return
                 }
             }
@@ -65,7 +82,7 @@ class RateLimitFilter : OncePerRequestFilter(), Log {
                 filterChain.doFilter(request, response)
             } else {
                 response.status = TOO_MANY_REQUESTS.value()
-                response.writer.write("Too many requests")
+                response.writer.write(TOO_MANY_REQUEST)
             }
         } ?: return filterChain.doFilter(request, response)
     }
@@ -109,13 +126,13 @@ class RateLimitFilter : OncePerRequestFilter(), Log {
                 .build(),
         ).build()
 
-    private fun getGreedyBucket(rateLimiter: RateLimiter): Bucket = Bucket.builder()
+    private fun getGreedyBucket(): Bucket = Bucket.builder()
         .addLimit(
             BandwidthBuilder.builder()
-                .capacity(rateLimiter.quota)
+                .capacity(AI_QUOTA)
                 .refillGreedy(
-                    rateLimiter.refillTokens,
-                    Duration.of(rateLimiter.refillInterval, rateLimiter.timeUnit.toChronoUnit()),
+                    AI_REFILL_TOKEN,
+                    Duration.of(AI_REFILL_INTERVAL, AI_REFILL_UNIT.toChronoUnit()),
                 )
                 .build(),
         ).build()
