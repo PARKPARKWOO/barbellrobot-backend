@@ -18,7 +18,7 @@ class RivalService(
 
     @Transactional
     override fun createRival(memberId: UUID) {
-        rivalJpaPort.save(memberId)
+        rivalJpaPort.saveRival(memberId)
     }
 
     @Transactional(readOnly = true)
@@ -38,6 +38,10 @@ class RivalService(
                     receiverId = command.receiver,
                 )
                 rivalJpaPort.requestRival(command)
+            }
+
+            RivalStatus.REQUEST -> {
+                // 내가 신청한 라이벌 목록 조회
             }
         }
     }

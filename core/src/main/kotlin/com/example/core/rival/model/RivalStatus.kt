@@ -4,4 +4,5 @@ enum class RivalStatus {
     ACTIVE,
     PENDING,
     REFUSE,
+    REQUEST,
 }

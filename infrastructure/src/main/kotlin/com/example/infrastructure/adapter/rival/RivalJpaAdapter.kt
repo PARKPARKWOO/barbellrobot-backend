@@ -1,6 +1,7 @@
 package com.example.infrastructure.adapter.rival
 
 import com.example.core.common.error.ErrorCode
+import com.example.core.common.error.ErrorCode.FAILURE_REQUEST_RIVAL
 import com.example.core.common.error.ServiceException
 import com.example.core.rival.dto.RivalSummaryDto
 import com.example.core.rival.model.RivalStatus
@@ -18,7 +19,7 @@ class RivalJpaAdapter(
     private val rivalCurrentSituationRepository: RivalCurrentSituationRepository,
     private val rivalRepository: RivalRepository,
 ) : RivalJpaPort {
-    override fun save(memberId: UUID) {
+    override fun saveRival(memberId: UUID) {
         val rivalEntity = RivalEntity(
             memberId = memberId,
         )
@@ -26,31 +27,47 @@ class RivalJpaAdapter(
     }
 
     override fun refuseFromRivalRequest(command: RivalEventCommand) {
-        rivalCurrentSituationRepository.findRequestStatusFromRequest(
-            senderId = command.sender,
-            receiverId = command.receiver,
+        rivalCurrentSituationRepository.findRequestStatus(
+            userId = command.sender,
+            rivalId = command.receiver,
+        )?.refuseRival() ?: throw ServiceException(ErrorCode.NOT_FOUND_RIVAL_REQUEST)
+
+        rivalCurrentSituationRepository.findPendingStatus(
+            userId = command.receiver,
+            rivalId = command.sender,
         )?.refuseRival() ?: throw ServiceException(ErrorCode.NOT_FOUND_RIVAL_REQUEST)
     }
 
     override fun requestRival(command: RivalEventCommand) {
-        val rivalCurrentSituationEntity = RivalCurrentSituationEntity(
-            sender = command.sender,
-            receiver = command.receiver,
-            rivalStatus = RivalStatus.PENDING,
+        val senderRivalEntity = rivalRepository.findByMemberId(command.sender)
+        val receiverRivalEntity = rivalRepository.findByMemberId(command.receiver)
+        if (senderRivalEntity == null || receiverRivalEntity == null) throw ServiceException(FAILURE_REQUEST_RIVAL)
+
+        val senderEntity = RivalCurrentSituationEntity(
+            rivalMemberId = command.receiver,
+            rivalStatus = RivalStatus.REQUEST,
+            rivalEntity = senderRivalEntity,
         )
-        val newEntity = rivalCurrentSituationRepository.save(rivalCurrentSituationEntity)
-        val sender = rivalRepository.findByMemberId(command.sender)
-        val receiver = rivalRepository.findByMemberId(command.receiver)
-        if (sender != null && receiver != null) {
-            sender.addRival(newEntity)
-            receiver.addRival(newEntity)
-        }
+
+        val receiverEntity = RivalCurrentSituationEntity(
+            rivalMemberId = command.sender,
+            rivalStatus = RivalStatus.PENDING,
+            rivalEntity = receiverRivalEntity,
+        )
+
+        rivalCurrentSituationRepository.save(senderEntity)
+        rivalCurrentSituationRepository.save(receiverEntity)
     }
 
     override fun acceptFromRivalRequest(command: RivalEventCommand) {
-        rivalCurrentSituationRepository.findRequestStatusFromRequest(
-            senderId = command.receiver,
-            receiverId = command.receiver,
+        rivalCurrentSituationRepository.findRequestStatus(
+            userId = command.sender,
+            rivalId = command.receiver,
+        )?.acceptRival() ?: throw ServiceException(ErrorCode.NOT_FOUND_RIVAL_REQUEST)
+
+        rivalCurrentSituationRepository.findPendingStatus(
+            userId = command.receiver,
+            rivalId = command.sender,
         )?.acceptRival() ?: throw ServiceException(ErrorCode.NOT_FOUND_RIVAL_REQUEST)
     }
 

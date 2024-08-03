@@ -1,6 +1,7 @@
 package com.example.infrastructure.persistence.repository.rival
 
 import com.example.core.rival.dto.RivalSummaryDto
+import com.example.core.rival.model.RivalStatus.ACTIVE
 import com.example.core.rival.model.RivalStatus.PENDING
 import com.example.infrastructure.persistence.entity.member.QMemberEntity.memberEntity
 import com.example.infrastructure.persistence.entity.member.QMemberInfo.memberInfo
@@ -34,17 +35,15 @@ class RivalQueryRepositoryImpl(
                 memberEntity.profile,
                 rivalCurrentSituationEntity.rivalStatus,
             ),
-        ).from(rivalEntity)
-            .leftJoin(rivalEntity.myRivals, rivalCurrentSituationEntity)
-            .on(
-                rivalCurrentSituationEntity.sender.eq(memberId)
-                    .or(rivalCurrentSituationEntity.receiver.eq(memberId)),
-            )
+        ).from(rivalCurrentSituationEntity)
+            .leftJoin(rivalCurrentSituationEntity.rivalEntity, rivalEntity)
             .leftJoin(memberEntity)
-            .on(memberEntity.id.eq(memberId))
+            .on(
+                memberEntity.id.eq(rivalCurrentSituationEntity.rivalMemberId),
+            )
             .leftJoin(memberInfo)
-            .on(memberInfo.userId.eq(memberId))
-            .where(rivalEntity.memberId.eq(memberId))
+            .on(memberInfo.userId.eq(memberEntity.id))
+            .where(rivalEntity.memberId.eq(memberId).and(rivalCurrentSituationEntity.rivalStatus.eq(ACTIVE)))
             .fetch()
     }
 
@@ -52,17 +51,18 @@ class RivalQueryRepositoryImpl(
         return jpaQueryFactory.select(
             Projections.constructor(
                 RivalSummaryDto::class.java,
-                rivalCurrentSituationEntity.sender,
+                rivalCurrentSituationEntity.rivalMemberId,
                 memberInfo.nickname,
                 memberEntity.profile,
                 rivalCurrentSituationEntity.rivalStatus,
             ),
         ).from(rivalCurrentSituationEntity)
-            .leftJoin(memberInfo).on(memberInfo.userId.eq(rivalCurrentSituationEntity.sender))
-            .leftJoin(memberEntity).on(memberEntity.id.eq(rivalCurrentSituationEntity.sender))
+            .leftJoin(memberInfo).on(memberInfo.userId.eq(rivalCurrentSituationEntity.rivalMemberId))
+            .leftJoin(memberEntity).on(memberEntity.id.eq(rivalCurrentSituationEntity.rivalMemberId))
+            .join(rivalCurrentSituationEntity.rivalEntity, rivalEntity)
             .where(
-                rivalCurrentSituationEntity.rivalStatus.eq(PENDING)
-                    .and(rivalCurrentSituationEntity.receiver.eq(memberId)),
+                rivalEntity.memberId.eq(memberId)
+                    .and(rivalCurrentSituationEntity.rivalStatus.eq(PENDING)),
             )
             .fetch()
     }

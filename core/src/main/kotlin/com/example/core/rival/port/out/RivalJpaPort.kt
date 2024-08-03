@@ -5,7 +5,7 @@ import com.example.core.rival.port.command.RivalEventCommand
 import java.util.UUID
 
 interface RivalJpaPort {
-    fun save(memberId: UUID)
+    fun saveRival(memberId: UUID)
 
     fun refuseFromRivalRequest(command: RivalEventCommand)
 

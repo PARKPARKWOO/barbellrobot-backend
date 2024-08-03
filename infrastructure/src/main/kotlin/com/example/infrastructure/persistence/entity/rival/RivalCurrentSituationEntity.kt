@@ -7,30 +7,28 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType.STRING
 import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType.LAZY
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
 import java.util.UUID
 
-// status 는 아닌듯
+const val RIVAL_CURRENT_SITUATION_TABLE_NAME = "rival_current_situation"
+
 @Entity
+@Table(name = RIVAL_CURRENT_SITUATION_TABLE_NAME)
 class RivalCurrentSituationEntity(
-    @Column(name = "sender")
+    @Column(name = "rival_member_id")
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    val sender: UUID,
-    @Column(name = "receiver")
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    val receiver: UUID,
+    val rivalMemberId: UUID,
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "rival")
+    val rivalEntity: RivalEntity,
     @Enumerated(STRING)
     var rivalStatus: RivalStatus,
 ) : BaseEntity() {
-    companion object {
-        fun from(domain: RivalCurrentSituation): RivalCurrentSituationEntity = RivalCurrentSituationEntity(
-            sender = domain.sender,
-            receiver = domain.receiver,
-            rivalStatus = domain.rivalStatus,
-        )
-    }
-
     fun refuseRival() {
         this.rivalStatus = RivalStatus.REFUSE
     }
@@ -40,8 +38,7 @@ class RivalCurrentSituationEntity(
     }
 
     fun toModel(): RivalCurrentSituation = RivalCurrentSituation(
-        sender = sender,
-        receiver = receiver,
+        rivalMemberId = rivalMemberId,
         rivalStatus = rivalStatus,
     )
 }
