@@ -15,6 +15,11 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 @RestController
 @RequestMapping(path = ["/api/v1/sse"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
 class SseController {
+    companion object {
+        // ms 단위 1시간
+        private const val SSE_EMITTER_TIMEOUT = 3_600_000L
+    }
+
     @GetMapping("/connect")
     @Operation(
         summary = "sse 연결",
@@ -24,7 +29,7 @@ class SseController {
         @AuthenticationUser
         userInfo: UserInfo,
     ): SseEmitter {
-        val response = SseEmitter(10000000000)
+        val response = SseEmitter(SSE_EMITTER_TIMEOUT)
         SseConnectionRegistry.SSE_CONNECTED_USER[userInfo.userId] = response
         return response
     }

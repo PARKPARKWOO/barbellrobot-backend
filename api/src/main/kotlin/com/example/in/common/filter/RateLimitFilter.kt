@@ -1,6 +1,5 @@
 package com.example.`in`.common.filter
 
-import com.example.application.common.log.logger
 import com.example.`in`.common.annotation.PublicEndPoint
 import com.example.`in`.common.annotation.RateLimit
 import com.example.`in`.common.config.RateLimiter

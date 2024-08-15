@@ -1,14 +1,14 @@
 package com.example.`in`.api.rival.adapter.`in`
 
-import com.example.`in`.common.annotation.AuthenticationUser
-import com.example.`in`.common.config.SwaggerConfig
-import com.example.`in`.common.resolver.UserInfo
-import com.example.`in`.common.response.ApiResponse
 import com.example.core.rival.port.`in`.RivalUseCase
 import com.example.core.user.port.`in`.MemberUseCase
 import com.example.`in`.api.rival.adapter.`in`.request.UpdateRivalStatusRequest
 import com.example.`in`.api.rival.adapter.`in`.response.RivalSummaryResponse
 import com.example.`in`.api.trainer.response.MemberSummaryResponse
+import com.example.`in`.common.annotation.AuthenticationUser
+import com.example.`in`.common.config.SwaggerConfig
+import com.example.`in`.common.resolver.UserInfo
+import com.example.`in`.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement

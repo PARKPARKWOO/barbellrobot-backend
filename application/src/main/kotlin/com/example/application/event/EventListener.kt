@@ -1,5 +1,6 @@
 package com.example.application.event
 
+import com.example.application.common.log.logger
 import com.example.core.notification.model.SseEvent
 import com.example.core.notification.model.SseEventType
 import com.example.core.notification.port.out.NotificationPort
@@ -21,6 +22,7 @@ class EventListener(
     @EventListener
     fun listen(event: SseEvent) {
         handlerScope.launch {
+            logger().info("sse message send listen")
             when (event.type) {
                 SseEventType.RIVAL_ACCEPT -> {
                     notificationPort.sendRivalAccept(event.sender, event.receiver)
