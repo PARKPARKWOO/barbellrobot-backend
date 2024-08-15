@@ -1,6 +1,5 @@
 package com.example.`in`.api.exercise.adapter.`in`
 
-import com.example.application.common.log.logger
 import com.example.core.exercise.port.`in`.ExerciseAreaUseCase
 import com.example.`in`.api.exercise.adapter.`in`.request.CreateExerciseAreaRequest
 import com.example.`in`.api.exercise.adapter.`in`.response.ExerciseAreaResponse
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.concurrent.CompletableFuture
 
 @RestController
 @RequestMapping("/api/v1/area")
@@ -23,7 +21,6 @@ import java.util.concurrent.CompletableFuture
 class ExerciseAreaController(
     private val exerciseAreaUseCase: ExerciseAreaUseCase,
 ) {
-    private val log = logger()
     @PostMapping
     @Operation(
         summary = "운동 부위 추가",

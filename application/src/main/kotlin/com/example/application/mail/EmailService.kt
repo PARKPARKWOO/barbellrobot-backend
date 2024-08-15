@@ -1,6 +1,5 @@
 package com.example.application.mail
 
-import com.example.application.common.log.logger
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.mail.application.port.out.EmailVerifyPort
@@ -19,8 +18,6 @@ class EmailService(
     private val sendEmailPort: SendEmailPort,
     private val userQueryPort: UserQueryPort,
 ) : EmailVerifyUseCase {
-    private val log = logger()
-
     @Transactional(readOnly = true)
     override fun verifyEmail(command: VerifyEmailCommand): UUID {
         return emailVerifyPort.verifyEmail(command)
