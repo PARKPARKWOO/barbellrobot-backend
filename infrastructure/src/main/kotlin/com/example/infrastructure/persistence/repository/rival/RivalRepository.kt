@@ -21,6 +21,8 @@ interface RivalQueryRepository {
     fun findMyRivals(memberId: UUID): List<RivalSummaryDto>
 
     fun findPendingFromMe(memberId: UUID): List<RivalSummaryDto>
+
+    fun findMyActiveRivalByRivalId(memberId: UUID, rivalId: UUID): RivalSummaryDto?
 }
 
 class RivalQueryRepositoryImpl(
@@ -65,5 +67,30 @@ class RivalQueryRepositoryImpl(
                     .and(rivalCurrentSituationEntity.rivalStatus.eq(PENDING)),
             )
             .fetch()
+    }
+
+    override fun findMyActiveRivalByRivalId(memberId: UUID, rivalId: UUID): RivalSummaryDto? {
+        return jpaQueryFactory.select(
+            Projections.constructor(
+                RivalSummaryDto::class.java,
+                memberInfo.userId,
+                memberInfo.nickname,
+                memberEntity.profile,
+                rivalCurrentSituationEntity.rivalStatus,
+            ),
+        ).from(rivalCurrentSituationEntity)
+            .leftJoin(rivalCurrentSituationEntity.rivalEntity, rivalEntity)
+            .leftJoin(memberEntity)
+            .on(
+                memberEntity.id.eq(rivalCurrentSituationEntity.rivalMemberId),
+            )
+            .leftJoin(memberInfo)
+            .on(memberInfo.userId.eq(memberEntity.id))
+            .where(
+                rivalEntity.memberId.eq(memberId)
+                    .and(rivalCurrentSituationEntity.rivalStatus.eq(ACTIVE))
+                    .and(rivalCurrentSituationEntity.rivalMemberId.eq(rivalId)),
+            )
+            .fetchOne()
     }
 }

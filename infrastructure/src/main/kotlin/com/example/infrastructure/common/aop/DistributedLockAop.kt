@@ -1,6 +1,6 @@
 package com.example.infrastructure.common.aop
 
-import com.example.application.common.log.Log
+import com.example.application.common.log.logger
 import com.example.application.common.util.SpringElParser
 import com.example.core.common.annotation.DistributedLock
 import org.aspectj.lang.ProceedingJoinPoint
@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component
 class DistributedLockAop(
     private val redissonClient: RedissonClient,
     private val aopForTransaction: AopForTransaction,
-) : Log {
+) {
+    private val log = logger()
+
     companion object {
         const val REDISSON_LOCK_PREFIX = "LOCK:"
     }

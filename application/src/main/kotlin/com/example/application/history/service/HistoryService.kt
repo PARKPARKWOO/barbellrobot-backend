@@ -4,6 +4,7 @@ import com.example.application.common.util.DateTimeConvert.getEndOfMonth
 import com.example.application.common.util.DateTimeConvert.getEndOfWeek
 import com.example.application.common.util.DateTimeConvert.getStartOfMonth
 import com.example.application.common.util.DateTimeConvert.getStartOfWeek
+import com.example.core.history.dto.HistoryResponseDto
 import com.example.core.history.port.command.AddDietJpaCommand
 import com.example.core.history.port.command.ExerciseTodayCommand
 import com.example.core.history.port.`in`.GenerateHistoryUseCase
@@ -14,7 +15,6 @@ import com.example.core.history.port.out.command.AttendanceTodayCommand
 import com.example.core.history.port.out.command.SaveExerciseHistoryCommand
 import com.example.core.history.port.out.query.FindUserHistoryQuery
 import com.example.core.history.port.query.GetHistoryQuery
-import com.example.core.history.dto.HistoryResponseDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
