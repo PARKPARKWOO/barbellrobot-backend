@@ -1,6 +1,7 @@
 package com.example.core.rival.port.`in`
 
 import com.example.core.rival.dto.RivalSummaryDto
+import com.example.core.rival.port.command.ProdRivalCommand
 import com.example.core.rival.port.command.RivalEventCommand
 import java.util.UUID
 
@@ -12,4 +13,6 @@ interface RivalUseCase {
     fun getPendingRivalList(memberId: UUID): List<RivalSummaryDto>
 
     fun updateRivalStatus(command: RivalEventCommand)
+
+    fun prodRival(command: ProdRivalCommand)
 }

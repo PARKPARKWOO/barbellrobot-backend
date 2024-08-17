@@ -2,6 +2,7 @@ package com.example.`in`.api.rival.adapter.`in`
 
 import com.example.core.rival.port.`in`.RivalUseCase
 import com.example.core.user.port.`in`.MemberUseCase
+import com.example.`in`.api.rival.adapter.`in`.request.ProdRivalRequest
 import com.example.`in`.api.rival.adapter.`in`.request.UpdateRivalStatusRequest
 import com.example.`in`.api.rival.adapter.`in`.response.RivalSummaryResponse
 import com.example.`in`.api.trainer.response.MemberSummaryResponse
@@ -118,5 +119,20 @@ class RivalController(
             MemberSummaryResponse.from(it)
         }
         return ApiResponse(data = response)
+    }
+
+    @PostMapping("/rival/prodding")
+    @Operation(
+        summary = "찌르기 기능",
+        security = [SecurityRequirement(name = SwaggerConfig.AUTHORIZATION_BEARER_SECURITY_SCHEME_NAME)],
+    )
+    fun prodRival(
+        @AuthenticationUser
+        userInfo: UserInfo,
+        @RequestBody
+        request: ProdRivalRequest,
+    ): ApiResponse<Unit> {
+        rivalUseCase.prodRival(request.toCommand(userInfo.userId))
+        return ApiResponse(data = Unit)
     }
 }

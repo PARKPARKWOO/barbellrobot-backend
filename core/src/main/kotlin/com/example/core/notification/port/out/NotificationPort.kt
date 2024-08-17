@@ -9,4 +9,6 @@ interface NotificationPort {
     fun sendChatAlert(sender: UUID, receiver: UUID)
 
     fun sendRivalRequest(sender: UUID, receiver: UUID)
+
+    fun sendRivalProdding(sender: UUID, receiver: UUID)
 }

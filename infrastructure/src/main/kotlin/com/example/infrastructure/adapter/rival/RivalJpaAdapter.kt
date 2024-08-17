@@ -7,12 +7,13 @@ import com.example.core.rival.dto.RivalSummaryDto
 import com.example.core.rival.model.RivalStatus
 import com.example.core.rival.port.command.RivalEventCommand
 import com.example.core.rival.port.out.RivalJpaPort
+import com.example.core.rival.port.query.FindMyRivalByRivalIdQuery
 import com.example.infrastructure.persistence.entity.rival.RivalCurrentSituationEntity
 import com.example.infrastructure.persistence.entity.rival.RivalEntity
 import com.example.infrastructure.persistence.repository.rival.RivalCurrentSituationRepository
 import com.example.infrastructure.persistence.repository.rival.RivalRepository
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class RivalJpaAdapter(
@@ -77,5 +78,12 @@ class RivalJpaAdapter(
 
     override fun findPendingFromMe(memberId: UUID): List<RivalSummaryDto> {
         return rivalRepository.findPendingFromMe(memberId)
+    }
+
+    override fun findMyRivalByRivalId(query: FindMyRivalByRivalIdQuery): RivalSummaryDto? {
+        return rivalRepository.findMyActiveRivalByRivalId(
+            memberId = query.userId,
+            rivalId = query.rivalId,
+        )
     }
 }
