@@ -19,4 +19,6 @@ interface RivalJpaPort {
     fun findPendingFromMe(memberId: UUID): List<RivalSummaryDto>
 
     fun findMyRivalByRivalId(query: FindMyRivalByRivalIdQuery): RivalSummaryDto?
+
+    fun findDuplicatedRequestExist(query: FindMyRivalByRivalIdQuery): Boolean
 }

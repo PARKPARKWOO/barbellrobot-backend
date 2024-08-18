@@ -13,6 +13,7 @@ import com.example.core.rival.port.command.ProdRivalCommand
 import com.example.core.rival.port.command.RivalEventCommand
 import com.example.core.rival.port.`in`.RivalUseCase
 import com.example.core.rival.port.out.RivalJpaPort
+import com.example.core.rival.port.query.FindMyRivalByRivalIdQuery
 import com.example.core.rival.service.RivalRequestValidation
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -58,6 +59,7 @@ class RivalService(
                     senderId = command.sender,
                     receiverId = command.receiver,
                 )
+                ifRequestExistThrowException(command.sender, command.receiver)
                 rivalJpaPort.requestRival(command)
                 applicationEventPublisher.publishEvent(
                     SseEvent(
@@ -73,6 +75,16 @@ class RivalService(
                 // 내가 신청한 라이벌 목록 조회
             }
         }
+    }
+
+    private fun ifRequestExistThrowException(userId: UUID, rivalId: UUID) {
+        val existRequestFromMe = FindMyRivalByRivalIdQuery(
+            userId = userId,
+            rivalId = rivalId,
+        )
+
+        val exist = rivalJpaPort.findDuplicatedRequestExist(existRequestFromMe)
+        if (exist) throw ServiceException(ErrorCode.DUPLICATED_REQUEST_RIVAL)
     }
 
     override fun prodRival(command: ProdRivalCommand) {

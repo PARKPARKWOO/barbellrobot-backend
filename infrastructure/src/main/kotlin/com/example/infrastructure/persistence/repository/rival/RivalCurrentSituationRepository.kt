@@ -17,6 +17,8 @@ interface RivalCurrentSituationQueryRepository {
     fun findRequestStatus(userId: UUID, rivalId: UUID): RivalCurrentSituationEntity?
 
     fun findPendingStatus(userId: UUID, rivalId: UUID): RivalCurrentSituationEntity?
+
+    fun findDuplicatedRequest(userId: UUID, rivalId: UUID): Boolean
 }
 
 class RivalCurrentSituationQueryRepositoryImpl(
@@ -42,5 +44,16 @@ class RivalCurrentSituationQueryRepositoryImpl(
                     .and(rivalCurrentSituationEntity.rivalMemberId.eq(rivalId))
                     .and(rivalEntity.memberId.eq(userId)),
             ).fetchOne()
+    }
+
+    override fun findDuplicatedRequest(userId: UUID, rivalId: UUID): Boolean {
+        return jpaQueryFactory.selectOne()
+            .from(rivalCurrentSituationEntity)
+            .join(rivalCurrentSituationEntity.rivalEntity, rivalEntity)
+            .where(
+                (rivalEntity.memberId.eq(userId).and(rivalCurrentSituationEntity.rivalMemberId.eq(rivalId)))
+                    .or(rivalEntity.memberId.eq(rivalId).and(rivalCurrentSituationEntity.rivalMemberId.eq(userId)))
+            )
+            .fetchFirst() != null
     }
 }

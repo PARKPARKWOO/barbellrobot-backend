@@ -86,4 +86,11 @@ class RivalJpaAdapter(
             rivalId = query.rivalId,
         )
     }
+
+    override fun findDuplicatedRequestExist(query: FindMyRivalByRivalIdQuery): Boolean {
+        return rivalCurrentSituationRepository.findDuplicatedRequest(
+            userId = query.userId,
+            rivalId = query.rivalId,
+        )
+    }
 }
