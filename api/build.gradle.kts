@@ -46,6 +46,9 @@ dependencies {
 
     // gemini auto-config
 //    implementation("org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter")
+
+    // log-loki
+    implementation("com.github.loki4j:loki-logback-appender:1.5.1")
 }
 
 extra["springAiVersion"] = "1.0.0-SNAPSHOT"
