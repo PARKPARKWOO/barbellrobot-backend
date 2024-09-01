@@ -21,7 +21,7 @@ apply(plugin = "org.jetbrains.kotlin.plugin.spring")
 
 dependencies {
     implementation(project(":application"))
-    implementation(project(":core"))
+    implementation(project(":domain"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

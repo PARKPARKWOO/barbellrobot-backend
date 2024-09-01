@@ -49,7 +49,6 @@ class SignInController(
         @RequestBody @Validated
         request: SignInWithEmailRequest,
     ): ApiResponse<JwtResponse> {
-        log.info("요청 들어옴")
         val response = JwtResponse.from(signInMemberUseCase.signInWithEmail(request.toCommand()))
         return ApiResponse(data = response)
     }

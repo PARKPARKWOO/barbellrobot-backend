@@ -1,10 +1,10 @@
 package com.example.application.event
 
-import com.example.core.notification.model.SseEvent
-import com.example.core.notification.model.SseEventType
-import com.example.core.notification.port.out.NotificationPort
+import com.example.core.event.NotificationEvent
+import com.example.core.event.SseConnectEvent
+import com.example.core.event.SseConnectType
+import com.example.core.notification.port.`in`.NotificationUseCase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import org.springframework.context.event.EventListener
@@ -13,29 +13,31 @@ import java.util.concurrent.Executors
 
 @Component
 class EventListener(
-    private val notificationPort: NotificationPort,
+    private val notificationUseCase: NotificationUseCase,
 ) {
     private val coroutineDispatcher = Executors.newScheduledThreadPool(10).asCoroutineDispatcher()
-    private val handlerScope = CoroutineScope(coroutineDispatcher + SupervisorJob())
+    private val handlerScope = CoroutineScope(coroutineDispatcher)
 
     @EventListener
-    fun listen(event: SseEvent) {
+    fun listenForNotification(event: NotificationEvent) {
+        handlerScope.launch {
+            notificationUseCase.sendNotification(event)
+        }
+    }
+
+    @EventListener
+    fun listenForSseConnected(event: SseConnectEvent) {
         handlerScope.launch {
             when (event.type) {
-                SseEventType.RIVAL_ACCEPT -> {
-                    notificationPort.sendRivalAccept(event.sender, event.receiver)
+                SseConnectType.CONNECTED -> {
+                    val unreadNotifications = notificationUseCase.findRecentUnreadNotification(event.userId)
+                    unreadNotifications.forEach { notification ->
+                        notificationUseCase.sendNotification(notification)
+                    }
                 }
 
-                SseEventType.CHAT -> {
-                    notificationPort.sendChatAlert(event.sender, event.receiver)
-                }
-
-                SseEventType.RIVAL_REQUEST -> {
-                    notificationPort.sendRivalRequest(event.sender, event.receiver)
-                }
-
-                SseEventType.RIVAL_PROD -> {
-                    notificationPort.sendRivalProdding(event.sender, event.receiver)
+                SseConnectType.DISCONNECTED -> {
+                    // 재연결 시도?
                 }
             }
         }

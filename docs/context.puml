@@ -1,26 +1,96 @@
+'@startuml
+'!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+'
+'Container_Ext(usr, "Client", "App", "user")
+'
+'Container_Ext(gemini, "Gemini", "LLM", "")
+'
+'ContainerDb(db, "Relational DB", "MySQL", "read/write")
+'ContainerDb(redis, "VectorDB", "Redis", "RedisVectorStore")
+'
+'Container_Boundary(server, "PocketFit Server") {
+'    package "Web Module" {
+'        Component(api, "API Module", "spring bean", "")
+'        Component(ch, "Rate Limiter", "spring bean", "Bucket4j filter")
+'    }
+'
+'    package "Application Module" {
+'        Component(service, "Service", "spring bean", "Implements UseCase")
+'    }
+'
+'    package "Core Module" {
+'        Component(usecase, "PtPort", "pojo", "core port")
+'        Component(port, "Out-Port", "pojo", "outbound port")
+'    }
+'
+'    package "Infrastructure Module" {
+'        Component(ai_adapter, "AI Adapter", "spring bean", "LLM Model Handling and Embedding VectorDatabase")
+'        Component(jpa_adapter, "Persistence Adapter", "spring bean", "Persistence read/write")
+'    }
+'}
+'
+'Rel(usr, api, "Submits pt request")
+'Rel(ch, api, "Intercepts user request")
+'
+'Rel(api, usecase, "UseCase")
+'Rel(api, usr, "Too Many Requests (429)")
+'
+'Rel(ai_adapter, port, "Implements")
+'Rel(jpa_adapter, port, "Implements")
+'Rel(service, usecase, "Implements")
+'
+'
+'Rel(ai_adapter, redis, "Retrieves data")
+'Rel(ai_adapter, gemini, "Generates Chat Response")
+'Rel(ai_adapter, service, "Returns Chat Response")
+'Rel(service, port, "retrieves data")
+'Rel(jpa_adapter, db, "Inserts pt entity")
+'
+'@enduml
+
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container_Ext(usr1, "Client", "App", "user1")
+Container_Ext(usr, "Client", "App", "user")
 Container_Ext(gemini, "Gemini", "LLM", "")
-
-ContainerDb(db, "Relational DB", "MySQL", "post persistence")
+ContainerDb(db, "Relational DB", "MySQL", "read/write")
 ContainerDb(redis, "VectorDB", "Redis", "RedisVectorStore")
 
 Container_Boundary(server, "PocketFit Server") {
-    Component(app1, "API Module", "API Server", "")
-    Component(app2, "Spring AI Module", "Vertex AI Gemini", "LLM Model Handling and Embedding VectorDatabase")
-    Component(ch, "Bucket4j filter", "RateLimiter")
-    Component(pt, "Pt", "UseCase")
+    package "Web Module" {
+        Component(api, "API Module", "spring bean", "")
+        Component(ch, "Rate Limiter", "spring bean", "Bucket4j filter")
+    }
+
+    package "Application Module" {
+        Component(service, "Service", "spring bean", "Implements UseCase")
+    }
+
+    package "Core Module" {
+        Component(usecase, "UseCase Port", "pojo", "core port")
+        Component(port, "Out-Port", "pojo", "outbound port")
+    }
+
+    package "Infrastructure Module" {
+        Component(ai_adapter, "AI Adapter", "spring bean", "LLM Model Handling and Embedding VectorDatabase")
+        Component(jpa_adapter, "Persistence Adapter", "spring bean", "Persistence read/write")
+    }
 }
 
-Rel(app1, app2, "Request Prompt       (user query)")
-Rel(app2, redis, "retrieve")
-Rel(usr1, app1, "pt request")
-Rel(ch, app1, "user request interceptor")
-Rel(ch, usr1, "Too Many Request (429)")
-Rel(app2, gemini, "Generate Chat Response")
-Rel(app2, pt, "Chat Response")
-Rel(pt, db, "insert pt entity")
+Rel(usr, api, "Submits pt request")
+Rel(ch, api, "Limits requests to")
+Rel(api, service, "Calls")
+Rel(api, usr, "Too Many Requests (429)")
+
+Rel(ai_adapter, port, "Implements")
+Rel(jpa_adapter, port, "Implements")
+Rel(service, usecase, "Implements")
+
+Rel(service, port, "Uses")
+Rel(port, service, "Provides data to")
+
+Rel(ai_adapter, redis, "Retrieves/Stores data")
+Rel(ai_adapter, gemini, "Generates Chat Response")
+Rel(jpa_adapter, db, "Reads/Writes data")
 
 @enduml
