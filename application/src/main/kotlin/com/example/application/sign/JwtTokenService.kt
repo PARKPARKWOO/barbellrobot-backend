@@ -78,8 +78,6 @@ class JwtTokenService(
             throw ExpiredJwtException(e.message.toString())
         } catch (e: JwtException) {
             throw ParseJwtFailedException("failed to parse jwt: $token ")
-        } catch (e: ParseJwtFailedException) {
-            throw NoBearerTokenException(e.message)
         }
     }
 
@@ -94,8 +92,6 @@ class JwtTokenService(
             throw ExpiredJwtException(e.message.toString())
         } catch (e: JwtException) {
             throw ParseJwtFailedException("failed to parse jwt: $refreshToken ")
-        } catch (e: ParseJwtFailedException) {
-            throw NoBearerTokenException(e.message)
         }
     }
 
