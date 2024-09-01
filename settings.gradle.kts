@@ -1,6 +1,6 @@
 rootProject.name = "health"
 
 include("api")
-include("core")
+include("domain")
 include("infrastructure")
 include("application")

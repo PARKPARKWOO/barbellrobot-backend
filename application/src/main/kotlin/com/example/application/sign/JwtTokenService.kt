@@ -2,6 +2,7 @@ package com.example.application.sign
 
 import com.example.core.sign.dto.JwtResponseDto
 import com.example.core.sign.exception.ExpiredJwtException
+import com.example.core.sign.exception.NoBearerTokenException
 import com.example.core.sign.exception.ParseJwtFailedException
 import io.jsonwebtoken.Header
 import io.jsonwebtoken.JwtException
@@ -77,6 +78,8 @@ class JwtTokenService(
             throw ExpiredJwtException(e.message.toString())
         } catch (e: JwtException) {
             throw ParseJwtFailedException("failed to parse jwt: $token ")
+        } catch (e: ParseJwtFailedException) {
+            throw NoBearerTokenException(e.message)
         }
     }
 
@@ -91,6 +94,8 @@ class JwtTokenService(
             throw ExpiredJwtException(e.message.toString())
         } catch (e: JwtException) {
             throw ParseJwtFailedException("failed to parse jwt: $refreshToken ")
+        } catch (e: ParseJwtFailedException) {
+            throw NoBearerTokenException(e.message)
         }
     }
 

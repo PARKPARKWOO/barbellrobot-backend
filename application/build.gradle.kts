@@ -16,8 +16,8 @@ allOpen {
 }
 
 dependencies {
-    implementation(project(":core"))
 
+    implementation(project(":domain"))
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springframework:spring-tx")
@@ -52,8 +52,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
 }
 
-//extra["springAiVersion"] = "1.0.0-SNAPSHOT"
-//extra["springCloudVersion"] = "2023.0.0"
+// extra["springAiVersion"] = "1.0.0-SNAPSHOT"
+// extra["springCloudVersion"] = "2023.0.0"
 
 dependencyManagement {
     imports {

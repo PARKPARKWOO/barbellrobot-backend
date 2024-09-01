@@ -3,10 +3,10 @@ package com.example.application.rival
 import com.example.application.common.transaction.Tx
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
-import com.example.core.notification.model.SseEvent
-import com.example.core.notification.model.SseEventType.RIVAL_ACCEPT
-import com.example.core.notification.model.SseEventType.RIVAL_PROD
-import com.example.core.notification.model.SseEventType.RIVAL_REQUEST
+import com.example.core.event.NotificationEvent
+import com.example.core.event.NotificationEventType.RIVAL_ACCEPT
+import com.example.core.event.NotificationEventType.RIVAL_PROD
+import com.example.core.event.NotificationEventType.RIVAL_REQUEST
 import com.example.core.rival.dto.RivalSummaryDto
 import com.example.core.rival.model.RivalStatus
 import com.example.core.rival.port.command.ProdRivalCommand
@@ -44,7 +44,7 @@ class RivalService(
             RivalStatus.ACTIVE -> {
                 rivalJpaPort.acceptFromRivalRequest(command)
                 applicationEventPublisher.publishEvent(
-                    SseEvent(
+                    NotificationEvent(
                         sender = command.sender,
                         receiver = command.receiver,
                         type = RIVAL_ACCEPT,
@@ -62,7 +62,7 @@ class RivalService(
                 ifRequestExistThrowException(command.sender, command.receiver)
                 rivalJpaPort.requestRival(command)
                 applicationEventPublisher.publishEvent(
-                    SseEvent(
+                    NotificationEvent(
                         sender = command.sender,
                         receiver = command.receiver,
                         type = RIVAL_REQUEST,
@@ -90,12 +90,12 @@ class RivalService(
     override fun prodRival(command: ProdRivalCommand) {
         val rival = Tx.readTx { rivalJpaPort.findMyRivalByRivalId(command.toQuery()) }
         rival?.let {
-            val sseEvent = SseEvent(
+            val notificationEvent = NotificationEvent(
                 sender = command.sender,
                 receiver = command.receiver,
                 type = RIVAL_PROD,
             )
-            applicationEventPublisher.publishEvent(sseEvent)
+            applicationEventPublisher.publishEvent(notificationEvent)
         } ?: throw ServiceException(ErrorCode.NOT_FOUND_RIVAL)
     }
 }

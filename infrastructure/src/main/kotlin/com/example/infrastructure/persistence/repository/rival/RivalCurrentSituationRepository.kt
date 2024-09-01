@@ -1,6 +1,7 @@
 package com.example.infrastructure.persistence.repository.rival
 
 import com.example.core.rival.model.RivalStatus.PENDING
+import com.example.core.rival.model.RivalStatus.REFUSE
 import com.example.core.rival.model.RivalStatus.REQUEST
 import com.example.infrastructure.persistence.entity.rival.QRivalCurrentSituationEntity.rivalCurrentSituationEntity
 import com.example.infrastructure.persistence.entity.rival.QRivalEntity.rivalEntity
@@ -53,6 +54,7 @@ class RivalCurrentSituationQueryRepositoryImpl(
             .where(
                 (rivalEntity.memberId.eq(userId).and(rivalCurrentSituationEntity.rivalMemberId.eq(rivalId)))
                     .or(rivalEntity.memberId.eq(rivalId).and(rivalCurrentSituationEntity.rivalMemberId.eq(userId)))
+                    .and(rivalCurrentSituationEntity.rivalStatus.notIn(REFUSE)),
             )
             .fetchFirst() != null
     }
