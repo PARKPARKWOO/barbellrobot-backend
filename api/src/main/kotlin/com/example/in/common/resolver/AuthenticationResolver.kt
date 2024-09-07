@@ -1,10 +1,10 @@
 package com.example.`in`.common.resolver
 
-import com.example.`in`.common.annotation.AuthenticationUser
 import com.example.core.common.constants.AuthConstants
 import com.example.core.common.error.ErrorCode
 import com.example.core.common.error.ServiceException
 import com.example.core.user.model.Role
+import com.example.`in`.common.annotation.AuthenticationUser
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
@@ -25,7 +25,7 @@ class AuthenticationResolver : HandlerMethodArgumentResolver {
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?,
-    ): Any? {
+    ): Any {
         webRequest.getNativeRequest(HttpServletRequest::class.java)?.let {
             val userId = UUID.fromString(it.getAttribute(AuthConstants.USER_ID).toString())
                 ?: throw ServiceException(ErrorCode.AUTHENTICATION_RESOLVER_ERROR)

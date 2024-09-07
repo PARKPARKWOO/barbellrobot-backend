@@ -58,5 +58,5 @@ Status Code 200 으로 통일
 
 ## 시스템 개요
 
-### AI Request FLOW Diagram
+### AI Component Diagram
 ![01.context diagram](./docs/ai.png)
