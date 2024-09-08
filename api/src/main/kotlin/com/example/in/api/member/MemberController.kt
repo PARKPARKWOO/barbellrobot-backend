@@ -15,6 +15,7 @@ import com.example.`in`.api.member.response.GetMemberMyPageResponse
 import com.example.`in`.api.member.response.ManagementFromMemberResponse
 import com.example.`in`.api.member.response.MemberDetailResponse
 import com.example.`in`.common.annotation.AuthenticationUser
+import com.example.`in`.common.annotation.FileExtension
 import com.example.`in`.common.annotation.RateLimit
 import com.example.`in`.common.config.SwaggerConfig
 import com.example.`in`.common.resolver.UserInfo
@@ -52,6 +53,7 @@ class MemberController(
         @Parameter(hidden = true)
         userInfo: UserInfo,
         @RequestParam("profile")
+        @FileExtension(allowExtensions = ["png", "jpeg", "jpg"])
         multipartFile: MultipartFile,
     ): ApiResponse<Unit> {
         val command = UploadProfileCommand(

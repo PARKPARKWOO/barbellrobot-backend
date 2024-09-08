@@ -7,6 +7,7 @@ import com.example.core.exercise.port.command.SaveExerciseItemCommand
 import com.example.core.exercise.port.`in`.ExerciseItemUseCase
 import com.example.`in`.api.exercise.adapter.`in`.request.AddYoutubeRequest
 import com.example.`in`.api.exercise.adapter.`in`.response.ExerciseItemDetailResponse
+import com.example.`in`.common.annotation.FileExtension
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -43,8 +44,10 @@ class ExerciseItemController(
         @RequestParam("exerciseName")
         exerciseName: String,
         @RequestParam(name = "video", required = false)
+        @FileExtension(allowExtensions = ["mp4", "mov"])
         video: List<MultipartFile>?,
         @RequestParam(name = "image", required = false)
+        @FileExtension(allowExtensions = ["png"])
         image: List<MultipartFile>?,
         @RequestParam(name = "exerciseAreas")
         exerciseAreas: MutableList<Long>,
