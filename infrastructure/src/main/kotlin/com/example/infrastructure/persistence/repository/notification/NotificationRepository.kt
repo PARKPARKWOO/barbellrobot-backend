@@ -1,5 +1,6 @@
 package com.example.infrastructure.persistence.repository.notification
 
+import com.example.core.event.NotificationEventType
 import com.example.infrastructure.persistence.entity.notification.NotificationEntity
 import com.example.infrastructure.persistence.entity.notification.QNotificationEntity.notificationEntity
 import com.querydsl.jpa.JPAExpressions
@@ -12,6 +13,8 @@ interface NotificationRepository : JpaRepository<NotificationEntity, Long>, Noti
 
 interface NotificationQueryRepository {
     fun findRecentUnread(receiverId: UUID): List<NotificationEntity>
+
+    fun ackNotification(receiverId: UUID, type: NotificationEventType)
 }
 
 @Repository
@@ -30,5 +33,19 @@ class NotificationQueryRepositoryImpl(
         return jpaQueryFactory.selectFrom(notificationEntity)
             .where(notificationEntity.id.`in`(latestEventsSubQuery))
             .fetch()
+    }
+
+    override fun ackNotification(receiverId: UUID, type: NotificationEventType) {
+        jpaQueryFactory.update(notificationEntity)
+            .set(notificationEntity.isRead, true)
+            .set(notificationEntity.isSent, true)
+            .where(
+                notificationEntity.receiver.eq(receiverId)
+                    .and(
+                        notificationEntity.type.eq(type)
+                            .and(notificationEntity.isRead.isFalse)
+                            .and(notificationEntity.isSent.isFalse),
+                    ),
+            ).execute()
     }
 }

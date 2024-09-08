@@ -27,7 +27,7 @@ class NotificationService(
         if (isSend) {
             notification.sent()
             notification.read()
-            Tx.writeTx { notificationJpaPort.update(notification) }
+            Tx.writeTx { notificationJpaPort.ackNotification(notification) }
         }
     }
 

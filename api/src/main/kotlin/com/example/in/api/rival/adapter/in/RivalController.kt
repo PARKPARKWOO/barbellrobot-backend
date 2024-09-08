@@ -128,6 +128,7 @@ class RivalController(
     )
     fun prodRival(
         @AuthenticationUser
+        @Parameter(hidden = true)
         userInfo: UserInfo,
         @RequestBody
         request: ProdRivalRequest,
