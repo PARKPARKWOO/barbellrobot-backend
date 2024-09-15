@@ -47,7 +47,7 @@ class ExerciseItemController(
         @FileExtension(allowExtensions = ["mp4", "mov"])
         video: List<MultipartFile>?,
         @RequestParam(name = "image", required = false)
-        @FileExtension(allowExtensions = ["png"])
+        @FileExtension(allowExtensions = ["png", "jpeg", "jpg"])
         image: List<MultipartFile>?,
         @RequestParam(name = "exerciseAreas")
         exerciseAreas: MutableList<Long>,

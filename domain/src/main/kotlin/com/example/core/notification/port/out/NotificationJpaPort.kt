@@ -10,4 +10,6 @@ interface NotificationJpaPort {
     fun findByRecentUnread(receiverId: UUID): List<Notification>
 
     fun update(notification: Notification)
+
+    fun ackNotification(notification: Notification)
 }

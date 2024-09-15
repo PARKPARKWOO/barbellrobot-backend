@@ -26,4 +26,11 @@ class NotificationJpaAdapter(
         val entity = NotificationEntity.from(notification)
         notificationRepository.save(entity)
     }
+
+    override fun ackNotification(notification: Notification) {
+        notificationRepository.ackNotification(
+            receiverId = notification.receiver,
+            type = notification.type,
+        )
+    }
 }
