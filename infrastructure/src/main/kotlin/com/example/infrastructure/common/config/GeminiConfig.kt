@@ -45,6 +45,6 @@ class GeminiConfig(
     }
 
     companion object {
-        const val GEMINI_TEMPERATURE = 0.4F
+        const val GEMINI_TEMPERATURE: Double = 0.4
     }
 }
