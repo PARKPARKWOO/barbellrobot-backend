@@ -2,9 +2,7 @@ name: Ci with Gradle build test
 
 on:
   pull_request:
-    branches:
-      - develop
-      - main
+  push:
   workflow_dispatch:
 
 permissions:

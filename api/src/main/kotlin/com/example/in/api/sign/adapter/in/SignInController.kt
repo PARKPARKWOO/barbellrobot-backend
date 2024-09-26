@@ -73,7 +73,6 @@ class SignInController(
         @RequestBody
         request: SignInWithKakaoRequest,
     ): ApiResponse<JwtResponse> {
-        log.info(request.accessToken)
         val response = JwtResponse.from(signInMemberUseCase.signInWithKakao(request.toCommand()))
         return ApiResponse(data = response)
     }

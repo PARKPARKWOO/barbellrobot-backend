@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/deployment-diagram
+
+actor developer
+
+agent agent
+artifact artifact
+boundary boundary
+
+interface ISP
+cloud vpc {
+    storage storage
+}
+
+cloud github {
+    package backend {
+        file workflow_image_build
+        file Dockerfile
+    }
+    package deploy {
+        file compose.yml
+        file workflow_deploy
+    }
+}
+
+
+collections collections
+component component
+database database
+entity entity
+folder folder
+frame frame
+label label
+node node
+
+queue queue
+
+@enduml

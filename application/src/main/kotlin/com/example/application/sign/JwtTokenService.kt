@@ -2,7 +2,6 @@ package com.example.application.sign
 
 import com.example.core.sign.dto.JwtResponseDto
 import com.example.core.sign.exception.ExpiredJwtException
-import com.example.core.sign.exception.NoBearerTokenException
 import com.example.core.sign.exception.ParseJwtFailedException
 import io.jsonwebtoken.Header
 import io.jsonwebtoken.JwtException
