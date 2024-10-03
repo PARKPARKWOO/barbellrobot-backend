@@ -29,6 +29,7 @@ open class WebMvcConfig(
             .allowedOriginPatterns(
                 "http://localhost:[*]",
                 "https://localhost:[*]",
+                "https://wooyoung.duckdns.org",
             )
             .allowedHeaders("*")
             .allowedMethods("*")
