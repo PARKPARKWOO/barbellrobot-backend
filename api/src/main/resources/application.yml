@@ -18,6 +18,8 @@ spring:
         default_batch_fetch_size: 1000
         dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
+    hibernate:
+      ddl-auto: update
 
   servlet:
     multipart:
