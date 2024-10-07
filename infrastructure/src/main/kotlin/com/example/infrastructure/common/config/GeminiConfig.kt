@@ -29,7 +29,7 @@ class GeminiConfig(
         return VertexAiGeminiChatModel(
             vertexAi,
             VertexAiGeminiChatOptions.builder()
-                .withModel(VertexAiGeminiChatModel.ChatModel.GEMINI_1_5_FLASH)
+                .withModel("gemini-1.5-flash")
                 .withTemperature(GEMINI_TEMPERATURE)
                 .build(),
         )
