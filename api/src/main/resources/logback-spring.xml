@@ -37,5 +37,6 @@
     </springProfile>
     <root level="INFO">
         <appender-ref ref="LOKI"/>
+        <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
