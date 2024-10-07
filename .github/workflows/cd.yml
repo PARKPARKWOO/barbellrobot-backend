@@ -78,12 +78,9 @@ jobs:
         env:
           IMAGE_NAME: ${{ env.repository_name }}
           IMAGE_TAG: ${{ env.image_tag }}
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
         run: |
-          docker build \ 
-          --build-arg GOOGLE_CREDENTIALS="$GOOGLE_CREDENTIALS" \
-          -f ./api/Dockerfile \
-          -t $IMAGE_NAME:$IMAGE_TAG .
+          docker build -f ./api/Dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
           docker push $IMAGE_NAME:$IMAGE_TAG
 
   trigger-dispatch:
