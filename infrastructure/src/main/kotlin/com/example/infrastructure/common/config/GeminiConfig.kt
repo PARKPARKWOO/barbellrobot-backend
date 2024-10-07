@@ -3,8 +3,8 @@ package com.example.infrastructure.common.config
 import com.example.infrastructure.adapter.pt.GeneratePtAdapter
 import com.google.cloud.vertexai.VertexAI
 import org.springframework.ai.model.function.FunctionCallback
+import org.springframework.ai.model.function.FunctionCallbackContext.SchemaType.OPEN_API_SCHEMA
 import org.springframework.ai.model.function.FunctionCallbackWrapper
-import org.springframework.ai.model.function.FunctionCallbackWrapper.Builder.SchemaType.OPEN_API_SCHEMA
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatOptions
 import org.springframework.beans.factory.annotation.Value
