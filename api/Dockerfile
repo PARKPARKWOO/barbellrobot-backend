@@ -1,20 +1,24 @@
-FROM gcr.io/google.com/cloudsdktool/google-cloud-cli:alpine
+# Use debian-based image instead of alpine
+FROM gcr.io/google.com/cloudsdktool/google-cloud-cli:debian_component_based
 
-# OpenJDK 17 설치
-RUN apk --update-cache add openjdk17-jre
+# Install OpenJDK 17
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jre && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# gcloud 설정 디렉토리 생성
+# Create gcloud config directory
 RUN mkdir -p /root/.config/gcloud
 
-# gcloud 추가 구성 요소 설치
+# Install additional gcloud components
 RUN gcloud components install app-engine-java kubectl
 
-# JAR 파일 설정
+# Set up JAR file
 ARG JAR_FILE=api/build/libs/*.jar
 COPY ${JAR_FILE} app.jar
 
-# 환경변수 설정
+# Set environment variable
 ENV GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/key.json
 
-# 애플리케이션 실행 전 서비스 계정 활성화
+# Activate service account before running the application
 ENTRYPOINT ["sh", "-c", "gcloud auth activate-service-account --key-file=/root/.config/gcloud/key.json && java -jar app.jar"]
