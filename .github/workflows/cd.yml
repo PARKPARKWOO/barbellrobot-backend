@@ -69,10 +69,6 @@ jobs:
         if: env.image_exists == 'false'
         run: ./gradlew clean build -x test --refresh-dependencies --stacktrace
 
-      - name: Mask Google Credentials in logs
-        run: |
-          echo "::add-mask::${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
-
       - name: Build, tag, and push image to Docker Hub
         if: env.image_exists == 'false'
         env:
