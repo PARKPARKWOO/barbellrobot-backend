@@ -49,6 +49,10 @@ dependencies {
 
     // log-loki
     implementation("com.github.loki4j:loki-logback-appender:1.5.1")
+
+    // for metric
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 extra["springAiVersion"] = "1.0.0-SNAPSHOT"

@@ -6,11 +6,14 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  mail:
+    username: wy9295@gmail.com
+    password: ${GMAIL_PASSWORD:password}
   ai:
     vertex:
       ai:
         gemini:
-          project-id: ${GEMINI_PROJECT_ID}
+          project-id: ${GEMINI_PROJECT_ID:project}
           location: asia-northeast3
 
 aws:
@@ -20,12 +23,12 @@ aws:
     secret-key: ${AWS_S3_SECRET_KEY:secretKey}
 
 cloud-front:
-  domain: ${CLOUD_FRONT_DOMAIN_NAME:https://d3vt348duxk7vk.cloudfront.net}
+  domain: https://d3vt348duxk7vk.cloudfront.net
 
 jwt:
   access-token:
-    secret-key: ${ACCESS_SECRET_KEY:qwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq}
-    expire-millis: ${ACCESS_EXPIRE_MILLIS:100000000000}
+    secret-key: qwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq}
+    expire-millis: 100000000000
   refresh-token:
-    secret-key: ${REFRESH_SECRET_KEY:asasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasaasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasaasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasa}
-    expire-millis: ${REFRESH_EXPIRE_MILLIS:1000000000000000}
+    secret-key: asasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasaasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasaasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasa
+    expire-millis: 1000000000000000
